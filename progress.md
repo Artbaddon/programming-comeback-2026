@@ -1,19 +1,19 @@
-# Progress Log - [Month] 2026
+# Progress Log - January 2026
 
-## Week X (Date - Date)
+## Week 1 (Jan 1 - Jan 5)
 
-### [Day], [Date] - Day X
-**Goal:** [Topic]
-**Status:** [x] Completed / [~] Partial / [ ] Skipped
-**Sessions:** X/2 (weekday) or X/4 (weekend)
-**Time:** X minutes
+### Thursday, Jan 1 - Day 1
+**Goal:** Modern JS Core - Variables refresh
+**Status:** [~] Partial
+**Sessions:** 1/2 (weekday)
+**Time:** 20 minutes
 
 **Notes:**
-- [What you learned]
-- [What was challenging]
-- [What clicked]
+- Revisited why `let`/`const` exist and typed a short reminder snippet to keep the streak alive.
+- Realized I still blur hoisting with variable types, so I marked it for follow-up tomorrow.
+- Habit win: even a single line keeps momentum better than skipping entirely.
 
 **Commits:**
-- [commit message]
+- docs: log week 1 day 1 progress
 
 ---
