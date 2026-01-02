@@ -51,12 +51,6 @@
 
 ---
 
-### [Main Concept 3]
-
-[Same structure as above]
-
----
-
 ## Aha Moments 💡
 - [Something that clicked for you]
 - [Connection you made between concepts]
@@ -69,8 +63,7 @@
 
 ---
 
-## Daily Exercises (The "3 Tasks") ✅
-*Paste the 3 exercises from the Roadmap here*
+## Daily Exercises ✅
 
 1. [ ] **Exercise 1:** [Description]
 2. [ ] **Exercise 2:** [Description]
@@ -102,38 +95,25 @@
 
 ## Post-Session Recall (CLOSE EVERYTHING FIRST!)
 
-**1. [Recall question 1 - specific to today's topic]**
-
+**1. [Recall question 1]**
 [Your answer from memory]
-
----
 
 **2. [Recall question 2]**
-
 [Your answer from memory]
-
----
 
 **3. [Recall question 3]**
-
 [Your answer from memory]
 
----
-
 **4. What's one thing I still don't fully understand?**
-
 [Honest answer]
 
----
-
-**5. The "EL15" Summary (Explain Like I'm 5)**
-[Explain the main concept of today in ONE simple sentence, as if teaching a child]
+**5. The "ELI5" Summary**
+[Explain the main concept in ONE simple sentence]
 
 ---
 
 ## Next Session Focus
 - [What you'll study next]
-- [Any follow-up from today's confusion]
 
 ---
 
@@ -147,10 +127,8 @@
 
 **Time management:**
 - Did I stay focused? Yes/No
-- Any distractions? 
 
 **Energy level:** X/10
-
 **Confidence on this topic:** X/10
 
 ---
