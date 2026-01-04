@@ -1,8 +1,8 @@
 # Session 1: Variable Scope
-**Date:** [Date]
+**Date:** Sunday Jan 4 2026
 **Time:** 10:00 - 11:05
 **Duration:** 65 minutes
-**Review Date:** JAN 7 (Spaced Repetition)
+**Review Date:** Jan 7 (Spaced Repetition)
 
 ---
 
@@ -11,7 +11,6 @@
 1. What is scope?
 
 **My guesses:**
-- We call closure in JS at the capability that a piece of code has to access different variables or functions.
 - Scope is to what piece of code a variable or function belongs to, for example if i create a function and a declare a variable inside, the scope of that variable will be only inside the function or descendants of that function
 ---
 
