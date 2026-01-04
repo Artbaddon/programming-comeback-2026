@@ -34,3 +34,15 @@
 - docs: log week 1 day 2 progress
 
 ---
+
+### Saturday, Jan 3 - Day 3
+**Goal:** Modern JS Core - Closure (light practice)
+**Status:** [~] Partial
+**Sessions:** 1/1 (weekend)
+**Time:** 25 minutes
+
+**Notes:**
+- Did the exercise set to keep consistency; rested instead of deep-diving into closure. Will return to the closure topic tomorrow after resting.
+
+**Commits:**
+- docs: log day 3 practice (kept consistency)
