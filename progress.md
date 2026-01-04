@@ -46,3 +46,20 @@
 
 **Commits:**
 - docs: log day 3 practice (kept consistency)
+
+---
+
+### Sunday, Jan 4 - Day 4
+**Goal:** Modern JS Core - Variable scope (session 1)
+**Status:** [x] Complete
+**Sessions:** 1/4 (weekend)
+**Time:** 65 minutes (10:00 - 11:05)
+
+**Notes:**
+- Built examples covering global, function, and block scope; practiced lookup and shadowing.
+- Implemented exercises demonstrating TDZ, loop+closure behavior, and scope chain outputs.
+- Remaining confusion: closure vs. scope and hoisting — plan to focus on these next session.
+
+**Commits:**
+- docs: add Day 4 variable-scope notes and examples
+- files: week_01_modern_js_core/day_4/day_4_session_1_variable-scope.js, week_01_modern_js_core/day_4/day_4_session_1_variable-scope.md
