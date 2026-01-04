@@ -25,16 +25,12 @@
 **Time:** 75 minutes (20:45 - 22:00)
 
 **Notes:**
-- Rewrote `let`/`const`/`var` differences in my own words and reinforced that bindings, not values, are what stay fixed with `const`.
-- Walked through lexical environment parsing rules so the tokenization limits on names finally clicked.
-- Practiced `var` inside blocks vs `let` to feel the scope leak firsthand and logged the TDZ as the next rabbit hole.
 - Captured aha that objects held by `const` stay mutable because only the binding is frozen.
 
+- Session 3 (Hoisting): covered creation vs execution phases, TDZ, `var` hoisting, and function declaration vs expression behavior; practiced examples showing `undefined` for hoisted `var`, TDZ errors for `let`, and why function expressions fail when called before assignment.
 **Commits:**
-- docs: log week 1 day 2 progress
-
----
-
+ - docs: add Day 4 session 3 — hoisting notes and examples
+ - files: week_01_modern_js_core/day_4/day_4_session_3_Hoisting.js, week_01_modern_js_core/day_4/day_4_session_3_Hoisting.md
 ### Saturday, Jan 3 - Day 3
 **Goal:** Modern JS Core - Closure (light practice)
 **Status:** [~] Partial
@@ -49,21 +45,45 @@
 
 ---
 
-### Sunday, Jan 4 - Day 4
-**Goal:** Modern JS Core - Variable scope (session 1)
+### Sunday, Jan 4 - Day 4 — Session 1
+**Goal:** Modern JS Core - Variable scope
 **Status:** [x] Complete
-**Sessions:** 2/4 (weekend)
-**Time:** 65 minutes (10:00 - 11:05)
+**Time:** 10:00 - 11:05 (65 minutes)
 
 **Notes:**
 - Built examples covering global, function, and block scope; practiced lookup and shadowing.
 - Implemented exercises demonstrating TDZ, loop+closure behavior, and scope chain outputs.
-- Remaining confusion: closure vs. scope and hoisting — plan to focus on these next session.
-
-- Session 2 (Closure): practiced factory/reader patterns, multiple closures sharing environment, and function-based counters; identified hoisting as next focus.
 
 **Commits:**
-- docs: add Day 4 variable-scope notes and examples
+- docs: add Day 4 session 1 — variable-scope notes and examples
 - files: week_01_modern_js_core/day_4/day_4_session_1_variable-scope.js, week_01_modern_js_core/day_4/day_4_session_1_variable-scope.md
- - docs: add Day 4 session 2 — closure notes and examples
- - files: week_01_modern_js_core/day_4/day_4_session_2_closure.js, week_01_modern_js_core/day_4/day_4_session_2_closure.md
+
+---
+
+### Sunday, Jan 4 - Day 4 — Session 2
+**Goal:** Modern JS Core - Closure
+**Status:** [x] Complete
+**Time:** 11:30 - 12:40 (70 minutes)
+
+**Notes:**
+- Practiced factory/reader patterns, multiple closures sharing an environment, and function-based counters.
+- Observed how closures capture and persist outer lexical environments; identified hoisting as next focus.
+
+**Commits:**
+- docs: add Day 4 session 2 — closure notes and examples
+- files: week_01_modern_js_core/day_4/day_4_session_2_closure.js, week_01_modern_js_core/day_4/day_4_session_2_closure.md
+
+---
+
+### Sunday, Jan 4 - Day 4 — Session 3
+**Goal:** Modern JS Core - Hoisting
+**Status:** [x] Complete
+**Time:** 15:25 - 16:25 (50 minutes)
+
+**Notes:**
+- Covered creation vs execution phases, TDZ, `var` hoisting, and function declaration vs expression behavior.
+- Practiced examples showing `undefined` for hoisted `var`, TDZ errors for `let`, and why function expressions fail when called before assignment.
+
+**Commits:**
+- docs: add Day 4 session 3 — hoisting notes and examples
+- files: week_01_modern_js_core/day_4/day_4_session_3_Hoisting.js, week_01_modern_js_core/day_4/day_4_session_3_Hoisting.md
