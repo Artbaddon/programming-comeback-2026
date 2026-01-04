@@ -87,3 +87,18 @@
 **Commits:**
 - docs: add Day 4 session 3 — hoisting notes and examples
 - files: week_01_modern_js_core/day_4/day_4_session_3_Hoisting.js, week_01_modern_js_core/day_4/day_4_session_3_Hoisting.md
+
+---
+
+### Sunday, Jan 4 - Day 4 — Session 4
+**Goal:** Modern JS Core - Data types & Template Literals
+**Status:** [x] Complete
+**Time:** 16:40 - 17:10 (30 minutes)
+
+**Notes:**
+- Reviewed primitive types: `number`, `bigint`, `string`, `boolean`, `null`, `undefined`, and `symbol`.
+- Practiced `typeof` checks and template literals with interpolation and simple expressions.
+
+**Commits:**
+- docs: add Day 4 session 4 — data types & template literals notes and examples
+- files: week_01_modern_js_core/day_4/day_4_session_4_Data_Types_and_Template_Literals.js, week_01_modern_js_core/day_4/day_4_session_4_Data_Types_and_Template_Literals.md
