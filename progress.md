@@ -102,3 +102,19 @@
 **Commits:**
 - docs: add Day 4 session 4 — data types & template literals notes and examples
 - files: week_01_modern_js_core/day_4/day_4_session_4_Data_Types_and_Template_Literals.js, week_01_modern_js_core/day_4/day_4_session_4_Data_Types_and_Template_Literals.md
+
+---
+
+### Monday, Jan 5 - Day 5
+**Goal:** Modern JS Core - Arrow Functions
+**Status:** [x] Complete
+**Sessions:** 1/1 (weekday)
+**Time:** 19:00 - 19:50 (50 minutes)
+
+**Notes:**
+- Reviewed arrow function syntax, implicit returns, returning objects with parentheses, and typical pitfalls with block bodies vs expression bodies.
+- Practiced converting classic function expressions to arrow functions and writing concise one-liners for common utilities.
+
+**Commits:**
+- docs: add Day 5 session 1 — arrow functions notes and examples
+- files: week_01_modern_js_core/day_5/day_5_session_1_arrow_functions.md, week_01_modern_js_core/day_5/day_5_session_1_arrow_functions.js
