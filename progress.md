@@ -118,3 +118,19 @@
 **Commits:**
 - docs: add Day 5 session 1 — arrow functions notes and examples
 - files: week_01_modern_js_core/day_5/day_5_session_1_arrow_functions.md, week_01_modern_js_core/day_5/day_5_session_1_arrow_functions.js
+
+---
+
+### Monday, Jan 5 - Day 5 — Session 2
+**Goal:** Modern JS Core - Arrow Functions This
+**Status:** [x] Complete
+**Sessions:** 1/1 (weekday)
+**Time:** 20:10 - 21:30 (80 minutes)
+
+**Notes:**
+- Reviewed `this` behavior in arrow functions vs regular functions, lexical `this`, and common callback patterns.
+- Practiced exercises: `makeUser` example, calculator object, method chaining, and fixing `this` in `setTimeout` with arrow functions.
+
+**Commits:**
+- docs: add Day 5 session 2 — arrow functions this notes and examples
+- files: week_01_modern_js_core/day_5/day_5_session_2_arrow_functions_this.md, week_01_modern_js_core/day_5/day_5_session_2_arrow_functions_this.js
