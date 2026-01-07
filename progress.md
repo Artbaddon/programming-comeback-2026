@@ -16,7 +16,6 @@
 **Commits:**
 - docs: log week 1 day 1 progress
 
----
 
 ### Friday, Jan 2 - Day 2
 **Goal:** Modern JS Core - Deepen variable scope & hoisting prep
@@ -148,3 +147,17 @@
 **Commits:**
 - docs: add Day 6 session 1 — destructuring, spread & rest notes and examples
 - files: week_01_modern_js_core/day_6/day_6_session_1_destructuring_spread_rest.md
+
+### Tuesday, Jan 6 - Day 6 — Session 2
+**Goal:** Modern JS Core - Object destructuring
+**Status:** [x] Complete
+**Time:** 20:00 - 20:50 (50 minutes)
+
+**Notes:**
+- Covered object destructuring: renaming, default values, nested destructuring, and using the rest pattern with objects.
+- Added examples and exercises demonstrating extracting values, renaming during destructuring, nested patterns, and `Object.entries` + destructuring in loops.
+
+**Commits:**
+- docs: add Day 6 session 2 — object destructuring notes and examples
+- files: week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.md, week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.js
+
