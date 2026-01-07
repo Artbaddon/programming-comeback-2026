@@ -134,3 +134,17 @@
 **Commits:**
 - docs: add Day 5 session 2 — arrow functions this notes and examples
 - files: week_01_modern_js_core/day_5/day_5_session_2_arrow_functions_this.md, week_01_modern_js_core/day_5/day_5_session_2_arrow_functions_this.js
+
+### Tuesday, Jan 6 - Day 6
+**Goal:** Modern JS Core - Destructuring, spread & rest
+**Status:** [x] Complete
+**Sessions:** 1/2 (weekday)
+**Time:** 19:00 - 19:50 (50 minutes)
+
+**Notes:**
+- Covered array destructuring, skipping elements with commas, rest/spread syntax, default values, swapping via destructuring, and destructuring with iterables.
+- Added examples demonstrating the rest operator, default values, swapping pattern, and destructuring in loops and function returns.
+
+**Commits:**
+- docs: add Day 6 session 1 — destructuring, spread & rest notes and examples
+- files: week_01_modern_js_core/day_6/day_6_session_1_destructuring_spread_rest.md
