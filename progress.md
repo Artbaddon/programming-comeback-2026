@@ -161,3 +161,16 @@
 - docs: add Day 6 session 2 — object destructuring notes and examples
 - files: week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.md, week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.js
 
+### Tuesday, Jan 7- Day 7 — Session 1
+**Goal:** Object and array destructructure exercises
+**Status:** [x] Complete
+**Time:** 21:40 - 22:00 (20 minutes)
+
+**Notes:**
+- exercises for practicing array and object destructuring with new use cases and new ways to do it
+
+**Commits:**
+- docs: add Day 7 session 1 — object destructuring exercises
+- files: week_01_modern_js_core/day_6/day_6_destructuring_exercises.js
+
+
