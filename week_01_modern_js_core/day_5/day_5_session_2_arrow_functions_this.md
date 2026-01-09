@@ -2,7 +2,7 @@
 **Date:** Monday Jan 5 2026
 **Time:** 20:10 : 21:30
 **Duration:** 80 minutes
-**Review Date:** Jan 8 (Spaced Repetition)
+**Review Date:** Jan 16 (Second Spaced Repetition)
 
 ---
 

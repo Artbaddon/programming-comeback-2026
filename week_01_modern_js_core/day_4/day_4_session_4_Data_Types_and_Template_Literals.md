@@ -2,7 +2,7 @@
 **Date:** Sunday Jan 4 2026
 **Time:** 16:40 - 17:10
 **Duration:** 30 minutes
-**Review Date:** Jan 7 (Spaced Repetition)
+**Review Date:** Jan 15 (7 days Repetition)
 
 ---
 
