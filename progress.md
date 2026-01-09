@@ -161,7 +161,7 @@
 - docs: add Day 6 session 2 — object destructuring notes and examples
 - files: week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.md, week_01_modern_js_core/day_6/day_6_session_2_object_destructuring.js
 
-### Tuesday, Jan 7- Day 7 — Session 1
+### Wednesday, Jan 7- Day 7 — Session 1
 **Goal:** Object and array destructructure exercises
 **Status:** [x] Complete
 **Time:** 21:40 - 22:00 (20 minutes)
@@ -174,3 +174,16 @@
 - files: week_01_modern_js_core/day_6/day_6_destructuring_exercises.js
 
 
+
+### Thursday, Jan 8- Day 8 — Session 1
+**Goal:** active recall scope, hoisting, arrow functions, closure, Main Topic Spread Operator,
+**Status:** [x] Complete
+**Sessions:** 1/2
+**Time:** 19:00 - 19:50 (50 minutes)
+
+**Notes:**
+- Active recalling scope, hoisting arrow functions closure, rest and spread main topic.
+
+**Commits:**
+- docs: add Day 8 session 1 — active recalling of topics of day 3, 4 and 5 and study main tpic rest and spread.
+- files: day_8_session_1_spread_operator.md, day_8_session_1_spread_operator.js
