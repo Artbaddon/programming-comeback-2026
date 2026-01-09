@@ -187,3 +187,16 @@
 **Commits:**
 - docs: add Day 8 session 1 — active recalling of topics of day 3, 4 and 5 and study main tpic rest and spread.
 - files: day_8_session_1_spread_operator.md, day_8_session_1_spread_operator.js
+- 
+### Thursday, Jan 8- Day 8 — Session 2
+**Goal:** 10 exercises spread and rest operators,
+**Status:** [x] Complete
+**Sessions:** 2/2
+**Time:** 20:00 - 20:30 (30 minutes)
+
+**Notes:**
+- Rest and spread exercises
+
+**Commits:**
+- docs: add Day 8 session 2 — rest and spread exercises.
+- files: day_8_session_1_spread_operator.js

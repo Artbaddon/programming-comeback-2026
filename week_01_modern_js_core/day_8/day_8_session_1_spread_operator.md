@@ -1,7 +1,7 @@
 # Session 1 and 2: Rest parametrers and spread Synax
 **Date:** Thursday Jan 8 2026
-**Time:** 20:00 : 20:50, 21:00 : 21:30 (Practice session)
-**Duration:** 80 minutes (Two Sessions)
+**Time:** 19:00 : 19:50, 20:00 : 20:40 (Practice session)
+**Duration:** 90 minutes (Two Sessions)
 **Review Date:** Jan 11 (Spaced Repetition)
 
 
@@ -149,7 +149,8 @@
 -Rest is used in functions for specifying all the args into an array, spread is the opposite meaning that is used for passing all items for an iterable as arguments to a function.
 
 **2.Why is `[...arr]` a shallow copy? What's the danger?**
--Is a shallow copy because is a copy by value and not by reference so if you change the copied arr the main one is not updated.
+-Its a shallow copy because it only copies the top-level references, not nested objects.
+-The danger: nested objects/arrays are still shared.
 
 **3. 3. How do you merge two objects with spread?**
 -let arrMerged=[...arr1, ...ar2]
