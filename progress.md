@@ -200,3 +200,16 @@
 **Commits:**
 - docs: add Day 8 session 2 — rest and spread exercises.
 - files: day_8_session_1_spread_operator.js
+---
+
+### Friday, Jan 9 - Day 9
+**Goal:** Practice — spread & rest review
+**Status:** [~] Partial
+**Sessions:** 1/1 (weekday)
+**Time:** 20 minutes
+
+**Notes:**
+- Short practice session to reinforce spread/rest exercises.
+
+**Commits:**
+- docs: log Day 9 practice (20 minutes)
