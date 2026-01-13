@@ -2,7 +2,7 @@
 **Date:** Thursday Jan 8 2026
 **Time:** 19:00 : 19:50, 20:00 : 20:40 (Practice session)
 **Duration:** 90 minutes (Two Sessions)
-**Review Date:** Jan 11 (Spaced Repetition)
+**Review Date:** Jan 20 (Spaced Repetition)
 
 
 ---
