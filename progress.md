@@ -213,3 +213,18 @@
 
 **Commits:**
 - docs: log Day 9 practice (20 minutes)
+
+---
+
+### Tuesday, Jan 13 - Day 13
+**Goal:** Modern JS Core - Array methods (`map`)
+**Status:** [x] Complete
+**Sessions:** 1/12
+**Time:** 18:30 - 19:20 (50 minutes)
+
+**Notes:**
+- Reviewed `Array.prototype.map()` behaviour and callback parameters.
+- Practiced transforming arrays, returning new objects with spread to avoid mutation, and chaining with other array methods.
+
+**Commits:**
+- docs: add Day 13 session 1 — array methods (map)
