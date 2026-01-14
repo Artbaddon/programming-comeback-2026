@@ -1,5 +1,5 @@
 # Session 1: Array methods
-**Date:** Thursday Jan 13 2026
+**Date:** Tuesday Jan 13 2026
 **Time:** 18:30 : 19:20
 **Duration:** 50 minutes
 **Review Date:** Jan 16 (Spaced Repetition)

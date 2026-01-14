@@ -219,7 +219,7 @@
 ### Tuesday, Jan 13 - Day 13
 **Goal:** Modern JS Core - Array methods (`map`)
 **Status:** [x] Complete
-**Sessions:** 1/12
+**Sessions:** 1/2
 **Time:** 18:30 - 19:20 (50 minutes)
 
 **Notes:**
@@ -228,3 +228,19 @@
 
 **Commits:**
 - docs: add Day 13 session 1 — array methods (map)
+
+---
+
+### Tuesday, Jan 13 - Day 13 — Session 2
+**Goal:** Modern JS Core - Array methods (`filter`, `find`)
+**Status:** [x] Complete
+**Sessions:** 2/2
+**Time:** 19:40 - 20:30 (50 minutes)
+
+**Notes:**
+- Reviewed `Array.prototype.filter()` and `Array.prototype.find()` behaviour.
+- Practiced predicate callbacks, removing falsy values, chaining `filter` + `map`, and using `every`/`some` for complex checks.
+- Implemented examples for products, users, todos, logs, and student grade checks.
+
+**Commits:**
+- docs: add Day 13 session 2 — array methods (filter & find)
