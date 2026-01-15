@@ -244,3 +244,15 @@
 
 **Commits:**
 - docs: add Day 13 session 2 — array methods (filter & find)
+- 
+### Wednesday, Jan 14 - Day 14 — Session 1
+**Goal:** Modern JS Core - Array methods (`filter`, `find`, `map`)
+**Status:** [x] Complete
+**Sessions:** 1/1
+**Time:** 21:00 - 22:00 (50 minutes)
+
+**Notes:**
+- Exercises array methods filter find map
+
+**Commits:**
+- docs: add Day 14 session 1 — array methods (filter, find, map exercises)
