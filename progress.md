@@ -256,3 +256,15 @@
 
 **Commits:**
 - docs: add Day 14 session 1 — array methods (filter, find, map exercises)
+- 
+### Sunday, Jan 18 - Day 18 — Session 1
+**Goal:** Modern JS Core - Array methods (`findIndex`)
+**Status:** [x] Complete
+**Sessions:** 1/4
+**Time:** 21:00 - 22:00 (50 minutes)
+
+**Notes:**
+- Reviewed `Array.prototype.findIndex()` behaviour.
+
+**Commits:**
+- docs: add Day 18 session 1 — array methods (findIndex)
