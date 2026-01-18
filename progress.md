@@ -261,10 +261,21 @@
 **Goal:** Modern JS Core - Array methods (`findIndex`)
 **Status:** [x] Complete
 **Sessions:** 1/4
-**Time:** 21:00 - 22:00 (50 minutes)
+**Time:** 10:10 - 10:50 (50 minutes)
 
 **Notes:**
 - Reviewed `Array.prototype.findIndex()` behaviour.
 
 **Commits:**
-- docs: add Day 18 session 1 — array methods (findIndex)
+- docs: add Day 18 session 2 — array methods (Reduce)
+- ### Sunday, Jan 18 - Day 18 — Session 2
+**Goal:** Modern JS Core - Array methods (`Reduce`)
+**Status:** [x] Complete
+**Sessions:** 2/4
+**Time:** 11:10 - 12:10 (60 minutes)
+
+**Notes:**
+- Reviewed `Array.prototype.reduce()` behaviour.
+
+**Commits:**
+- docs: add Day 18 session 2 — array methods (reduce)

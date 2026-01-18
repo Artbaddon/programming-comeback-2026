@@ -1,5 +1,5 @@
 # Session 1: Array methods (find index )
-**Date:** Tuesday Jan 13 2026
+**Date:** Sunday Jan 18 2026
 **Time:** 10:10 : 10:50
 **Duration:** 50 minutes
 **Review Date:** Jan 18 (Spaced Repetition)
