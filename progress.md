@@ -281,7 +281,7 @@
 - docs: add Day 18 session 2 — array methods (reduce)
 
 ### Monday, Jan 19 - Day 19 — Session 1
-**Goal:** [Topic]
+**Goal:** Modern JS Core - Array methods (`Evert, some`)
 **Status:** [x] Completed
 **Sessions:** 1/2 (weekday)
 **Time:** 50 minutes
