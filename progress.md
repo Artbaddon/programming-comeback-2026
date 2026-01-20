@@ -295,3 +295,21 @@
 - docs: add Day 19 session 1 — array methods (every, some)
 
 ---
+...existing code...
+
+### Monday, Jan 19 - Day 19 — Session 2
+**Goal:** Modern JS Core - Array methods (`includes`) + practical fixes  
+**Status:** [x] Complete  
+**Sessions:** 2/2 (weekday)  
+**Time:** 20:20 - 21:00 (40 minutes)
+
+**Notes:**
+- Studied Array.prototype.includes()
+- Fixed bugs in the session code:
+  - Compare properties (e.g., `ele.age > 15`) 
+  - Ensure reducers return the accumulator and provide initial values (grouping & sum).
+  - Compute average by dividing sum by count.
+  - Ensure highest-paid reduction handles initial value safely.
+
+**Commits:**
+- docs: add Day 19 session 2 — includes notes and code fixes  
