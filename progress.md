@@ -279,3 +279,19 @@
 
 **Commits:**
 - docs: add Day 18 session 2 — array methods (reduce)
+
+### Monday, Jan 19 - Day 19 — Session 1
+**Goal:** [Topic]
+**Status:** [x] Completed
+**Sessions:** 1/2 (weekday)
+**Time:** 50 minutes
+
+**Notes:**
+- Learned about some and every
+- NOthing really it was easy
+- When to use which one
+
+**Commits:**
+- docs: add Day 19 session 1 — array methods (every, some)
+
+---
