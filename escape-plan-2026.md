@@ -67,33 +67,24 @@
 ### Session Template
 
 ```markdown
-# Session X: [Topic Name]
-**Date:** [Date]
-**Time:** [Start time - End time]
-**Duration:** 50 minutes
-**Review Date:** [Date + 3 days] (Spaced Repetition)
+## Session [#]: [Topic]
+**Date:** [Day, Month DD, YYYY]
+**Start:** [Time] | **End:** [Time]
+**Focus:** [Main learning objective]
 
----
+### Pre-Session Questions (Answer BEFORE coding)
+1. [Question 1 about topic]
+2. [Question 2 about topic]
 
-## Pre-Session Questions (Answer BEFORE you start)
-1. [Question about today's topic]
-2. [Another question about today's topic]
-
-**My guesses:**
+**My answers:**
 - 
 - 
 
----
+### Resources
+- [Resource 1 with link]
+- [Resource 2 with link]
 
-## Resources Used 📚
-- [Link 1]
-- [Link 2]
-
----
-
-## Notes (Write in MY words during session)
-
-### [Main Concept 1]
+### Code & Notes (Write during session)
 
 **What it is:**
 [Explain in your own words]
@@ -7644,19 +7635,1812 @@ model Post {
 
 ---
 
-_(Days 62-87 continue with similar structure covering:_
-- _Day 62: Redis introduction & caching_
-- _Day 63: Implementing caching layer_
-- _Day 64: Rate limiting & throttling_
-- _Day 65: API documentation with Swagger_
-- _Day 66-67: Background jobs & queues_
-- _Day 68-69: WebSockets & real-time features_
-- _Day 70-71: File uploads & S3_
-- _Day 72-73: Email integration_
-- _Day 74-75: Logging & monitoring_
-- _Day 76-80: Complete Blog API with all features_
-- _Day 81-85: Performance optimization_
-- _Day 86-87: Production deployment preparation)_
+### Saturday, Mar 1 - Day 62
+**Topic:** Redis Introduction & Basic Caching
+**Sessions:** 2
+
+#### Session 1: Redis Fundamentals (50 min)
+**Pre-Session Questions:**
+1. What is in-memory caching and why is it faster than databases?
+2. What problems does Redis solve?
+3. What's the difference between Redis and PostgreSQL?
+
+**Core Topics:**
+- In-memory data structures
+- Key-value storage patterns
+- Redis data types (strings, hashes, lists, sets, sorted sets)
+- TTL (Time To Live) and expiration
+- Redis use cases: caching, sessions, rate limiting, real-time
+
+**Resources:**
+- [Redis University - Introduction](https://university.redis.com/courses/ru101/) (30 min)
+- [Redis Documentation - Data Types](https://redis.io/docs/data-types/) (20 min)
+
+**Setup:**
+```bash
+# Install Redis with Docker
+docker run -d --name redis-dev -p 6379:6379 redis:alpine
+
+# Install Redis client in your blog-api project
+cd blog-api
+npm install ioredis @types/ioredis
+```
+
+**Exercises:**
+1. Create Redis connection service in NestJS
+2. Store and retrieve a simple key-value pair
+3. Set key with 60-second expiration
+4. Store user object as hash
+5. Create list of recent posts IDs
+6. Implement sorted set for post rankings by views
+
+**Practice Problems:**
+- Problem 1: Create `CacheService` with get/set/delete methods
+- Problem 2: Add TTL support to cache service (default 5 minutes)
+- Problem 3: Create method to check if key exists
+- Problem 4: Implement cache invalidation pattern
+- Problem 5: Store JSON objects in cache
+
+**Hints:**
+- Use `@nestjs/cache-manager` for cleaner integration
+- Redis automatically serializes primitives, manually serialize objects
+- Always handle Redis connection errors gracefully
+
+#### Session 2: Basic Caching Implementation (50 min)
+**Topics:** Cache-aside pattern, cache warming, invalidation strategies
+
+**Exercises:**
+1. Cache blog post by ID (cache-aside pattern)
+2. Cache list of all posts
+3. Implement cache warming on app startup
+4. Add cache invalidation on post update/delete
+5. Create cache hit/miss logging
+6. Measure performance improvement with/without cache
+
+**Practice Problems:**
+- Problem 1: Implement `findPostById` with caching (check cache first, then DB)
+- Problem 2: Cache search results for common queries
+- Problem 3: Invalidate post cache when post is updated
+- Problem 4: Implement "cache stampede" prevention with locks
+- Problem 5: Add cache statistics endpoint (hits, misses, hit rate)
+
+**Hints:**
+- Cache key naming convention: `post:${id}`, `posts:all`, `search:${query}`
+- Invalidate specific keys, not entire cache
+- Consider stale-while-revalidate pattern for better UX
+
+**Commit:** `Day 62: Redis integration and basic caching`
+
+---
+
+### Sunday, Mar 2 - Day 63
+**Topic:** Advanced Caching Patterns
+**Sessions:** 2
+
+#### Session 1: Cache Strategies (50 min)
+**Pre-Session Questions:**
+1. What's the difference between cache-aside and write-through caching?
+2. When would you use cache-aside vs write-through?
+3. What is cache invalidation and why is it hard?
+
+**Core Topics:**
+- Cache-aside (lazy loading)
+- Write-through caching
+- Write-behind caching
+- Cache invalidation strategies
+- Cache warming vs cold cache
+- Stampede prevention
+
+**Resources:**
+- [AWS - Caching Best Practices](https://aws.amazon.com/caching/best-practices/) (20 min)
+- [Cache Strategies Explained](https://codeahoy.com/2017/08/11/caching-strategies-and-how-to-choose-the-right-one/) (15 min)
+
+**Exercises:**
+1. Implement write-through caching for post creation
+2. Add cache warming for popular posts on startup
+3. Create cache invalidation middleware
+4. Implement LRU eviction simulation
+5. Add cache versioning for breaking changes
+6. Create cache health check endpoint
+
+**Practice Problems:**
+- Problem 1: Implement write-through cache for user profile updates
+- Problem 2: Cache user's own posts list with automatic invalidation
+- Problem 3: Implement tag-based cache invalidation (invalidate all posts with tag:javascript)
+- Problem 4: Create cache decorator for controller methods
+- Problem 5: Add Redis cluster support for high availability
+
+**Hints:**
+- Use Redis pub/sub for distributed cache invalidation
+- Consider using cache tags for grouped invalidation
+- Monitor cache memory usage to prevent OOM
+
+#### Session 2: Performance Optimization (50 min)
+**Topics:** Query optimization with caching, pagination caching, aggregate caching
+
+**Exercises:**
+1. Cache paginated results (page 1, page 2, etc.)
+2. Cache user authentication checks
+3. Cache database aggregations (post count, user count)
+4. Implement cache preloading for predictable queries
+5. Add cache compression for large objects
+6. Benchmark API response times with various cache strategies
+
+**Practice Problems:**
+- Problem 1: Cache expensive aggregation queries (e.g., posts per category)
+- Problem 2: Implement sliding window cache for recent activity
+- Problem 3: Cache computed fields (e.g., post read time calculation)
+- Problem 4: Add cache warming for frequently accessed data
+- Problem 5: Create cache invalidation queue for batch updates
+
+**Hints:**
+- Cache expensive computations, not cheap DB queries
+- Use shorter TTL for frequently changing data
+- Consider partial caching (cache expensive parts only)
+
+**Commit:** `Day 63: Advanced caching patterns and optimization`
+
+---
+
+### Monday, Mar 3 - Day 64
+**Topic:** Rate Limiting & Throttling
+**Sessions:** 2
+
+#### Session 1: Rate Limiting Fundamentals (50 min)
+**Pre-Session Questions:**
+1. Why do APIs need rate limiting?
+2. What's the difference between rate limiting and throttling?
+3. What is a token bucket algorithm?
+
+**Core Topics:**
+- Rate limiting strategies (fixed window, sliding window, token bucket)
+- IP-based vs user-based rate limiting
+- Rate limit headers (X-RateLimit-*)
+- 429 Too Many Requests response
+- Rate limiting with Redis
+
+**Resources:**
+- [Rate Limiting Algorithms](https://blog.logrocket.com/rate-limiting-node-js/) (15 min)
+- [NestJS Throttler Documentation](https://docs.nestjs.com/security/rate-limiting) (10 min)
+
+**Setup:**
+```bash
+npm install @nestjs/throttler
+```
+
+**Exercises:**
+1. Install and configure @nestjs/throttler
+2. Add global rate limit: 100 requests per 15 minutes
+3. Create custom rate limit for auth endpoints (5 login attempts per minute)
+4. Add rate limit headers to responses
+5. Create rate limit exceeded exception filter
+6. Test rate limiting with multiple requests
+
+**Practice Problems:**
+- Problem 1: Implement IP-based rate limiting (10 req/min per IP)
+- Problem 2: Implement user-based rate limiting (100 req/hour per user)
+- Problem 3: Create different rate limits for different endpoints (public vs authenticated)
+- Problem 4: Add rate limiting bypass for admin users
+- Problem 5: Create rate limit monitoring dashboard data
+
+**Hints:**
+- Use Redis for distributed rate limiting (multiple servers)
+- Return remaining requests in headers: `X-RateLimit-Remaining`
+- Consider different limits for read vs write operations
+
+#### Session 2: Advanced Throttling (50 min)
+**Topics:** Dynamic rate limits, burst handling, graceful degradation
+
+**Exercises:**
+1. Implement sliding window rate limiter with Redis
+2. Create dynamic rate limits based on user tier (free vs premium)
+3. Add burst allowance (allow 10 requests instantly, then throttle)
+4. Implement graceful degradation (return cached data when rate limited)
+5. Add rate limit reset timer in response headers
+6. Create rate limit analytics (who's hitting limits, which endpoints)
+
+**Practice Problems:**
+- Problem 1: Implement token bucket algorithm manually with Redis
+- Problem 2: Create API key-based rate limiting
+- Problem 3: Add rate limiting for expensive operations (e.g., search limited to 10 req/min)
+- Problem 4: Implement progressive delay (delay increases with each request)
+- Problem 5: Create rate limit warming system (gradually increase limits for new users)
+
+**Hints:**
+- Store rate limit counters in Redis with TTL
+- Use Redis sorted sets for sliding window implementation
+- Add monitoring to detect abuse patterns
+
+**Commit:** `Day 64: Rate limiting and throttling implementation`
+
+---
+
+### Tuesday, Mar 4 - Day 65
+**Topic:** API Documentation with Swagger/OpenAPI
+**Sessions:** 2
+
+#### Session 1: Swagger Setup & Basic Documentation (50 min)
+**Pre-Session Questions:**
+1. What is OpenAPI specification?
+2. Why is API documentation important?
+3. What information should API docs contain?
+
+**Core Topics:**
+- OpenAPI 3.0 specification
+- Swagger UI integration
+- Auto-generated docs from decorators
+- Request/response schemas
+- Authentication documentation
+
+**Resources:**
+- [NestJS Swagger Documentation](https://docs.nestjs.com/openapi/introduction) (20 min)
+- [OpenAPI Specification](https://swagger.io/specification/) (15 min)
+
+**Setup:**
+```bash
+npm install @nestjs/swagger swagger-ui-express
+```
+
+**Exercises:**
+1. Install and configure Swagger in NestJS
+2. Access Swagger UI at `/api-docs`
+3. Document post endpoints with @ApiTags, @ApiOperation
+4. Add @ApiResponse decorators for success/error responses
+5. Document request DTOs with @ApiProperty
+6. Add authentication documentation with @ApiBearerAuth
+
+**Practice Problems:**
+- Problem 1: Document all blog post CRUD endpoints
+- Problem 2: Add examples for request/response bodies
+- Problem 3: Document query parameters for pagination
+- Problem 4: Add error response schemas (400, 401, 404, 500)
+- Problem 5: Document authentication flow with examples
+
+**Hints:**
+- Use @ApiProperty({ example: '...' }) for better docs
+- Group endpoints with @ApiTags
+- Document all possible HTTP status codes
+
+#### Session 2: Advanced API Documentation (50 min)
+**Topics:** Schema generation, API versioning docs, testing from Swagger UI
+
+**Exercises:**
+1. Auto-generate schemas from TypeScript classes
+2. Add enum documentation for post status
+3. Document file upload endpoints
+4. Add API versioning to documentation
+5. Create separate docs for public vs admin API
+6. Add "Try it out" functionality testing
+
+**Practice Problems:**
+- Problem 1: Document nested objects and relationships
+- Problem 2: Add deprecation warnings for old endpoints
+- Problem 3: Document webhooks in Swagger
+- Problem 4: Create API changelog section
+- Problem 5: Add authentication testing directly from Swagger UI
+
+**Hints:**
+- Use @ApiExtraModels for reusable schemas
+- Keep docs up-to-date with code (use decorators, not manual docs)
+- Add useful descriptions and examples
+
+**Commit:** `Day 65: Complete API documentation with Swagger`
+
+---
+
+### Wednesday, Mar 5 - Day 66
+**Topic:** Background Jobs with BullMQ - Part 1
+**Sessions:** 2
+
+#### Session 1: Job Queues Fundamentals (50 min)
+**Pre-Session Questions:**
+1. Why would you run tasks in the background instead of in the request?
+2. What is a message queue?
+3. What happens if a background job fails?
+
+**Core Topics:**
+- Job queues concept (producer-consumer pattern)
+- BullMQ architecture (Redis-backed queues)
+- Use cases: emails, image processing, reports, cleanup tasks
+- Job lifecycle: waiting → active → completed/failed
+- Job retries and dead letter queues
+
+**Resources:**
+- [BullMQ Documentation](https://docs.bullmq.io/) (20 min)
+- [@nestjs/bull Documentation](https://docs.nestjs.com/techniques/queues) (15 min)
+
+**Setup:**
+```bash
+npm install @nestjs/bull bull bullmq
+```
+
+**Exercises:**
+1. Install BullMQ and configure with Redis
+2. Create email queue
+3. Add job to send welcome email on user registration
+4. Create worker to process email jobs
+5. Add job completion logging
+6. Test job processing with multiple jobs
+
+**Practice Problems:**
+- Problem 1: Create email queue with producer and consumer
+- Problem 2: Add job to send "New comment" notification email
+- Problem 3: Implement job retry logic (max 3 attempts)
+- Problem 4: Add job progress tracking (0%, 50%, 100%)
+- Problem 5: Create job failure handler with logging
+
+**Hints:**
+- Separate queue producers (controllers) from consumers (processors)
+- Use job IDs for tracking
+- Always handle job failures gracefully
+
+#### Session 2: Job Configuration & Monitoring (50 min)
+**Topics:** Job options, priority queues, delayed jobs, job events
+
+**Exercises:**
+1. Add job priority (high priority for password reset emails)
+2. Implement delayed jobs (send reminder email in 24 hours)
+3. Add job timeouts (fail if job takes >30 seconds)
+4. Create job removal on completion/failure
+5. Implement job event listeners (completed, failed, progress)
+6. Add queue health monitoring endpoint
+
+**Practice Problems:**
+- Problem 1: Create priority queue (high/medium/low priority jobs)
+- Problem 2: Schedule delayed job for post publication (publish at specific time)
+- Problem 3: Implement job throttling (max 10 emails per minute)
+- Problem 4: Add job deduplication (don't send duplicate emails)
+- Problem 5: Create job dashboard data (pending, active, completed, failed counts)
+
+**Hints:**
+- Use `opts.priority` for job prioritization
+- Use `opts.delay` for delayed execution
+- Monitor queue size to prevent memory issues
+
+**Commit:** `Day 66: Background jobs with BullMQ fundamentals`
+
+---
+
+### Thursday, Mar 6 - Day 67
+**Topic:** Background Jobs with BullMQ - Part 2
+**Sessions:** 2
+
+#### Session 1: Advanced Job Patterns (50 min)
+**Pre-Session Questions:**
+1. How do you handle jobs that depend on other jobs?
+2. What is a cron job?
+3. How do you scale job processing?
+
+**Core Topics:**
+- Cron jobs (scheduled recurring tasks)
+- Job chaining (job B runs after job A completes)
+- Batch jobs (process multiple items together)
+- Job concurrency control
+- Scaling workers
+
+**Resources:**
+- [BullMQ Patterns](https://docs.bullmq.io/patterns/patterns) (20 min)
+
+**Exercises:**
+1. Create cron job to clean up old posts daily
+2. Implement job chaining (image upload → resize → save → notify)
+3. Create batch job processor (process 100 posts at once)
+4. Add concurrency limit (max 5 jobs running simultaneously)
+5. Create separate worker instance for testing
+6. Implement graceful shutdown for workers
+
+**Practice Problems:**
+- Problem 1: Create daily digest email cron job (runs every day at 9 AM)
+- Problem 2: Implement job chaining for multi-step process
+- Problem 3: Create bulk email job (send to 1000 users in batches of 50)
+- Problem 4: Add job timeout and automatic retry
+- Problem 5: Implement worker scaling (multiple worker processes)
+
+**Hints:**
+- Use `@Cron('0 9 * * *')` for daily 9 AM execution
+- Chain jobs using job return values
+- Process in batches to avoid memory issues
+
+#### Session 2: Job Monitoring & Error Handling (50 min)
+**Topics:** Dead letter queues, job metrics, debugging failed jobs
+
+**Exercises:**
+1. Create dead letter queue for permanently failed jobs
+2. Add structured logging for all job events
+3. Implement job metrics collection (duration, success rate)
+4. Create job retry with exponential backoff
+5. Add job failure alerts (log to monitoring service)
+6. Build job dashboard endpoint with stats
+
+**Practice Problems:**
+- Problem 1: Implement custom error handling for different error types
+- Problem 2: Create job replay functionality (retry failed jobs manually)
+- Problem 3: Add job performance monitoring (track slow jobs)
+- Problem 4: Implement circuit breaker for external service failures
+- Problem 5: Create job archive system (move old completed jobs to archive)
+
+**Hints:**
+- Store failed jobs for manual review
+- Add contextual data to job errors for debugging
+- Monitor job queue length to detect bottlenecks
+
+**Commit:** `Day 67: Advanced background job patterns and monitoring`
+
+---
+
+### Friday, Mar 7 - Day 68
+**Topic:** WebSockets & Real-Time Features - Part 1
+**Sessions:** 2
+
+#### Session 1: WebSocket Fundamentals (50 min)
+**Pre-Session Questions:**
+1. What's the difference between HTTP and WebSocket?
+2. When would you use WebSockets instead of polling?
+3. What is a full-duplex connection?
+
+**Core Topics:**
+- WebSocket protocol (ws://)
+- Socket.IO vs native WebSockets
+- Connection lifecycle (connect, disconnect, reconnect)
+- Event-based communication
+- Rooms and namespaces
+
+**Resources:**
+- [NestJS WebSockets](https://docs.nestjs.com/websockets/gateways) (20 min)
+- [Socket.IO Documentation](https://socket.io/docs/v4/) (20 min)
+
+**Setup:**
+```bash
+npm install @nestjs/websockets @nestjs/platform-socket.io socket.io
+```
+
+**Exercises:**
+1. Create WebSocket gateway in NestJS
+2. Handle client connection/disconnection events
+3. Emit "hello" event to connected client
+4. Receive message from client and broadcast to all
+5. Test with WebSocket client (Postman or socket.io-client)
+6. Add connection logging
+
+**Practice Problems:**
+- Problem 1: Create chat gateway that broadcasts messages to all users
+- Problem 2: Implement typing indicator (user is typing...)
+- Problem 3: Add online users count display
+- Problem 4: Create private messages between two users
+- Problem 5: Handle WebSocket authentication (JWT in handshake)
+
+**Hints:**
+- Use `@WebSocketGateway()` decorator
+- Emit events with `server.emit(event, data)`
+- Store connected users in Map for tracking
+
+#### Session 2: Real-Time Blog Features (50 min)
+**Topics:** Live updates, notifications, collaborative features
+
+**Exercises:**
+1. Emit event when new post is created (notify all users)
+2. Broadcast comment additions in real-time
+3. Implement live post view counter
+4. Add real-time like notifications
+5. Create "New activity" notification system
+6. Test with multiple browser windows
+
+**Practice Problems:**
+- Problem 1: Broadcast new posts to all connected users
+- Problem 2: Implement real-time comment stream for a post
+- Problem 3: Add notification when someone likes your post
+- Problem 4: Create live user activity feed
+- Problem 5: Implement "user is viewing post" indicator
+
+**Hints:**
+- Use rooms to group users (e.g., all users viewing post:123)
+- Emit only to relevant users, not everyone
+- Handle edge cases (user disconnects mid-update)
+
+**Commit:** `Day 68: WebSocket integration and real-time features`
+
+---
+
+### Saturday, Mar 8 - Day 69
+**Topic:** WebSockets & Real-Time Features - Part 2
+**Sessions:** 2
+
+#### Session 1: Advanced WebSocket Patterns (50 min)
+**Pre-Session Questions:**
+1. How do you scale WebSockets across multiple servers?
+2. What is a WebSocket room?
+3. How do you handle reconnection?
+
+**Core Topics:**
+- Rooms and namespaces for organization
+- Broadcasting strategies (to all, to room, except sender)
+- WebSocket middleware (authentication, logging)
+- Adapter pattern for scaling (Redis adapter)
+- Reconnection handling
+
+**Resources:**
+- [Socket.IO Rooms](https://socket.io/docs/v4/rooms/) (15 min)
+- [Scaling with Redis Adapter](https://socket.io/docs/v4/redis-adapter/) (10 min)
+
+**Exercises:**
+1. Create room for each blog post (users join when viewing post)
+2. Broadcast comment only to users in that post's room
+3. Implement namespace for admin-only events
+4. Add WebSocket middleware for JWT authentication
+5. Set up Redis adapter for multi-server WebSocket support
+6. Handle automatic client reconnection
+
+**Practice Problems:**
+- Problem 1: Implement post-specific rooms (users auto-join when viewing post)
+- Problem 2: Create admin namespace for admin-only real-time updates
+- Problem 3: Add authentication middleware (reject unauthorized connections)
+- Problem 4: Implement presence system (who's online, who's viewing what)
+- Problem 5: Handle disconnection cleanup (remove user from all rooms)
+
+**Hints:**
+- Use `socket.join(room)` to add user to room
+- Emit to room with `server.to(room).emit(event, data)`
+- Store user-socket mapping for targeted messages
+
+#### Session 2: Real-Time Dashboard (50 min)
+**Topics:** Live metrics, server-sent events alternative, performance
+
+**Exercises:**
+1. Create real-time analytics dashboard (posts created, users online)
+2. Implement live metrics updates (every 5 seconds)
+3. Add real-time error notifications for admins
+4. Create live log streaming
+5. Optimize WebSocket payload size
+6. Add heartbeat/ping-pong for connection health
+
+**Practice Problems:**
+- Problem 1: Create admin dashboard with live stats (active users, posts today, errors)
+- Problem 2: Implement real-time error alerting
+- Problem 3: Add live activity feed (last 10 actions)
+- Problem 4: Create real-time search suggestions
+- Problem 5: Implement graceful degradation (fallback to polling if WebSocket fails)
+
+**Hints:**
+- Send only changed data, not full state every time
+- Use compression for large payloads
+- Implement exponential backoff for reconnection
+
+**Commit:** `Day 69: Advanced WebSocket patterns and real-time dashboard`
+
+---
+
+### Sunday, Mar 9 - Day 70
+**Topic:** File Uploads & Cloud Storage - Part 1
+**Sessions:** 2
+
+#### Session 1: File Upload Basics (50 min)
+**Pre-Session Questions:**
+1. How do you handle file uploads in HTTP?
+2. What is multipart/form-data?
+3. Where should uploaded files be stored in production?
+
+**Core Topics:**
+- Multipart form data
+- File validation (size, type, extension)
+- Local file storage vs cloud storage
+- File streaming for large uploads
+- Security considerations (file validation, path traversal)
+
+**Resources:**
+- [NestJS File Upload](https://docs.nestjs.com/techniques/file-upload) (15 min)
+- [Multer Documentation](https://github.com/expressjs/multer) (10 min)
+
+**Setup:**
+```bash
+npm install @nestjs/platform-express multer @types/multer
+```
+
+**Exercises:**
+1. Create file upload endpoint for post images
+2. Validate file size (max 5MB)
+3. Validate file type (only images: jpg, png, webp)
+4. Save uploaded file to `uploads/` directory
+5. Return file URL in response
+6. Serve uploaded files via static endpoint
+
+**Practice Problems:**
+- Problem 1: Create POST `/posts/:id/image` endpoint for post cover image
+- Problem 2: Validate uploaded file is actually an image (check MIME type and magic bytes)
+- Problem 3: Limit file size to 5MB, return error if exceeded
+- Problem 4: Generate unique filename (avoid collisions)
+- Problem 5: Create GET endpoint to serve uploaded images
+
+**Hints:**
+- Use `@UseInterceptors(FileInterceptor('file'))` for single file
+- Validate file in pipe before saving
+- Store filename in database, not binary data
+
+#### Session 2: Multiple Files & Optimization (50 min)
+**Topics:** Multiple file uploads, image optimization, thumbnails
+
+**Exercises:**
+1. Handle multiple file uploads (up to 5 images per post)
+2. Generate thumbnails for uploaded images
+3. Implement image compression (reduce file size by 60%)
+4. Add file deletion endpoint
+5. Clean up orphaned files (files not referenced in DB)
+6. Add upload progress tracking
+
+**Practice Problems:**
+- Problem 1: Allow multiple image uploads for post gallery
+- Problem 2: Generate 3 sizes: thumbnail (150x150), medium (800x600), original
+- Problem 3: Compress images without visible quality loss
+- Problem 4: Delete old image when post cover is replaced
+- Problem 5: Create cleanup job to remove unused files
+
+**Hints:**
+- Use `sharp` library for image processing: `npm install sharp`
+- Process images in background job for large files
+- Store multiple sizes and serve appropriate size based on request
+
+**Commit:** `Day 70: File uploads and image processing`
+
+---
+
+### Monday, Mar 10 - Day 71
+**Topic:** File Uploads & Cloud Storage - Part 2 (AWS S3)
+**Sessions:** 2
+
+#### Session 1: AWS S3 Integration (50 min)
+**Pre-Session Questions:**
+1. Why use cloud storage instead of local file system?
+2. What is S3 and what are its benefits?
+3. How do you secure files in S3?
+
+**Core Topics:**
+- AWS S3 basics (buckets, objects, keys)
+- S3 SDK for Node.js
+- Presigned URLs for secure access
+- S3 bucket policies and ACLs
+- Cost optimization (storage classes)
+
+**Resources:**
+- [AWS S3 Documentation](https://docs.aws.amazon.com/s3/) (20 min)
+- [AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html) (15 min)
+
+**Setup:**
+```bash
+npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
+# Create free AWS account and S3 bucket
+```
+
+**Exercises:**
+1. Set up AWS credentials (access key, secret key)
+2. Create S3 service in NestJS
+3. Upload file to S3 bucket
+4. Generate public URL for uploaded file
+5. Download file from S3
+6. Delete file from S3
+
+**Practice Problems:**
+- Problem 1: Upload post image to S3 instead of local storage
+- Problem 2: Generate unique S3 key (path) for each file
+- Problem 3: Set proper content-type for uploaded files
+- Problem 4: Make uploaded images publicly accessible
+- Problem 5: Update post record with S3 URL
+
+**Hints:**
+- Use S3 key format: `posts/${postId}/${filename}`
+- Set content-type to enable browser preview
+- Store S3 credentials in environment variables
+
+#### Session 2: Advanced S3 Features (50 min)
+**Topics:** Presigned URLs, direct browser uploads, CDN integration
+
+**Exercises:**
+1. Generate presigned URL for temporary file access
+2. Implement direct browser-to-S3 upload (bypass server)
+3. Set file expiration (auto-delete after 30 days)
+4. Add CloudFront CDN for faster file delivery
+5. Implement S3 multipart upload for large files
+6. Add upload progress tracking
+
+**Practice Problems:**
+- Problem 1: Generate presigned upload URL (let client upload directly to S3)
+- Problem 2: Create presigned download URL with 1-hour expiration
+- Problem 3: Implement S3 lifecycle policy (delete old files automatically)
+- Problem 4: Set up CloudFront distribution for S3 bucket
+- Problem 5: Add CORS configuration for direct browser uploads
+
+**Hints:**
+- Presigned URLs avoid exposing AWS credentials to client
+- Use multipart upload for files >100MB
+- CDN reduces S3 request costs and improves speed
+
+**Commit:** `Day 71: AWS S3 integration and cloud file storage`
+
+---
+
+### Tuesday, Mar 11 - Day 72
+**Topic:** Email Integration - Part 1
+**Sessions:** 2
+
+#### Session 1: Email Service Setup (50 min)
+**Pre-Session Questions:**
+1. How do you send emails from a Node.js application?
+2. What is SMTP?
+3. What are transactional emails?
+
+**Core Topics:**
+- SMTP protocol basics
+- Email service providers (SendGrid, AWS SES, Mailgun, Resend)
+- Email templates (HTML emails)
+- Transactional vs marketing emails
+- Email deliverability basics
+
+**Resources:**
+- [Nodemailer Documentation](https://nodemailer.com/) (15 min)
+- [SendGrid Node.js Quickstart](https://docs.sendgrid.com/for-developers/sending-email/quickstart-nodejs) (15 min)
+
+**Setup:**
+```bash
+npm install @nestjs-modules/mailer nodemailer handlebars
+# Create free SendGrid or Resend account
+```
+
+**Exercises:**
+1. Set up email service with Nodemailer
+2. Configure SMTP credentials from SendGrid/Resend
+3. Send plain text email
+4. Send HTML email with basic styling
+5. Create email template with Handlebars
+6. Test email sending in development (use Mailtrap or similar)
+
+**Practice Problems:**
+- Problem 1: Create EmailService with `sendEmail(to, subject, body)` method
+- Problem 2: Send welcome email when user registers
+- Problem 3: Create HTML email template for welcome email
+- Problem 4: Send password reset email with reset link
+- Problem 5: Add email sending to background job (don't block requests)
+
+**Hints:**
+- Use environment variables for SMTP credentials
+- Always send emails in background jobs
+- Use Mailtrap.io for testing emails in development
+
+#### Session 2: Email Templates & Styling (50 min)
+**Topics:** HTML email templates, inline CSS, responsive emails
+
+**Exercises:**
+1. Create reusable email layout template
+2. Design welcome email with logo and branding
+3. Add inline CSS (email clients don't support external CSS)
+4. Create responsive email (mobile-friendly)
+5. Add "View in browser" link
+6. Implement unsubscribe link
+
+**Practice Problems:**
+- Problem 1: Create email template for "New comment on your post" notification
+- Problem 2: Design email template for weekly digest (list of new posts)
+- Problem 3: Add email header/footer with branding
+- Problem 4: Create password reset email with styled button
+- Problem 5: Test emails across different email clients (Gmail, Outlook, Apple Mail)
+
+**Hints:**
+- Use tables for layout (old-school but works in all email clients)
+- Inline all CSS (use tools like juice or preprocessors)
+- Keep emails under 102KB to avoid Gmail clipping
+
+**Commit:** `Day 72: Email service integration and templates`
+
+---
+
+### Wednesday, Mar 12 - Day 73
+**Topic:** Email Integration - Part 2
+**Sessions:** 2
+
+#### Session 1: Advanced Email Features (50 min)
+**Pre-Session Questions:**
+1. How do you track email opens?
+2. What are email attachments?
+3. How do you handle email bounces?
+
+**Core Topics:**
+- Email tracking (opens, clicks)
+- Attachments
+- Email webhooks (delivery status, bounces, complaints)
+- Batch email sending
+- Email analytics
+
+**Resources:**
+- [SendGrid Event Webhook](https://docs.sendgrid.com/for-developers/tracking-events/event) (15 min)
+
+**Exercises:**
+1. Add attachment support (PDF invoices, reports)
+2. Implement email open tracking (invisible pixel)
+3. Add click tracking for links in emails
+4. Set up webhook endpoint for email events
+5. Handle bounce and complaint notifications
+6. Store email sending history in database
+
+**Practice Problems:**
+- Problem 1: Send post summary as PDF attachment
+- Problem 2: Track email opens (when user opens email)
+- Problem 3: Track link clicks in emails
+- Problem 4: Create webhook handler for email delivery status
+- Problem 5: Mark user email as invalid if bounced
+
+**Hints:**
+- Use 1x1 transparent GIF for open tracking
+- Replace links with tracking URLs
+- Store email events for analytics
+
+#### Session 2: Email Automation (50 min)
+**Topics:** Scheduled emails, drip campaigns, email preferences
+
+**Exercises:**
+1. Schedule daily digest email (cron job)
+2. Implement drip campaign (welcome series: day 1, day 3, day 7 emails)
+3. Add email preferences (user can opt out of certain email types)
+4. Create email queue with retry logic
+5. Implement email rate limiting (don't spam users)
+6. Add email unsubscribe functionality
+
+**Practice Problems:**
+- Problem 1: Create daily digest email sent every morning with new posts
+- Problem 2: Implement 3-email welcome sequence (sent on days 0, 3, 7)
+- Problem 3: Add user email preferences (notifications, marketing, digests)
+- Problem 4: Respect unsubscribe requests (don't send marketing emails)
+- Problem 5: Implement "1 email per day max" rule to avoid spam
+
+**Hints:**
+- Use background jobs with delays for drip campaigns
+- Store email preferences in user table
+- Always include unsubscribe link in marketing emails
+
+**Commit:** `Day 73: Advanced email features and automation`
+
+---
+
+### Thursday, Mar 13 - Day 74
+**Topic:** Logging & Monitoring - Part 1
+**Sessions:** 2
+
+#### Session 1: Structured Logging (50 min)
+**Pre-Session Questions:**
+1. Why is logging important in production?
+2. What information should you log?
+3. What's the difference between console.log and proper logging?
+
+**Core Topics:**
+- Log levels (debug, info, warn, error, fatal)
+- Structured logging (JSON format)
+- Contextual logging (request ID, user ID)
+- Log aggregation
+- Log retention and rotation
+
+**Resources:**
+- [Winston Documentation](https://github.com/winstonjs/winston) (15 min)
+- [NestJS Logger](https://docs.nestjs.com/techniques/logger) (10 min)
+
+**Setup:**
+```bash
+npm install winston nest-winston
+```
+
+**Exercises:**
+1. Replace console.log with Winston logger
+2. Configure log levels for different environments (debug in dev, info in prod)
+3. Add structured logging with JSON format
+4. Include request ID in all logs
+5. Log HTTP requests and responses
+6. Save logs to files (daily rotation)
+
+**Practice Problems:**
+- Problem 1: Create logger service with Winston
+- Problem 2: Add request ID to all logs in a request context
+- Problem 3: Log all API requests (method, path, status, duration)
+- Problem 4: Log errors with full stack traces
+- Problem 5: Implement log file rotation (new file daily, keep 14 days)
+
+**Hints:**
+- Use middleware to generate and attach request ID
+- Log objects, not strings: `logger.info({ userId, action: 'post_created' })`
+- Never log sensitive data (passwords, tokens)
+
+#### Session 2: Error Tracking & Monitoring (50 min)
+**Topics:** Error tracking services, alerting, performance monitoring
+
+**Resources:**
+- [Sentry Node.js Documentation](https://docs.sentry.io/platforms/node/) (20 min)
+
+**Setup:**
+```bash
+npm install @sentry/node
+# Create free Sentry account
+```
+
+**Exercises:**
+1. Integrate Sentry for error tracking
+2. Capture exceptions automatically
+3. Add contextual data to error reports (user, request)
+4. Create custom error tracking for business logic errors
+5. Set up Sentry source maps for better stack traces
+6. Test error alerting
+
+**Practice Problems:**
+- Problem 1: Configure Sentry in NestJS
+- Problem 2: Capture unhandled exceptions
+- Problem 3: Add user context to Sentry errors
+- Problem 4: Track custom events (e.g., "Payment failed")
+- Problem 5: Set up Sentry alerts for critical errors
+
+**Hints:**
+- Sentry automatically captures unhandled errors
+- Add breadcrumbs for debugging (user actions before error)
+- Set up alerting rules (notify on new errors)
+
+**Commit:** `Day 74: Structured logging and error tracking`
+
+---
+
+### Friday, Mar 14 - Day 75
+**Topic:** Logging & Monitoring - Part 2
+**Sessions:** 2
+
+#### Session 1: Application Metrics (50 min)
+**Pre-Session Questions:**
+1. What metrics should you track in a backend API?
+2. How do you monitor API performance?
+3. What is APM (Application Performance Monitoring)?
+
+**Core Topics:**
+- Application metrics (requests/sec, latency, error rate)
+- Custom business metrics
+- Health checks
+- Prometheus integration
+- Grafana dashboards
+
+**Resources:**
+- [Prometheus Node.js Client](https://github.com/siimon/prom-client) (15 min)
+- [NestJS Health Checks](https://docs.nestjs.com/recipes/terminus) (10 min)
+
+**Setup:**
+```bash
+npm install @nestjs/terminus prom-client
+```
+
+**Exercises:**
+1. Add Prometheus metrics endpoint (`/metrics`)
+2. Track HTTP request count by endpoint and status
+3. Track request duration (latency)
+4. Track active connections
+5. Add custom metric: posts created per hour
+6. Create health check endpoint
+
+**Practice Problems:**
+- Problem 1: Expose `/metrics` endpoint with Prometheus format
+- Problem 2: Track requests per second by endpoint
+- Problem 3: Track P95 latency (95th percentile response time)
+- Problem 4: Add custom counter for posts created
+- Problem 5: Create `/health` endpoint (check DB, Redis, external services)
+
+**Hints:**
+- Use histogram for latency tracking
+- Use counter for event counts
+- Use gauge for current values (active connections)
+
+#### Session 2: Monitoring Dashboard (50 min)
+**Topics:** Metrics visualization, alerting rules, SLIs/SLOs
+
+**Exercises:**
+1. Set up Grafana with Docker
+2. Connect Grafana to Prometheus
+3. Create dashboard for API metrics (requests, errors, latency)
+4. Add database connection pool metrics
+5. Create alert rule for high error rate (>5%)
+6. Implement uptime monitoring
+
+**Practice Problems:**
+- Problem 1: Create Grafana dashboard with key API metrics
+- Problem 2: Add panel for request rate over time
+- Problem 3: Add panel for error rate by endpoint
+- Problem 4: Create alert for P95 latency >500ms
+- Problem 5: Add business metrics dashboard (posts created, users registered)
+
+**Hints:**
+- Use Prometheus query language (PromQL) for complex queries
+- Set up alerts for actionable metrics only
+- Start with RED metrics: Rate, Errors, Duration
+
+**Commit:** `Day 75: Application metrics and monitoring dashboard`
+
+---
+
+### Saturday, Mar 15 - Day 76
+**Topic:** Complete Blog API - Advanced Features Part 1
+**Sessions:** 2
+
+#### Session 1: Full-Text Search (50 min)
+**Pre-Session Questions:**
+1. What's the difference between SQL LIKE and full-text search?
+2. How does PostgreSQL full-text search work?
+3. When would you use Elasticsearch instead of PostgreSQL search?
+
+**Core Topics:**
+- PostgreSQL full-text search
+- Search indexing and ranking
+- Search highlighting
+- Fuzzy search and typo tolerance
+
+**Resources:**
+- [PostgreSQL Full-Text Search](https://www.postgresql.org/docs/current/textsearch.html) (20 min)
+
+**Exercises:**
+1. Add full-text search to posts (title + content)
+2. Create GIN index for faster search
+3. Implement search ranking (relevance scoring)
+4. Add search result highlighting
+5. Implement autocomplete for search
+6. Add search filters (by category, date range)
+
+**Practice Problems:**
+- Problem 1: Search posts by keywords in title or content
+- Problem 2: Rank results by relevance (title matches higher than content)
+- Problem 3: Highlight matched keywords in results
+- Problem 4: Implement "did you mean?" suggestions for misspellings
+- Problem 5: Add faceted search (filter by category while searching)
+
+**Hints:**
+- Use `to_tsvector` and `to_tsquery` for full-text search
+- Create GIN index on tsvector column for performance
+- Use `ts_rank` for relevance scoring
+
+#### Session 2: Advanced Filtering & Sorting (50 min)
+**Topics:** Complex queries, dynamic filtering, cursor pagination
+
+**Exercises:**
+1. Implement dynamic filtering (any combination of filters)
+2. Add multiple sort options (date, popularity, relevance)
+3. Implement cursor-based pagination for better performance
+4. Add tag-based filtering (posts with tags: javascript AND typescript)
+5. Implement "related posts" recommendation
+6. Add trending posts algorithm (views + recency)
+
+**Practice Problems:**
+- Problem 1: Allow filtering by multiple criteria simultaneously (category, tags, date range, author)
+- Problem 2: Implement cursor pagination (better than offset for large datasets)
+- Problem 3: Create trending posts algorithm (high views in last 7 days)
+- Problem 4: Implement "related posts" based on shared tags
+- Problem 5: Add sort by multiple fields (date DESC, views DESC)
+
+**Hints:**
+- Build query dynamically based on provided filters
+- Use cursor pagination for infinite scroll
+- Cache trending posts calculation
+
+**Commit:** `Day 76: Full-text search and advanced filtering`
+
+---
+
+### Sunday, Mar 16 - Day 77
+**Topic:** Complete Blog API - Advanced Features Part 2
+**Sessions:** 2
+
+#### Session 1: Social Features (50 min)
+**Pre-Session Questions:**
+1. How do you implement a follow system?
+2. What's the best way to store likes/favorites?
+3. How do you build a personalized feed?
+
+**Core Topics:**
+- Follow/follower relationships
+- Like/favorite system
+- Bookmarks
+- Personalized feed algorithms
+- Social graph queries
+
+**Exercises:**
+1. Implement user follow/unfollow functionality
+2. Add followers/following count to user profile
+3. Implement like/unlike for posts
+4. Add bookmark functionality
+5. Create personalized feed (posts from followed users)
+6. Implement "suggested users to follow"
+
+**Practice Problems:**
+- Problem 1: Create follow system (user can follow other users)
+- Problem 2: Get user's followers and following lists
+- Problem 3: Implement like/unlike with like count
+- Problem 4: Create personalized feed (posts from people you follow, sorted by recency)
+- Problem 5: Suggest users to follow (based on mutual connections or similar interests)
+
+**Hints:**
+- Use junction table for follows (follower_id, following_id)
+- Denormalize counts for performance (follower_count column)
+- Cache personalized feed generation
+
+#### Session 2: Engagement & Analytics (50 min)
+**Topics:** View tracking, reading time, engagement metrics, user analytics
+
+**Exercises:**
+1. Track post views (unique and total)
+2. Calculate and store reading time for posts
+3. Track user engagement (time spent on post)
+4. Implement view history for users
+5. Add "popular posts" based on engagement
+6. Create user analytics dashboard
+
+**Practice Problems:**
+- Problem 1: Track post views (increment view count, track unique views)
+- Problem 2: Calculate estimated reading time based on word count
+- Problem 3: Track which posts a user has viewed (history)
+- Problem 4: Implement "trending now" (high engagement in last 24h)
+- Problem 5: Create analytics: views over time, top posts, engagement rate
+
+**Hints:**
+- Use Redis for real-time view counting
+- Calculate reading time: word_count / 200 words per minute
+- Aggregate analytics data periodically (don't calculate on every request)
+
+**Commit:** `Day 77: Social features and engagement tracking`
+
+---
+
+### Monday, Mar 17 - Day 78
+**Topic:** Complete Blog API - Advanced Features Part 3
+**Sessions:** 2
+
+#### Session 1: Content Moderation (50 min)
+**Pre-Session Questions:**
+1. Why do you need content moderation?
+2. How can you detect inappropriate content?
+3. What is a content review workflow?
+
+**Core Topics:**
+- Content moderation workflows
+- Automated moderation (profanity filter, spam detection)
+- Manual review queue
+- User reporting system
+- Moderation actions (flag, hide, delete, ban)
+
+**Exercises:**
+1. Implement user reporting (report post/comment as spam/inappropriate)
+2. Create moderation queue for admins
+3. Add content flagging system
+4. Implement profanity filter for posts/comments
+5. Add automatic spam detection
+6. Create moderation action log
+
+**Practice Problems:**
+- Problem 1: Allow users to report posts/comments
+- Problem 2: Create admin moderation queue showing reported content
+- Problem 3: Implement approve/reject actions for reported content
+- Problem 4: Add profanity filter (block or replace bad words)
+- Problem 5: Automatically flag posts with suspicious patterns (spam links, excessive caps)
+
+**Hints:**
+- Use enum for report reasons (spam, harassment, inappropriate, etc.)
+- Store moderation history for audit trail
+- Use third-party APIs for advanced content moderation (AWS Rekognition, Perspective API)
+
+#### Session 2: Notifications System (50 min)
+**Topics:** In-app notifications, notification preferences, notification center
+
+**Exercises:**
+1. Create notifications table and model
+2. Implement notification creation for various events
+3. Add notification types (comment, like, follow, mention)
+4. Create "get unread notifications" endpoint
+5. Implement mark as read functionality
+6. Add notification preferences (user can opt out)
+
+**Practice Problems:**
+- Problem 1: Send notification when someone comments on your post
+- Problem 2: Send notification when someone likes your post
+- Problem 3: Send notification when someone follows you
+- Problem 4: Implement @mentions (notify user when mentioned in comment)
+- Problem 5: Create notification center endpoint (list all notifications with unread count)
+
+**Hints:**
+- Use WebSockets to push real-time notifications
+- Batch notification creation (don't create notification for every like from same user)
+- Respect user notification preferences
+
+**Commit:** `Day 78: Content moderation and notifications`
+
+---
+
+### Tuesday, Mar 18 - Day 79
+**Topic:** Complete Blog API - Performance Optimization
+**Sessions:** 2
+
+#### Session 1: Database Optimization (50 min)
+**Pre-Session Questions:**
+1. How do you identify slow database queries?
+2. What is query planning?
+3. When should you denormalize data?
+
+**Core Topics:**
+- Query optimization techniques
+- Index optimization
+- N+1 query problem solutions
+- Denormalization strategies
+- Database connection pooling
+
+**Exercises:**
+1. Enable query logging and find slow queries
+2. Use EXPLAIN ANALYZE to understand query plans
+3. Add missing indexes based on query patterns
+4. Solve N+1 problems with eager loading
+5. Denormalize frequently accessed counts
+6. Optimize connection pool settings
+
+**Practice Problems:**
+- Problem 1: Find and fix the 5 slowest queries in your API
+- Problem 2: Add indexes for common query patterns
+- Problem 3: Solve N+1 problem when loading posts with authors and comments
+- Problem 4: Denormalize post like_count and comment_count for faster queries
+- Problem 5: Implement database query caching for expensive queries
+
+**Hints:**
+- Use Prisma's `include` and `select` carefully to avoid over-fetching
+- Add composite indexes for multi-column WHERE clauses
+- Monitor query execution time in production
+
+#### Session 2: API Performance Optimization (50 min)
+**Topics:** Response time optimization, payload optimization, compression
+
+**Exercises:**
+1. Implement response compression (gzip)
+2. Optimize JSON payload size (remove unnecessary fields)
+3. Add ETag caching for GET requests
+4. Implement response streaming for large datasets
+5. Add HTTP/2 support
+6. Optimize image serving (proper sizes, WebP format)
+
+**Practice Problems:**
+- Problem 1: Enable gzip compression for all responses
+- Problem 2: Implement ETag caching (return 304 Not Modified when content unchanged)
+- Problem 3: Reduce API response size by 50% (remove unnecessary data, use pagination)
+- Problem 4: Implement streaming for large list endpoints
+- Problem 5: Set proper cache headers (Cache-Control, max-age)
+
+**Hints:**
+- Use compression middleware
+- Calculate ETags based on content hash
+- Set aggressive caching for static content, short TTL for dynamic
+
+**Commit:** `Day 79: Performance optimization`
+
+---
+
+### Wednesday, Mar 19 - Day 80
+**Topic:** Complete Blog API - Production Hardening
+**Sessions:** 2
+
+#### Session 1: Security Hardening (50 min)
+**Pre-Session Questions:**
+1. What are common API security vulnerabilities?
+2. How do you protect against SQL injection?
+3. What is CORS and why is it important?
+
+**Core Topics:**
+- Security best practices
+- Input validation and sanitization
+- SQL injection prevention
+- XSS protection
+- CORS configuration
+- Security headers
+
+**Exercises:**
+1. Add Helmet.js for security headers
+2. Configure CORS properly (allow specific origins only)
+3. Implement input sanitization (strip HTML tags)
+4. Add rate limiting per user (prevent abuse)
+5. Implement CSRF protection
+6. Add security audit with npm audit
+
+**Practice Problems:**
+- Problem 1: Configure Helmet.js with appropriate security headers
+- Problem 2: Set up CORS to allow only your frontend domain
+- Problem 3: Sanitize user input (remove script tags, validate data types)
+- Problem 4: Implement per-user rate limiting (stricter than global)
+- Problem 5: Add API key authentication for admin endpoints
+
+**Hints:**
+- Never trust client input, always validate on server
+- Use Prisma's parameterized queries (prevents SQL injection)
+- Set Content-Security-Policy header
+
+#### Session 2: Deployment Preparation (50 min)
+**Topics:** Environment configuration, secrets management, health checks, graceful shutdown
+
+**Exercises:**
+1. Externalize all configuration to environment variables
+2. Implement secrets management (don't commit secrets)
+3. Add comprehensive health check (database, Redis, S3)
+4. Implement graceful shutdown (finish ongoing requests before exit)
+5. Add process manager configuration (PM2)
+6. Create deployment checklist
+
+**Practice Problems:**
+- Problem 1: Move all secrets to environment variables (never hardcode)
+- Problem 2: Implement `/health` endpoint checking all dependencies
+- Problem 3: Add graceful shutdown (SIGTERM handler)
+- Problem 4: Create PM2 configuration for process management
+- Problem 5: Write deployment documentation (environment variables, setup steps)
+
+**Hints:**
+- Use dotenv for local development, proper secrets management in production
+- Health check should return 503 if any critical service is down
+- Graceful shutdown: stop accepting new requests, finish existing, then exit
+
+**Commit:** `Day 80: Security hardening and production preparation`
+
+---
+
+### Thursday, Mar 20 - Day 81
+**Topic:** API Testing & Quality Assurance - Part 1
+**Sessions:** 2
+
+#### Session 1: Integration Testing Best Practices (50 min)
+**Pre-Session Questions:**
+1. What's the difference between unit tests and integration tests?
+2. How do you test database interactions?
+3. What is test coverage and why does it matter?
+
+**Core Topics:**
+- Integration testing strategies
+- Test database setup
+- Test fixtures and factories
+- Mocking external services
+- Test coverage analysis
+
+**Exercises:**
+1. Set up separate test database
+2. Create test fixtures for users and posts
+3. Write integration tests for all post endpoints
+4. Mock external services (S3, email) in tests
+5. Generate test coverage report
+6. Add test coverage to CI/CD
+
+**Practice Problems:**
+- Problem 1: Write integration tests for complete post CRUD workflow
+- Problem 2: Test authentication middleware (authorized vs unauthorized)
+- Problem 3: Test pagination, filtering, and sorting
+- Problem 4: Test error cases (404, 400, 401, 403)
+- Problem 5: Achieve 80%+ test coverage for all services
+
+**Hints:**
+- Reset test database before each test suite
+- Use factories for test data (don't hardcode)
+- Mock external API calls (don't hit real S3/email in tests)
+
+#### Session 2: E2E Testing (50 min)
+**Topics:** End-to-end test flows, test scenarios, smoke tests
+
+**Exercises:**
+1. Create E2E test for user registration → login → create post flow
+2. Test complete comment workflow
+3. Test file upload flow
+4. Test search functionality
+5. Create smoke test suite (critical paths only)
+6. Add E2E tests to CI/CD
+
+**Practice Problems:**
+- Problem 1: E2E test: register → verify email → login → create post → logout
+- Problem 2: E2E test: user A creates post → user B comments → user A gets notification
+- Problem 3: E2E test: search for posts → filter by category → sort by date
+- Problem 4: E2E test: upload image → create post with image → verify image URL works
+- Problem 5: Create smoke test suite that runs in <2 minutes
+
+**Hints:**
+- E2E tests should test complete user journeys
+- Keep E2E tests focused on critical paths (don't test everything)
+- Run E2E tests against isolated test environment
+
+**Commit:** `Day 81: Comprehensive integration and E2E testing`
+
+---
+
+### Friday, Mar 21 - Day 82
+**Topic:** API Testing & Quality Assurance - Part 2
+**Sessions:** 2
+
+#### Session 1: Load Testing (50 min)
+**Pre-Session Questions:**
+1. Why do you need load testing?
+2. What metrics matter in load testing?
+3. How many concurrent users can your API handle?
+
+**Core Topics:**
+- Load testing fundamentals
+- k6 or Artillery for load testing
+- Performance benchmarks
+- Bottleneck identification
+- Scalability testing
+
+**Resources:**
+- [k6 Documentation](https://k6.io/docs/) (20 min)
+
+**Setup:**
+```bash
+npm install -g k6
+```
+
+**Exercises:**
+1. Write load test script for GET /posts endpoint
+2. Test with 10, 50, 100, 500 concurrent users
+3. Measure throughput (requests/second)
+4. Measure latency (P50, P95, P99)
+5. Identify breaking point (when API starts failing)
+6. Find and fix performance bottlenecks
+
+**Practice Problems:**
+- Problem 1: Load test GET /posts with 100 concurrent users for 1 minute
+- Problem 2: Load test POST /posts with authentication
+- Problem 3: Find maximum throughput (req/sec before errors)
+- Problem 4: Measure P95 latency under normal load
+- Problem 5: Test behavior under spike load (sudden 10x traffic)
+
+**Hints:**
+- Start with low load and gradually increase
+- Monitor database connections, CPU, memory during load test
+- Optimize based on bottlenecks found (usually database or cache)
+
+#### Session 2: API Documentation & Contract Testing (50 min)
+**Topics:** OpenAPI contract testing, API versioning, breaking changes
+
+**Exercises:**
+1. Export OpenAPI spec from Swagger
+2. Write contract tests (validate API matches OpenAPI spec)
+3. Test for breaking changes in API
+4. Document API versioning strategy
+5. Create API migration guides
+6. Test backward compatibility
+
+**Practice Problems:**
+- Problem 1: Generate OpenAPI JSON from Swagger
+- Problem 2: Write tests that validate responses match OpenAPI schema
+- Problem 3: Test that adding new optional field doesn't break existing clients
+- Problem 4: Document how to handle breaking changes (versioning strategy)
+- Problem 5: Create migration guide for API v1 → v2
+
+**Hints:**
+- Use tools like Spectral for OpenAPI spec validation
+- Never remove fields in existing API (add new version instead)
+- Document all breaking changes clearly
+
+**Commit:** `Day 82: Load testing and contract testing`
+
+---
+
+### Saturday, Mar 22 - Day 83
+**Topic:** Advanced Architecture Patterns
+**Sessions:** 2
+
+#### Session 1: Clean Architecture & Domain-Driven Design (50 min)
+**Pre-Session Questions:**
+1. What is Clean Architecture?
+2. What is Domain-Driven Design?
+3. How do you organize code for maintainability?
+
+**Core Topics:**
+- Clean Architecture principles
+- Domain-Driven Design basics
+- Separation of concerns
+- Dependency injection patterns
+- Repository pattern
+
+**Resources:**
+- [Clean Architecture by Robert Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) (20 min)
+- [Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html) (15 min)
+
+**Exercises:**
+1. Refactor blog API to use repository pattern
+2. Separate domain logic from HTTP layer
+3. Create value objects for domain concepts
+4. Implement use cases/application services
+5. Add domain events
+6. Implement domain validation
+
+**Practice Problems:**
+- Problem 1: Create repository interfaces and implementations
+- Problem 2: Extract business logic from controllers to use cases/services
+- Problem 3: Create value objects (Email, PostId, etc.)
+- Problem 4: Implement domain events (PostCreated, UserFollowed)
+- Problem 5: Add domain validation (business rules) separate from input validation
+
+**Hints:**
+- Controllers should be thin (just HTTP handling)
+- Business logic belongs in domain services/use cases
+- Use dependency injection for loose coupling
+
+#### Session 2: CQRS & Event Sourcing Introduction (50 min)
+**Topics:** Command Query Responsibility Segregation, Event Sourcing basics
+
+**Exercises:**
+1. Separate read and write models
+2. Implement command handlers (write operations)
+3. Implement query handlers (read operations)
+4. Create event store for audit trail
+5. Implement event replay
+6. Add read model projections
+
+**Practice Problems:**
+- Problem 1: Split post creation (command) and post retrieval (query) into separate handlers
+- Problem 2: Store all domain events in event store
+- Problem 3: Create read model optimized for queries (denormalized)
+- Problem 4: Implement event replay to rebuild read model from events
+- Problem 5: Add temporal queries (what was state at specific point in time)
+
+**Hints:**
+- CQRS is useful when read and write patterns are very different
+- Event Sourcing stores events, not current state
+- Read models can be rebuilt from events
+
+**Commit:** `Day 83: Clean architecture and CQRS patterns`
+
+---
+
+### Sunday, Mar 23 - Day 84
+**Topic:** API Versioning & Evolution
+**Sessions:** 2
+
+#### Session 1: API Versioning Strategies (50 min)
+**Pre-Session Questions:**
+1. Why do APIs need versioning?
+2. What are different versioning strategies?
+3. How do you avoid breaking existing clients?
+
+**Core Topics:**
+- API versioning strategies (URL, header, content negotiation)
+- Semantic versioning for APIs
+- Deprecation policies
+- Backward compatibility
+- Forward compatibility
+
+**Resources:**
+- [API Versioning Best Practices](https://swagger.io/blog/api-strategy/api-versioning-best-practices/) (15 min)
+
+**Exercises:**
+1. Implement URL-based versioning (/v1/posts, /v2/posts)
+2. Support multiple API versions simultaneously
+3. Add deprecation warnings to old endpoints
+4. Create v2 with breaking change (different response format)
+5. Maintain v1 compatibility while adding v2
+6. Document migration path from v1 to v2
+
+**Practice Problems:**
+- Problem 1: Add `/v1` prefix to all existing routes
+- Problem 2: Create `/v2/posts` with different response structure
+- Problem 3: Support both v1 and v2 simultaneously
+- Problem 4: Add deprecation header to v1 endpoints
+- Problem 5: Create automated tests for both versions
+
+**Hints:**
+- Use versioning from day one (easier to add initially)
+- Support at least 2 versions simultaneously
+- Give clients 6-12 months to migrate
+
+#### Session 2: API Evolution & Sunset (50 min)
+**Topics:** Adding features without breaking changes, deprecation process, API sunset
+
+**Exercises:**
+1. Add new optional field without breaking changes
+2. Add new endpoint while keeping old one
+3. Implement feature flags for gradual rollout
+4. Create deprecation schedule
+5. Monitor deprecated endpoint usage
+6. Sunset old API version gracefully
+
+**Practice Problems:**
+- Problem 1: Add new optional field `readingTimeMinutes` to post response
+- Problem 2: Add new endpoint `/posts/trending` without affecting existing endpoints
+- Problem 3: Use feature flags to test new features with subset of users
+- Problem 4: Create deprecation notice (6 months before removal)
+- Problem 5: Monitor v1 API usage and notify remaining clients
+
+**Hints:**
+- Always additive changes when possible (new fields, new endpoints)
+- Use feature flags for risky changes
+- Communicate deprecations early and clearly
+
+**Commit:** `Day 84: API versioning and evolution strategies`
+
+---
+
+### Monday, Mar 24 - Day 85
+**Topic:** Production Deployment & DevOps Basics
+**Sessions:** 2
+
+#### Session 1: Containerization & Docker Compose (50 min)
+**Pre-Session Questions:**
+1. Why containerize your application?
+2. What's the difference between development and production Docker images?
+3. How do you orchestrate multiple containers?
+
+**Core Topics:**
+- Production-ready Dockerfile
+- Multi-stage builds
+- Docker Compose for full stack
+- Environment-specific configurations
+- Container health checks
+
+**Exercises:**
+1. Create production Dockerfile (multi-stage, optimized)
+2. Create Docker Compose with app + PostgreSQL + Redis
+3. Add health checks to containers
+4. Configure environment variables
+5. Set up volumes for data persistence
+6. Implement container restart policies
+
+**Practice Problems:**
+- Problem 1: Build production Docker image < 200MB
+- Problem 2: Create docker-compose.yml for local development (hot reload)
+- Problem 3: Create docker-compose.prod.yml for production
+- Problem 4: Add health check endpoint and container health check
+- Problem 5: Configure proper resource limits (CPU, memory)
+
+**Hints:**
+- Use alpine base images for smaller size
+- Copy only necessary files (use .dockerignore)
+- Use multi-stage builds (build stage + runtime stage)
+
+#### Session 2: CI/CD Pipeline Setup (50 min)
+**Topics:** GitHub Actions, automated testing, automated deployment
+
+**Setup:**
+- Create GitHub repository for blog-api
+
+**Exercises:**
+1. Create GitHub Actions workflow for CI
+2. Run tests automatically on every push
+3. Add linting to CI pipeline
+4. Build Docker image in CI
+5. Push image to Docker registry
+6. Add deployment workflow (CD)
+
+**Practice Problems:**
+- Problem 1: Create `.github/workflows/ci.yml` that runs tests on every push
+- Problem 2: Add linting step (ESLint)
+- Problem 3: Build Docker image and push to Docker Hub or GitHub Container Registry
+- Problem 4: Deploy to staging environment automatically on main branch merge
+- Problem 5: Add manual approval step for production deployment
+
+**Hints:**
+- Use caching in GitHub Actions to speed up builds
+- Separate CI (test on every push) from CD (deploy on main)
+- Use secrets for sensitive credentials
+
+**Commit:** `Day 85: Containerization and CI/CD pipeline`
+
+---
+
+### Tuesday, Mar 25 - Day 86
+**Topic:** Production Deployment - Cloud Platforms
+**Sessions:** 2
+
+#### Session 1: Deploy to Cloud Platform (50 min)
+**Pre-Session Questions:**
+1. What cloud platforms can host Node.js applications?
+2. What's the difference between VPS and PaaS?
+3. How do you configure production environment variables?
+
+**Core Topics:**
+- Cloud platform options (Render, Railway, Fly.io, AWS, DigitalOcean)
+- Platform-as-a-Service (PaaS) deployment
+- Environment configuration
+- Database hosting (managed PostgreSQL)
+- Redis hosting
+
+**Resources:**
+- [Render Deployment Guide](https://render.com/docs) (15 min)
+- [Railway Deployment](https://docs.railway.app/) (15 min)
+
+**Exercises:**
+1. Deploy blog API to Render or Railway
+2. Set up managed PostgreSQL database
+3. Set up managed Redis instance
+4. Configure environment variables in cloud dashboard
+5. Connect to production database
+6. Test production API endpoints
+
+**Practice Problems:**
+- Problem 1: Deploy blog-api to Render/Railway/Fly.io
+- Problem 2: Provision managed PostgreSQL database
+- Problem 3: Provision managed Redis instance
+- Problem 4: Configure all environment variables in platform
+- Problem 5: Run database migrations in production
+
+**Hints:**
+- Start with PaaS (easier) before VPS/Kubernetes
+- Use managed databases (don't host PostgreSQL yourself initially)
+- Set NODE_ENV=production
+
+#### Session 2: Production Monitoring & Troubleshooting (50 min)
+**Topics:** Log aggregation, error monitoring, uptime monitoring, alerting
+
+**Exercises:**
+1. Set up production logging (centralized logs)
+2. Configure error tracking (Sentry in production)
+3. Add uptime monitoring (UptimeRobot or similar)
+4. Set up alerts for errors and downtime
+5. Create production runbook (how to handle incidents)
+6. Test incident response
+
+**Practice Problems:**
+- Problem 1: Configure production logs to be searchable
+- Problem 2: Ensure all production errors are sent to Sentry
+- Problem 3: Set up uptime monitoring with 5-minute checks
+- Problem 4: Configure alerts (email/Slack) for critical errors
+- Problem 5: Write runbook for common incidents (DB down, high latency, errors)
+
+**Hints:**
+- Use cloud platform's built-in logging when possible
+- Set up alerts for actionable events only (avoid alert fatigue)
+- Document troubleshooting steps
+
+**Commit:** `Day 86: Cloud deployment and production monitoring`
+
+---
+
+### Wednesday, Mar 26 - Day 87
+**Topic:** Blog API Complete & Production Ready
+**Sessions:** 2
+
+#### Session 1: Final Features & Polish (50 min)
+**Pre-Session Questions:**
+1. What features are missing from your blog API?
+2. How do you know if your API is production-ready?
+3. What documentation should you provide?
+
+**Core Topics:**
+- Feature completeness checklist
+- API documentation completeness
+- Error handling consistency
+- Code quality and maintainability
+
+**Exercises:**
+1. Review and complete any missing features
+2. Ensure all endpoints have proper error handling
+3. Add request/response examples to all endpoints
+4. Ensure consistent error response format
+5. Add API rate limits documentation
+6. Create comprehensive README.md
+
+**Practice Problems:**
+- Problem 1: Audit all endpoints for consistent error responses
+- Problem 2: Document all environment variables required
+- Problem 3: Create API usage examples for common workflows
+- Problem 4: Add troubleshooting section to documentation
+- Problem 5: Create architecture diagram showing all components
+
+**Hints:**
+- Use checklist to ensure nothing is missed
+- Document for someone who has never seen your code
+- Include setup instructions, API docs, architecture overview
+
+#### Session 2: Production Readiness Review (50 min)
+**Topics:** Security audit, performance review, disaster recovery
+
+**Exercises:**
+1. Run security audit (npm audit, snyk)
+2. Fix all high/critical vulnerabilities
+3. Review and fix performance bottlenecks
+4. Implement database backup strategy
+5. Create disaster recovery plan
+6. Document rollback procedure
+
+**Practice Problems:**
+- Problem 1: Fix all npm audit vulnerabilities
+- Problem 2: Ensure all endpoints respond in <200ms at P95
+- Problem 3: Set up automated daily database backups
+- Problem 4: Test backup restoration
+- Problem 5: Document rollback process (how to deploy previous version)
+
+**Hints:**
+- Keep dependencies up to date
+- Test disaster recovery procedures
+- Document everything for future you
+
+**Commit:** `Day 87: Blog API production-ready and complete!`
 
 ---
 
@@ -7684,16 +9468,2863 @@ _(Days 62-87 continue with similar structure covering:_
 
 **Focus:** React fundamentals, hooks, state management, TypeScript + React
 
-_(Days 88-128 will be created in next iteration - React fundamentals through advanced patterns)_
+---
+
+### Thursday, Mar 27 - Day 88
+**Topic:** React Setup & JSX Fundamentals
+**Sessions:** 2
+
+#### Session 1: React Basics (50 min)
+**Pre-Session Questions:**
+1. What is React and why use it?
+2. What is JSX?
+3. What's the difference between React and vanilla JavaScript for DOM manipulation?
+
+**Core Topics:**
+- React introduction and mental model
+- Virtual DOM concept
+- JSX syntax and rules
+- React vs vanilla JavaScript
+- Create React App vs Vite
+
+**Resources:**
+- [React Official Tutorial](https://react.dev/learn) (30 min)
+- [Vite Documentation](https://vitejs.dev/guide/) (10 min)
+
+**Setup:**
+```bash
+npm create vite@latest blog-frontend -- --template react-ts
+cd blog-frontend
+npm install
+npm run dev
+```
+
+**Exercises:**
+1. Create React app with Vite + TypeScript
+2. Explore project structure (src, public, index.html)
+3. Create first component (HelloWorld)
+4. Understand JSX (JavaScript in HTML)
+5. Render component in App.tsx
+6. Add basic styling with CSS
+
+**Practice Problems:**
+- Problem 1: Create `Greeting` component that displays "Hello, World!"
+- Problem 2: Create `UserCard` component that displays name and email
+- Problem 3: Create `Button` component with text and onClick (console.log for now)
+- Problem 4: Create `Header` component with navigation links
+- Problem 5: Compose multiple components in App.tsx
+
+**Hints:**
+- JSX must return single root element (use <></> fragment if needed)
+- Use className instead of class
+- Use camelCase for event handlers (onClick not onclick)
+
+#### Session 2: Components & Props (50 min)
+**Topics:** Props, component composition, props types
+
+**Exercises:**
+1. Pass props to components
+2. Type props with TypeScript interfaces
+3. Use props.children for composition
+4. Create reusable Button component with variants
+5. Implement conditional rendering based on props
+6. Add default props
+
+**Practice Problems:**
+- Problem 1: Create `BlogPost` component that accepts title, author, content as props
+- Problem 2: Type all props with TypeScript interfaces
+- Problem 3: Create `Card` component that accepts children
+- Problem 4: Create `Button` component with variant prop (primary, secondary, danger)
+- Problem 5: Implement conditional rendering (show/hide based on isVisible prop)
+
+**Hints:**
+- Define props interface: `interface Props { title: string; }`
+- Use destructuring: `({ title, author }: Props) =>`
+- props.children has type React.ReactNode
+
+**Commit:** `Day 88: React setup, JSX, components, and props`
+
+---
+
+### Friday, Mar 28 - Day 89
+**Topic:** State with useState Hook
+**Sessions:** 2
+
+#### Session 1: useState Fundamentals (50 min)
+**Pre-Session Questions:**
+1. What is state in React?
+2. How is state different from props?
+3. What happens when state changes?
+
+**Core Topics:**
+- useState hook basics
+- State updates and re-renders
+- Multiple state variables
+- State immutability
+- Form inputs and controlled components
+
+**Resources:**
+- [React useState Hook](https://react.dev/reference/react/useState) (20 min)
+
+**Exercises:**
+1. Create counter with useState (increment/decrement buttons)
+2. Create toggle button (show/hide content)
+3. Handle text input with state
+4. Create form with multiple inputs
+5. Implement controlled vs uncontrolled components
+6. Understand why state updates cause re-renders
+
+**Practice Problems:**
+- Problem 1: Create counter component (count starts at 0, buttons to +1 and -1)
+- Problem 2: Create toggle component (button shows/hides text)
+- Problem 3: Create input that displays typed text in real-time
+- Problem 4: Create simple form (name, email inputs + submit button that logs state)
+- Problem 5: Create character counter for textarea (show characters remaining out of 200)
+
+**Hints:**
+- useState returns `[value, setValue]` pair
+- State updates are asynchronous
+- Don't mutate state directly, always use setter function
+
+#### Session 2: State Updates & Immutability (50 min)
+**Topics:** Updating objects and arrays in state, functional updates
+
+**Exercises:**
+1. Update object state (user profile with multiple fields)
+2. Update array state (todo list - add, remove, toggle)
+3. Use functional updates for state that depends on previous state
+4. Implement controlled form with object state
+5. Create shopping cart (add/remove items)
+6. Understand shallow vs deep copying
+
+**Practice Problems:**
+- Problem 1: Create user profile form that updates object state ({ name, email, bio })
+- Problem 2: Create todo list (add todo, mark as complete, delete)
+- Problem 3: Use functional update in counter: `setCount(prev => prev + 1)`
+- Problem 4: Create shopping cart (add item, remove item, update quantity)
+- Problem 5: Create task list with filter (show all, active, completed)
+
+**Hints:**
+- Spread operator for object updates: `setState({ ...state, field: newValue })`
+- Array methods for state: `[...arr, newItem]`, `arr.filter(...)`, `arr.map(...)`
+- Use functional updates when new state depends on old: `setState(prev => ...)`
+
+**Commit:** `Day 89: useState hook and state management`
+
+---
+
+### Saturday, Mar 29 - Day 90
+**Topic:** Lists, Keys, and Conditional Rendering
+**Sessions:** 2
+
+#### Session 1: Rendering Lists (50 min)
+**Pre-Session Questions:**
+1. How do you render arrays in React?
+2. Why do list items need keys?
+3. What makes a good key value?
+
+**Core Topics:**
+- Array.map() for rendering lists
+- Keys and their importance
+- List item components
+- Rendering empty states
+- Performance with large lists
+
+**Resources:**
+- [Rendering Lists](https://react.dev/learn/rendering-lists) (15 min)
+
+**Exercises:**
+1. Render array of strings as list
+2. Render array of objects with proper keys
+3. Extract list item into separate component
+4. Handle empty lists (no items message)
+5. Implement list with remove functionality
+6. Create searchable list
+
+**Practice Problems:**
+- Problem 1: Render list of posts from array (title, author for each)
+- Problem 2: Add unique key to each list item (use id, not array index)
+- Problem 3: Extract PostItem component for each list item
+- Problem 4: Show "No posts found" when array is empty
+- Problem 5: Add search input to filter displayed posts
+
+**Hints:**
+- Always use .map() to render arrays
+- Key should be unique and stable (preferably id from data)
+- Don't use array index as key if list can be reordered/filtered
+
+#### Session 2: Conditional Rendering (50 min)
+**Topics:** if/else, ternary, &&, null rendering, switch cases
+
+**Exercises:**
+1. Show/hide components based on boolean state
+2. Use ternary for inline conditionals
+3. Use && for conditional rendering
+4. Return null to render nothing
+5. Use switch/case for multiple conditions
+6. Implement loading states
+
+**Practice Problems:**
+- Problem 1: Show login button if not authenticated, profile if authenticated
+- Problem 2: Use ternary: `{isLoading ? <Spinner /> : <Content />}`
+- Problem 3: Use &&: `{error && <ErrorMessage />}`
+- Problem 4: Show different UI based on user role (admin, user, guest)
+- Problem 5: Create component with loading, error, and success states
+
+**Hints:**
+- Use ternary for if/else: `{condition ? <A /> : <B />}`
+- Use && for if only: `{condition && <Component />}`
+- Return null from component to render nothing
+- Can use early return for cleaner code
+
+**Commit:** `Day 90: Lists, keys, and conditional rendering`
+
+---
+
+### Sunday, Mar 30 - Day 91
+**Topic:** Forms and Events
+**Sessions:** 2
+
+#### Session 1: Event Handling (50 min)
+**Pre-Session Questions:**
+1. How do you handle click events in React?
+2. What is event delegation?
+3. How do you prevent form submission default behavior?
+
+**Core Topics:**
+- Event handlers (onClick, onChange, onSubmit)
+- Event object and preventDefault
+- Passing arguments to event handlers
+- Event delegation vs direct binding
+- Synthetic events in React
+
+**Resources:**
+- [Responding to Events](https://react.dev/learn/responding-to-events) (15 min)
+
+**Exercises:**
+1. Handle button click events
+2. Handle input onChange events
+3. Prevent form default submission
+4. Pass parameters to event handlers
+5. Handle keyboard events (Enter key to submit)
+6. Implement double-click handler
+
+**Practice Problems:**
+- Problem 1: Create button that logs message on click
+- Problem 2: Create input that logs value on every change
+- Problem 3: Create form that prevents default submit and logs data
+- Problem 4: Create delete button that passes item id to handler
+- Problem 5: Submit form on Enter key press
+
+**Hints:**
+- Event handlers: `onClick={() => handleClick()}`
+- Access event object: `onChange={(e) => setValue(e.target.value)}`
+- Prevent default: `e.preventDefault()`
+- Pass args: `onClick={() => handleDelete(id)}`
+
+#### Session 2: Form Validation (50 min)
+**Topics:** Controlled components, validation, error messages, form submission
+
+**Exercises:**
+1. Create controlled form inputs
+2. Implement client-side validation
+3. Display field-level error messages
+4. Disable submit button while invalid
+5. Show validation errors on blur
+6. Create reusable form input component
+
+**Practice Problems:**
+- Problem 1: Create login form with email and password validation
+- Problem 2: Show error message if email is invalid format
+- Problem 3: Show error if password is less than 8 characters
+- Problem 4: Disable submit button if form has errors
+- Problem 5: Show validation errors only after user touches field
+
+**Hints:**
+- Controlled input: `value={state}` + `onChange={...}`
+- Validate on change or blur
+- Store errors in state object: `{ email: 'Invalid email', password: '' }`
+- Use HTML5 validation attributes as starting point
+
+**Commit:** `Day 91: Events and form handling`
+
+---
+
+### Monday, Mar 31 - Day 92
+**Topic:** useEffect Hook - Part 1
+**Sessions:** 2
+
+#### Session 1: useEffect Basics (50 min)
+**Pre-Session Questions:**
+1. What are side effects in React?
+2. When does useEffect run?
+3. What's the difference between componentDidMount and useEffect?
+
+**Core Topics:**
+- Side effects concept (API calls, timers, subscriptions)
+- useEffect syntax and execution timing
+- Dependency array
+- Cleanup function
+- Common use cases
+
+**Resources:**
+- [useEffect Hook](https://react.dev/reference/react/useEffect) (25 min)
+
+**Exercises:**
+1. Use useEffect to log on every render
+2. Use useEffect with empty dependency array (runs once)
+3. Use useEffect with dependencies (runs when deps change)
+4. Set document title based on state
+5. Add cleanup function for timer
+6. Fetch data on component mount
+
+**Practice Problems:**
+- Problem 1: Log "Component mounted" once when component appears
+- Problem 2: Update document title with current count value
+- Problem 3: Create timer that increments counter every second
+- Problem 4: Cleanup timer when component unmounts
+- Problem 5: Fetch fake data from JSONPlaceholder API on mount
+
+**Hints:**
+- Empty deps `[]`: runs once on mount
+- No deps: runs after every render (usually not what you want)
+- Deps `[count]`: runs when count changes
+- Return cleanup function to prevent memory leaks
+
+#### Session 2: Data Fetching with useEffect (50 min)
+**Topics:** API calls, loading states, error handling, cleanup
+
+**Exercises:**
+1. Fetch data from API on component mount
+2. Add loading state while fetching
+3. Handle errors and display error message
+4. Clean up fetch on unmount (abort controller)
+5. Refetch data when dependency changes
+6. Handle race conditions
+
+**Practice Problems:**
+- Problem 1: Fetch list of posts from JSONPlaceholder API
+- Problem 2: Show loading spinner while fetching
+- Problem 3: Display error message if fetch fails
+- Problem 4: Use AbortController to cancel fetch on unmount
+- Problem 5: Fetch user posts when userId prop changes
+
+**Hints:**
+- Use async/await inside useEffect (create async function inside)
+- Set loading: true before fetch, false after
+- Use try/catch for error handling
+- AbortController for cleanup: `fetch(url, { signal })`
+
+**Commit:** `Day 92: useEffect hook basics and data fetching`
+
+---
+
+### Tuesday, Apr 1 - Day 93
+**Topic:** useEffect Hook - Part 2
+**Sessions:** 2
+
+#### Session 1: Advanced useEffect Patterns (50 min)
+**Pre-Session Questions:**
+1. What are effect dependencies?
+2. How do you handle multiple useEffects?
+3. What is the cleanup function for?
+
+**Core Topics:**
+- Dependency array deep dive
+- Multiple effects organization
+- Effect cleanup patterns
+- Common pitfalls (infinite loops, missing deps)
+- ESLint exhaustive-deps rule
+
+**Resources:**
+- [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) (20 min)
+
+**Exercises:**
+1. Split multiple side effects into separate useEffects
+2. Avoid infinite loops (wrong dependencies)
+3. Use cleanup for event listeners
+4. Use cleanup for subscriptions
+5. Implement debounced search with useEffect
+6. Handle localStorage sync with useEffect
+
+**Practice Problems:**
+- Problem 1: Add window resize event listener with cleanup
+- Problem 2: Implement search that fetches results as you type (debounced)
+- Problem 3: Sync state to localStorage automatically
+- Problem 4: Set up WebSocket connection with cleanup
+- Problem 5: Create custom timer hook with useEffect
+
+**Hints:**
+- One effect per concern (don't mix unrelated side effects)
+- Always clean up subscriptions/listeners/timers
+- Use debounce for search: delay fetch until user stops typing
+- ESLint will warn about missing dependencies (usually fix by adding them)
+
+#### Session 2: Effect Performance & Optimization (50 min)
+**Topics:** Unnecessary effects, derived state, performance optimization
+
+**Exercises:**
+1. Identify when you don't need useEffect
+2. Use derived state instead of effects
+3. Optimize expensive computations
+4. Avoid unnecessary re-renders from effects
+5. Use refs for values that don't trigger re-renders
+6. Implement efficient data synchronization
+
+**Practice Problems:**
+- Problem 1: Replace effect with derived state (fullName = firstName + lastName)
+- Problem 2: Calculate filtered list directly instead of using effect
+- Problem 3: Only run effect when specific field changes, not all state
+- Problem 4: Use useRef to store value without causing re-render
+- Problem 5: Batch multiple state updates to avoid multiple effects
+
+**Hints:**
+- If you can calculate value from props/state, don't use effect
+- Derived values: `const filtered = items.filter(...)`  no effect needed
+- Be specific with dependencies (include only what matters)
+
+**Commit:** `Day 93: Advanced useEffect patterns and optimization`
+
+---
+
+### Wednesday, Apr 2 - Day 94
+**Topic:** Custom Hooks
+**Sessions:** 2
+
+#### Session 1: Creating Custom Hooks (50 min)
+**Pre-Session Questions:**
+1. What is a custom hook?
+2. Why extract logic into custom hooks?
+3. What are the rules of hooks?
+
+**Core Topics:**
+- Custom hooks concept (sharing logic)
+- Naming convention (must start with "use")
+- Rules of hooks
+- When to create custom hooks
+- Composition with built-in hooks
+
+**Resources:**
+- [Reusing Logic with Custom Hooks](https://react.dev/learn/reusing-logic-with-custom-hooks) (20 min)
+
+**Exercises:**
+1. Create useLocalStorage hook
+2. Create useToggle hook
+3. Create useDebounce hook
+4. Create useWindowSize hook
+5. Create usePrevious hook
+6. Compose multiple hooks in custom hook
+
+**Practice Problems:**
+- Problem 1: Create `useLocalStorage(key, initialValue)` hook (get/set localStorage)
+- Problem 2: Create `useToggle(initialValue)` hook (returns [value, toggle])
+- Problem 3: Create `useDebounce(value, delay)` hook (returns debounced value)
+- Problem 4: Create `useWindowSize()` hook (returns window width/height)
+- Problem 5: Create `usePrevious(value)` hook (returns previous render's value)
+
+**Hints:**
+- Custom hooks are just functions that use other hooks
+- Must start with "use" (convention + linter requirement)
+- Can return anything (value, array, object)
+- Extract repeated logic into custom hooks
+
+#### Session 2: Advanced Custom Hooks (50 min)
+**Topics:** Complex custom hooks, API hooks, form hooks
+
+**Exercises:**
+1. Create useFetch hook for API calls
+2. Create useForm hook for form state management
+3. Create useAsync hook for async operations
+4. Create useOnClickOutside hook
+5. Create useInterval hook
+6. Combine multiple hooks into feature hook
+
+**Practice Problems:**
+- Problem 1: Create `useFetch(url)` hook that returns { data, loading, error }
+- Problem 2: Create `useForm(initialValues)` hook for form state and validation
+- Problem 3: Create `useAsync(asyncFunction)` hook with execute function
+- Problem 4: Create `useOnClickOutside(ref, handler)` hook for modals/dropdowns
+- Problem 5: Create `useBlogPosts()` hook that fetches and manages blog posts
+
+**Hints:**
+- Hooks can use other hooks (useEffect, useState, etc.)
+- Return intuitive interface (what would you want as consumer?)
+- Think about reusability across different components
+
+**Commit:** `Day 94: Custom hooks for code reusability`
+
+---
+
+### Thursday, Apr 3 - Day 95
+**Topic:** React Router - Navigation & Routing
+**Sessions:** 2
+
+#### Session 1: React Router Setup (50 min)
+**Pre-Session Questions:**
+1. What is client-side routing?
+2. How is it different from traditional server routing?
+3. What is React Router?
+
+**Core Topics:**
+- Client-side routing concept
+- React Router v6 basics
+- Routes, Route, and BrowserRouter
+- Link and NavLink components
+- Programmatic navigation
+
+**Resources:**
+- [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial) (30 min)
+
+**Setup:**
+```bash
+npm install react-router-dom
+```
+
+**Exercises:**
+1. Install and set up React Router
+2. Create basic routes (/home, /about, /contact)
+3. Create navigation menu with Link components
+4. Set up 404 Not Found page
+5. Use NavLink for active link styling
+6. Implement programmatic navigation (useNavigate)
+
+**Practice Problems:**
+- Problem 1: Set up router with routes for Home, About, Contact pages
+- Problem 2: Create navigation menu using Link components
+- Problem 3: Style active navigation link differently using NavLink
+- Problem 4: Create 404 page for unmatched routes
+- Problem 5: Navigate programmatically after form submission
+
+**Hints:**
+- Wrap app in `<BrowserRouter>`
+- Define routes with `<Route path="/about" element={<About />} />`
+- Use `<Link to="/about">` not `<a href>`
+- useNavigate() for programmatic navigation: `navigate('/home')`
+
+#### Session 2: Dynamic Routes & Parameters (50 min)
+**Topics:** URL parameters, nested routes, query parameters
+
+**Exercises:**
+1. Create dynamic route with URL parameter (/posts/:id)
+2. Access route params with useParams hook
+3. Create nested routes
+4. Use Outlet for nested route rendering
+5. Access query parameters with useSearchParams
+6. Create layout routes (shared layout)
+
+**Practice Problems:**
+- Problem 1: Create route `/posts/:id` for individual post pages
+- Problem 2: Use useParams() to get post id and fetch that post
+- Problem 3: Create nested routes: `/dashboard` with child routes `/dashboard/profile`, `/dashboard/settings`
+- Problem 4: Create layout route with shared header/sidebar
+- Problem 5: Use query params for filtering: `/posts?category=tech`
+
+**Hints:**
+- useParams(): `const { id } = useParams()`
+- Nested routes need `<Outlet />` in parent to render children
+- useSearchParams(): `const [searchParams] = useSearchParams()`
+- Layouts: create route with children, use <Outlet /> where children render
+
+**Commit:** `Day 95: React Router for navigation and routing`
+
+---
+
+### Friday, Apr 4 - Day 96
+**Topic:** React with TypeScript - Advanced Typing
+**Sessions:** 2
+
+#### Session 1: Component Props Typing (50 min)
+**Pre-Session Questions:**
+1. How do you type props in React with TypeScript?
+2. What is the type of children prop?
+3. How do you make props optional?
+
+**Core Topics:**
+- Props interface definitions
+- children prop type
+- Optional props
+- Union types for props
+- Generic components
+
+**Resources:**
+- [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/) (20 min)
+
+**Exercises:**
+1. Create strongly typed component props
+2. Type children prop correctly
+3. Use optional props with default values
+4. Create union type for variant prop
+5. Type event handlers properly
+6. Create generic List component
+
+**Practice Problems:**
+- Problem 1: Type Button component props (text, onClick, variant?, disabled?)
+- Problem 2: Type Card component that accepts children
+- Problem 3: Create Alert component with variant: 'success' | 'error' | 'warning'
+- Problem 4: Type form event handlers (onChange, onSubmit)
+- Problem 5: Create generic `List<T>` component that accepts items: T[]
+
+**Hints:**
+- `children: React.ReactNode`
+- Optional props: `title?: string`
+- Union types: `variant: 'primary' | 'secondary'`
+- Event types: `React.ChangeEvent<HTMLInputElement>`
+- Generic: `function List<T>({ items }: { items: T[] })`
+
+#### Session 2: Hooks & State Typing (50 min)
+**Topics:** useState with TypeScript, useEffect types, custom hook types
+
+**Exercises:**
+1. Type useState with explicit type parameter
+2. Type useState with inferred types
+3. Type custom hooks properly
+4. Type useRef for DOM elements
+5. Type useContext
+6. Handle null/undefined in types
+
+**Practice Problems:**
+- Problem 1: Type useState for object state: `const [user, setUser] = useState<User | null>(null)`
+- Problem 2: Type custom useFetch hook with generics
+- Problem 3: Type useRef for button element: `const ref = useRef<HTMLButtonElement>(null)`
+- Problem 4: Create typed context for auth (user, login, logout)
+- Problem 5: Type event handler functions separately
+
+**Hints:**
+- Explicit type: `useState<User | null>(null)`
+- Inferred when initial value is typed: `useState(0)` infers number
+- Ref for DOM: `useRef<HTMLDivElement>(null)`
+- Context: create type for context value, use in createContext<ValueType>()
+
+**Commit:** `Day 96: Advanced React TypeScript patterns`
+
+---
+
+### Saturday, Apr 5 - Day 97
+**Topic:** useContext & Context API
+**Sessions:** 2
+
+#### Session 1: Context API Basics (50 min)
+**Pre-Session Questions:**
+1. What problem does Context solve?
+2. When should you use Context?
+3. What is prop drilling?
+
+**Core Topics:**
+- Context API concept (avoid prop drilling)
+- Creating context with createContext
+- Context Provider
+- Consuming context with useContext
+- When to use Context vs props
+
+**Resources:**
+- [Passing Data Deeply with Context](https://react.dev/learn/passing-data-deeply-with-context) (20 min)
+
+**Exercises:**
+1. Create theme context (light/dark mode)
+2. Provide context value at app root
+3. Consume context in nested components
+4. Create context with multiple values
+5. Update context value from child components
+6. Create multiple contexts
+
+**Practice Problems:**
+- Problem 1: Create ThemeContext with value: { theme: 'light' | 'dark', toggleTheme: () => void }
+- Problem 2: Wrap app in ThemeProvider
+- Problem 3: Use useContext(ThemeContext) in Button component to apply theme styles
+- Problem 4: Create toggle button that calls toggleTheme from context
+- Problem 5: Create separate contexts for theme and user auth
+
+**Hints:**
+- Create context: `const ThemeContext = createContext<ThemeContextType | undefined>(undefined)`
+- Provide value: `<ThemeContext.Provider value={...}>`
+- Consume: `const { theme } = useContext(ThemeContext)`
+- Wrap providers at app root (or nearest common ancestor)
+
+#### Session 2: Advanced Context Patterns (50 min)
+**Topics:** Custom context hooks, context composition, performance optimization
+
+**Exercises:**
+1. Create custom hook for context (useTheme, useAuth)
+2. Split context for better performance
+3. Memoize context value
+4. Create context with reducer
+5. Implement auth context with login/logout
+6. Nest multiple context providers
+
+**Practice Problems:**
+- Problem 1: Create `useTheme()` custom hook that wraps useContext with null check
+- Problem 2: Create `useAuth()` hook for auth context
+- Problem 3: Memoize context value with useMemo to avoid unnecessary re-renders
+- Problem 4: Create AuthContext with user state and login/logout functions
+- Problem 5: Implement protected routes using auth context
+
+**Hints:**
+- Custom hook pattern: throw error if context is undefined (used outside provider)
+- Memoize value: `const value = useMemo(() => ({ ... }), [deps])`
+- Multiple providers: nest them or create wrapper component
+
+**Commit:** `Day 97: Context API for state sharing`
+
+---
+
+### Sunday, Apr 6 - Day 98
+**Topic:** State Management Patterns
+**Sessions:** 2
+
+#### Session 1: useReducer Hook (50 min)
+**Pre-Session Questions:**
+1. When should you use useReducer instead of useState?
+2. What is a reducer function?
+3. How is useReducer similar to Redux?
+
+**Core Topics:**
+- useReducer for complex state logic
+- Reducer function (state, action) => newState
+- Dispatch actions
+- Action types and payloads
+- useReducer vs useState
+
+**Resources:**
+- [Extracting State Logic into a Reducer](https://react.dev/learn/extracting-state-logic-into-a-reducer) (20 min)
+
+**Exercises:**
+1. Convert useState to useReducer for todo list
+2. Define action types (ADD_TODO, TOGGLE_TODO, DELETE_TODO)
+3. Write reducer function with switch statement
+4. Dispatch actions from components
+5. Type reducer with TypeScript
+6. Combine useReducer with useContext
+
+**Practice Problems:**
+- Problem 1: Create todo list with useReducer (add, toggle, delete actions)
+- Problem 2: Define TodoAction type union for all action types
+- Problem 3: Write reducer function handling all actions
+- Problem 4: Create cart with useReducer (add item, remove item, update quantity, clear cart)
+- Problem 5: Combine useReducer + useContext for global state
+
+**Hints:**
+- Reducer: `(state, action) => { switch(action.type) { ... } }`
+- Dispatch: `dispatch({ type: 'ADD_TODO', payload: todo })`
+- Use useReducer when multiple related state updates
+- TypeScript: type State, type Action (union of all action types)
+
+#### Session 2: Zustand for State Management (50 min)
+**Topics:** External state library, simpler alternative to Redux
+
+**Resources:**
+- [Zustand Documentation](https://github.com/pmndrs/zustand) (20 min)
+
+**Setup:**
+```bash
+npm install zustand
+```
+
+**Exercises:**
+1. Install Zustand
+2. Create store with state and actions
+3. Use store in components
+4. Create multiple stores for different concerns
+5. Persist state to localStorage
+6. Compare with useContext/useReducer
+
+**Practice Problems:**
+- Problem 1: Create auth store with user state and login/logout actions
+- Problem 2: Create cart store with items array and add/remove/clear actions
+- Problem 3: Use auth store in multiple components without prop drilling
+- Problem 4: Persist cart to localStorage automatically
+- Problem 5: Create theme store for dark/light mode
+
+**Hints:**
+- Create store: `const useStore = create((set) => ({ ... }))`
+- Use in component: `const { user, login } = useStore()`
+- Actions: `login: (user) => set({ user })`
+- Middleware for persistence: `persist()`
+- Zustand is simpler than Redux, no providers needed
+
+**Commit:** `Day 98: State management with useReducer and Zustand`
+
+---
+
+### Monday, Apr 7 - Day 99
+**Topic:** Performance Optimization - Part 1
+**Sessions:** 2
+
+#### Session 1: React.memo and useMemo (50 min)
+**Pre-Session Questions:**
+1. Why does React re-render components?
+2. What is memoization?
+3. When should you optimize performance?
+
+**Core Topics:**
+- React rendering behavior
+- React.memo for component memoization
+- useMemo for expensive computations
+- When to use memoization
+- Premature optimization pitfalls
+
+**Resources:**
+- [React Performance Optimization](https://react.dev/reference/react/memo) (15 min)
+
+**Exercises:**
+1. Identify unnecessary re-renders with React DevTools
+2. Wrap component with React.memo
+3. Use useMemo for expensive calculations
+4. Compare with and without memoization
+5. Memoize filtered/sorted lists
+6. Understand when memo is helpful vs harmful
+
+**Practice Problems:**
+- Problem 1: Wrap pure component in React.memo to prevent re-renders
+- Problem 2: Use useMemo to cache expensive filter/sort operation
+- Problem 3: Calculate fibonacci with and without useMemo (compare performance)
+- Problem 4: Memoize filtered list that re-calculates on every render
+- Problem 5: Identify when NOT to use memo (premature optimization)
+
+**Hints:**
+- React.memo: `const MemoComponent = React.memo(Component)`
+- useMemo: `const value = useMemo(() => expensiveCalc(), [deps])`
+- Only memoize if actually expensive or component renders often
+- Profile first, optimize after
+
+#### Session 2: useCallback and Optimization Patterns (50 min)
+**Topics:** useCallback for function memoization, optimization best practices
+
+**Exercises:**
+1. Use useCallback for event handlers passed to child components
+2. Understand useCallback dependency array
+3. Optimize list rendering with keys
+4. Use code splitting with lazy loading
+5. Virtualize long lists (concept introduction)
+6. Apply optimization techniques to blog app
+
+**Practice Problems:**
+- Problem 1: Use useCallback to memoize function passed to React.memo child
+- Problem 2: Optimize list where each item has event handler
+- Problem 3: Use proper keys (not array index) for list performance
+- Problem 4: Lazy load route components with React.lazy
+- Problem 5: Measure before/after performance with React DevTools Profiler
+
+**Hints:**
+- useCallback: `const fn = useCallback(() => {...}, [deps])`
+- Necessary when passing function to memoized component
+- Without useCallback, new function instance on every render
+- Combine: React.memo + useCallback for full optimization
+
+**Commit:** `Day 99: React performance optimization techniques`
+
+---
+
+### Tuesday, Apr 8 - Day 100
+**Topic:** Performance Optimization - Part 2
+**Sessions:** 2
+
+#### Session 1: Code Splitting & Lazy Loading (50 min)
+**Pre-Session Questions:**
+1. What is code splitting?
+2. Why would you lazy load components?
+3. What is a bundle size and why does it matter?
+
+**Core Topics:**
+- Code splitting concept
+- React.lazy and Suspense
+- Route-based code splitting
+- Component-based code splitting
+- Bundle analysis
+
+**Resources:**
+- [Code-Splitting](https://react.dev/reference/react/lazy) (15 min)
+
+**Exercises:**
+1. Analyze bundle size with webpack analyzer
+2. Lazy load route components
+3. Add Suspense boundaries with fallback
+4. Lazy load heavy components (charts, editors)
+5. Preload components on hover
+6. Measure improvement in initial load time
+
+**Practice Problems:**
+- Problem 1: Lazy load route components for /posts, /about, /contact
+- Problem 2: Add Suspense with loading spinner fallback
+- Problem 3: Lazy load modal component (only load when opened)
+- Problem 4: Install and run webpack-bundle-analyzer to see bundle size
+- Problem 5: Split vendor bundles from app code
+
+**Hints:**
+- Lazy: `const Posts = React.lazy(() => import('./Posts'))`
+- Suspense: `<Suspense fallback={<Loading />}><Posts /></Suspense>`
+- Split at route level first (biggest wins)
+- Lazy load modals, tooltips, heavy features
+
+#### Session 2: Web Vitals & Performance Monitoring (50 min)
+**Topics:** Core Web Vitals, performance measurement, optimization strategies
+
+**Setup:**
+```bash
+npm install web-vitals
+```
+
+**Exercises:**
+1. Install web-vitals library
+2. Measure LCP, FID, CLS
+3. Use React DevTools Profiler
+4. Optimize images (lazy loading, next-gen formats)
+5. Implement virtualization for long lists
+6. Add performance monitoring
+
+**Practice Problems:**
+- Problem 1: Measure Core Web Vitals (LCP, FID, CLS) in your app
+- Problem 2: Lazy load images below the fold
+- Problem 3: Use React DevTools Profiler to find slow components
+- Problem 4: Implement infinite scroll or virtual list for long lists
+- Problem 5: Set up performance monitoring (log vitals to analytics)
+
+**Hints:**
+- LCP: Largest Contentful Paint (should be <2.5s)
+- FID: First Input Delay (should be <100ms)
+- CLS: Cumulative Layout Shift (should be <0.1)
+- Lazy load images: `loading="lazy"` attribute
+- Virtual lists: react-window or react-virtual
+
+**Commit:** `Day 100: Code splitting and performance monitoring`
+
+---
+
+### Wednesday, Apr 9 - Day 101
+**Topic:** Error Boundaries & Error Handling
+**Sessions:** 2
+
+#### Session 1: Error Boundaries (50 min)
+**Pre-Session Questions:**
+1. What happens when a component throws an error?
+2. How do you catch errors in React?
+3. What are Error Boundaries?
+
+**Core Topics:**
+- Error Boundaries concept (class components)
+- componentDidCatch and getDerivedStateFromError
+- Fallback UI for errors
+- Error boundary placement
+- Limitations of error boundaries
+
+**Resources:**
+- [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) (15 min)
+
+**Exercises:**
+1. Create Error Boundary class component
+2. Catch errors with componentDidCatch
+3. Display fallback UI on error
+4. Log errors to error tracking service
+5. Place error boundaries strategically
+6. Reset error boundary with state
+
+**Practice Problems:**
+- Problem 1: Create ErrorBoundary component that catches child errors
+- Problem 2: Display friendly error message when error occurs
+- Problem 3: Add "Retry" button to error boundary
+- Problem 4: Log errors to console (or Sentry) from componentDidCatch
+- Problem 5: Wrap each route in error boundary (isolate errors)
+
+**Hints:**
+- Error boundaries must be class components (no hook equivalent yet)
+- Catch: `componentDidCatch(error, errorInfo) { ... }`
+- Fallback UI: `getDerivedStateFromError() { return { hasError: true } }`
+- Wrap parts of app that might fail independently
+
+#### Session 2: Global Error Handling (50 min)
+**Topics:** Async error handling, error logging, user-friendly errors
+
+**Exercises:**
+1. Handle async errors (promises, fetch)
+2. Create global error handler
+3. Display toast notifications for errors
+4. Implement retry logic for failed requests
+5. Create error page for fatal errors
+6. Add error reporting to monitoring service
+
+**Practice Problems:**
+- Problem 1: Catch and display errors from async API calls
+- Problem 2: Show toast notification for network errors
+- Problem 3: Retry failed fetch requests automatically (max 3 attempts)
+- Problem 4: Create 500 error page for unrecoverable errors
+- Problem 5: Send errors to Sentry or similar error tracking service
+
+**Hints:**
+- Try/catch for async code in useEffect
+- Store errors in state to display to user
+- Use error state: `const [error, setError] = useState<Error | null>(null)`
+- Provide actionable error messages (not just "Error occurred")
+
+**Commit:** `Day 101: Error boundaries and error handling`
+
+---
+
+### Thursday, Apr 10 - Day 102
+**Topic:** Accessibility (a11y) Basics
+**Sessions:** 2
+
+#### Session 1: Semantic HTML & ARIA (50 min)
+**Pre-Session Questions:**
+1. What is web accessibility?
+2. Why is accessibility important?
+3. What is semantic HTML?
+
+**Core Topics:**
+- Accessibility fundamentals
+- Semantic HTML elements
+- ARIA attributes (aria-label, aria-describedby, role)
+- Keyboard navigation
+- Screen reader considerations
+
+**Resources:**
+- [React Accessibility](https://react.dev/learn/accessibility) (15 min)
+- [MDN Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility) (20 min)
+
+**Exercises:**
+1. Use semantic HTML (<nav>, <main>, <article>, <button>)
+2. Add aria-label to icon buttons
+3. Implement keyboard navigation (Tab, Enter, Escape)
+4. Add focus styles to interactive elements
+5. Test with screen reader
+6. Use alt text for images
+
+**Practice Problems:**
+- Problem 1: Replace <div onClick> with <button> (semantic + accessible)
+- Problem 2: Add aria-label to icon-only buttons
+- Problem 3: Ensure all interactive elements are keyboard accessible (Tab + Enter)
+- Problem 4: Add alt text to all images (descriptive, not "image")
+- Problem 5: Test your app with keyboard only (no mouse)
+
+**Hints:**
+- Use <button> not <div onClick>
+- Add aria-label when visible label isn't present
+- Make custom components focusable with tabIndex={0}
+- Add :focus styles (don't remove outline!)
+
+#### Session 2: Form Accessibility & Testing (50 min)
+**Topics:** Accessible forms, labels, error messages, focus management
+
+**Exercises:**
+1. Associate labels with inputs (<label htmlFor>)
+2. Add accessible error messages (aria-describedby)
+3. Manage focus (auto-focus on modal open, return on close)
+4. Add skip links for navigation
+5. Test with Lighthouse accessibility audit
+6. Test with axe DevTools extension
+
+**Practice Problems:**
+- Problem 1: Ensure every input has associated label (htmlFor + id)
+- Problem 2: Link error messages to inputs with aria-describedby
+- Problem 3: Auto-focus first input when modal opens
+- Problem 4: Return focus to trigger button when modal closes
+- Problem 5: Run Lighthouse audit and fix accessibility issues
+
+**Hints:**
+- Label: `<label htmlFor="email">Email</label> <input id="email" />`
+- Error: `<input aria-describedby="email-error" /> <span id="email-error">{error}</span>`
+- Focus management: `useEffect(() => inputRef.current?.focus(), [])`
+- Install axe DevTools extension for Chrome/Firefox
+
+**Commit:** `Day 102: Accessibility best practices`
+
+---
+
+### Friday, Apr 11 - Day 103
+**Topic:** Testing React Components - Part 1
+**Sessions:** 2
+
+#### Session 1: React Testing Library Setup (50 min)
+**Pre-Session Questions:**
+1. Why test React components?
+2. What's the difference between unit tests and integration tests?
+3. What is React Testing Library?
+
+**Core Topics:**
+- Testing philosophy (test behavior, not implementation)
+- React Testing Library vs Enzyme
+- Queries (getBy, queryBy, findBy)
+- Rendering components for tests
+- Assertions with Jest
+
+**Resources:**
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) (20 min)
+
+**Setup:**
+```bash
+npm install --save-dev @testing-library/react @testing-library/jest-dom @testing-library/user-event
+```
+
+**Exercises:**
+1. Set up testing environment
+2. Write first test (render component)
+3. Query elements (getByText, getByRole)
+4. Test props rendering
+5. Test conditional rendering
+6. Run tests with npm test
+
+**Practice Problems:**
+- Problem 1: Test Button component renders with correct text
+- Problem 2: Test Card component displays title and children
+- Problem 3: Test conditional rendering (component shows/hides based on prop)
+- Problem 4: Test list renders correct number of items
+- Problem 5: Test error message displays when error prop is provided
+
+**Hints:**
+- Render: `render(<Component />)`
+- Query: `screen.getByText('Hello')`, `screen.getByRole('button')`
+- Assert: `expect(element).toBeInTheDocument()`
+- Prefer getByRole over getByTestId
+
+#### Session 2: Testing User Interactions (50 min)
+**Topics:** Simulating events, user-event library, async tests
+
+**Exercises:**
+1. Test button clicks
+2. Test form input changes
+3. Test form submission
+4. Use user-event for realistic interactions
+5. Test async behavior (loading, data display)
+6. Test error scenarios
+
+**Practice Problems:**
+- Problem 1: Test button click calls onClick handler
+- Problem 2: Test typing in input updates the displayed value
+- Problem 3: Test form submission calls onSubmit with correct data
+- Problem 4: Test async data fetching (loading → data displayed)
+- Problem 5: Test error handling (network failure shows error message)
+
+**Hints:**
+- Fire event: `fireEvent.click(button)` or `await user.click(button)`
+- Prefer user-event: `const user = userEvent.setup()` then `user.click(...)`
+- Async: `await screen.findByText('Data')` waits for element
+- Mock functions: `const onClick = jest.fn()`
+
+**Commit:** `Day 103: React Testing Library fundamentals`
+
+---
+
+### Saturday, Apr 12 - Day 104
+**Topic:** Testing React Components - Part 2
+**Sessions:** 2
+
+#### Session 1: Testing Hooks (50 min)
+**Pre-Session Questions:**
+1. How do you test custom hooks?
+2. Can you test hooks outside of components?
+3. What is @testing-library/react-hooks?
+
+**Core Topics:**
+- Testing hooks with renderHook
+- Testing hook return values
+- Testing hook updates
+- Testing async hooks
+- Testing hooks with context
+
+**Resources:**
+- [Testing Hooks](https://react-hooks-testing-library.com/) (15 min)
+
+**Exercises:**
+1. Test custom useToggle hook
+2. Test hook state updates
+3. Test async hooks (useFetch)
+4. Test hook with dependencies
+5. Test hook with context
+6. Test hook error handling
+
+**Practice Problems:**
+- Problem 1: Test useToggle hook (initial value, toggle function)
+- Problem 2: Test useCounter hook (increment, decrement, reset)
+- Problem 3: Test useFetch hook (loading, data, error states)
+- Problem 4: Test useDebounce hook (value updates after delay)
+- Problem 5: Test useAuth hook that uses AuthContext
+
+**Hints:**
+- Use renderHook: `const { result } = renderHook(() => useToggle())`
+- Access value: `result.current.value`
+- Trigger update: `act(() => result.current.toggle())`
+- Test async: `await waitFor(() => expect(result.current.data).toBeDefined())`
+
+#### Session 2: Testing Integration & Best Practices (50 min)
+**Topics:** Integration tests, mocking, test organization
+
+**Exercises:**
+1. Write integration tests (multiple components together)
+2. Mock API calls with MSW (Mock Service Worker)
+3. Test complete user flows
+4. Organize tests logically
+5. Achieve good test coverage
+6. Balance unit vs integration tests
+
+**Practice Problems:**
+- Problem 1: Test complete login flow (input → submit → success/error)
+- Problem 2: Mock API with MSW (return fake data)
+- Problem 3: Test post creation flow (form → API call → list updates)
+- Problem 4: Test navigation flow (click link → new page renders)
+- Problem 5: Achieve 80%+ coverage on key components
+
+**Hints:**
+- Integration tests test multiple components working together
+- Mock network with MSW (better than axios mocking)
+- Focus tests on user behavior, not implementation details
+- Test what users do: see, click, type, read feedback
+
+**Commit:** `Day 104: Testing hooks and integration tests`
+
+---
+
+### Sunday, Apr 13 - Day 105
+**Topic:** Blog Frontend - Setup & Post List
+**Sessions:** 2
+
+#### Session 1: Project Setup (50 min)
+**Topics:** Connect to backend API, project structure, routing setup
+
+**Exercises:**
+1. Create Vite + React + TypeScript project for blog frontend
+2. Set up folder structure (components, pages, hooks, services)
+3. Set up React Router for navigation
+4. Create API service layer (axios or fetch)
+5. Set up environment variables for API URL
+6. Create base layout with header/footer
+
+**Practice Problems:**
+- Problem 1: Set up project with Vite, React, TypeScript, React Router
+- Problem 2: Create folder structure: src/{components, pages, hooks, services, types}
+- Problem 3: Set up routes: /, /posts, /posts/:id, /login, /register
+- Problem 4: Create API service with base URL from environment variable
+- Problem 5: Create Layout component with Header (nav links) and Outlet
+
+**Hints:**
+- Use Vite for faster dev experience
+- Environment variable: `VITE_API_URL=http://localhost:3000`
+- API service: centralize all API calls in services/api.ts
+- Layout route pattern with Outlet for child routes
+
+#### Session 2: Post List Page (50 min)
+**Topics:** Fetch and display blog posts, loading states, error handling
+
+**Exercises:**
+1. Create PostList component
+2. Fetch posts from API on mount
+3. Display loading spinner while fetching
+4. Display error message if fetch fails
+5. Render list of posts with title, author, excerpt
+6. Add link to each post detail page
+
+**Practice Problems:**
+- Problem 1: Create useFetch custom hook for data fetching
+- Problem 2: Fetch posts from GET /posts API endpoint
+- Problem 3: Show loading spinner while fetching
+- Problem 4: Show error message if API call fails
+- Problem 5: Display list of posts (title, author, excerpt, "Read more" link)
+
+**Hints:**
+- Use useEffect to fetch on component mount
+- Create Loading and Error components for reuse
+- Link to post detail: `<Link to={`/posts/${post.id}`}>Read more</Link>`
+- Handle empty state (no posts)
+
+**Commit:** `Day 105: Blog frontend setup and post list`
+
+---
+
+### Monday, Apr 14 - Day 106
+**Topic:** Blog Frontend - Post Detail & Comments
+**Sessions:** 2
+
+#### Session 1: Post Detail Page (50 min)
+**Topics:** Dynamic route, fetch single post, display content
+
+**Exercises:**
+1. Create PostDetail component
+2. Get post ID from URL params
+3. Fetch post by ID from API
+4. Display full post (title, author, content, date)
+5. Handle post not found (404)
+6. Add back button to post list
+
+**Practice Problems:**
+- Problem 1: Create PostDetail page component
+- Problem 2: Use useParams to get post ID from URL
+- Problem 3: Fetch post from GET /posts/:id endpoint
+- Problem 4: Display full post with formatted date
+- Problem 5: Show 404 message if post not found
+
+**Hints:**
+- useParams: `const { id } = useParams()`
+- Format date: use `new Date(post.createdAt).toLocaleDateString()`
+- Handle 404: check if API returns 404, show error message
+- Add navigation: `<Link to="/posts">← Back to posts</Link>`
+
+#### Session 2: Comments Section (50 min)
+**Topics:** Display comments, add new comment
+
+**Exercises:**
+1. Fetch comments for post
+2. Display comments list
+3. Create AddComment form
+4. Post new comment to API
+5. Update comments list after adding
+6. Handle authentication (only logged-in users can comment)
+
+**Practice Problems:**
+- Problem 1: Fetch comments from GET /posts/:id/comments
+- Problem 2: Display comments below post (author, content, date)
+- Problem 3: Create AddComment form (textarea + submit button)
+- Problem 4: POST new comment to API /posts/:id/comments
+- Problem 5: Refresh comments after successful submission
+
+**Hints:**
+- Fetch comments in same useEffect as post, or separate
+- After posting comment, fetch comments again or add to state manually
+- Check if user is authenticated before showing comment form
+- Clear form after successful submission
+
+**Commit:** `Day 106: Post detail and comments functionality`
+
+---
+
+### Tuesday, Apr 15 - Day 107
+**Topic:** Blog Frontend - Authentication
+**Sessions:** 2
+
+#### Session 1: Login & Register Forms (50 min)
+**Topics:** Auth forms, form validation, API integration
+
+**Exercises:**
+1. Create Login page with form
+2. Create Register page with form
+3. Add form validation (email format, password length)
+4. Call login API endpoint
+5. Handle auth errors (invalid credentials)
+6. Display success/error messages
+
+**Practice Problems:**
+- Problem 1: Create Login form (email, password, submit)
+- Problem 2: Validate email format and password length (min 8 chars)
+- Problem 3: POST to /auth/login endpoint
+- Problem 4: Display error message if login fails
+- Problem 5: Create Register form (name, email, password, confirmPassword)
+
+**Hints:**
+- Use controlled inputs with useState
+- Validate before submitting
+- API returns JWT token on successful login
+- Show field-level errors (invalid email, passwords don't match)
+
+#### Session 2: Auth State Management (50 min)
+**Topics:** Store JWT, auth context, protected routes
+
+**Exercises:**
+1. Create AuthContext for global auth state
+2. Store JWT in localStorage
+3. Add JWT to API requests (Authorization header)
+4. Implement logout functionality
+5. Create protected routes (redirect to login if not authenticated)
+6. Show user info in header when logged in
+
+**Practice Problems:**
+- Problem 1: Create AuthContext with { user, login, logout, isAuthenticated }
+- Problem 2: Store JWT in localStorage after successful login
+- Problem 3: Add Authorization: Bearer <token> header to all API requests
+- Problem 4: Implement logout (clear token, redirect to home)
+- Problem 5: Create ProtectedRoute component (redirect to /login if not authenticated)
+
+**Hints:**
+- AuthContext holds user and auth functions
+- Persist token: `localStorage.setItem('token', jwt)`
+- Axios interceptor: add token to all requests automatically
+- Check isAuthenticated before rendering protected content
+
+**Commit:** `Day 107: Authentication (login, register, auth state)`
+
+---
+
+### Wednesday, Apr 16 - Day 108
+**Topic:** Blog Frontend - Create & Edit Posts
+**Sessions:** 2
+
+#### Session 1: Create Post Form (50 min)
+**Topics:** Form for creating new posts, rich text input (or textarea)
+
+**Exercises:**
+1. Create NewPost page
+2. Build post form (title, content, category, tags)
+3. Add form validation
+4. POST new post to API
+5. Redirect to post detail after creation
+6. Only allow authenticated users
+
+**Practice Problems:**
+- Problem 1: Create NewPost form (title, content, category, tags)
+- Problem 2: Validate all fields are filled
+- Problem 3: POST to /posts endpoint with auth token
+- Problem 4: Redirect to created post detail page on success
+- Problem 5: Show form errors if API returns validation errors
+
+**Hints:**
+- Use textarea for content (or markdown editor library)
+- Send auth token in request headers
+- Get created post ID from API response for redirect
+- Handle tags as comma-separated string or array
+
+#### Session 2: Edit Post (50 min)
+**Topics:** Prefill form with existing post data, update post
+
+**Exercises:**
+1. Create EditPost page
+2. Fetch existing post data
+3. Prefill form with post data
+4. PUT/PATCH updated post to API
+5. Only allow post author to edit
+6. Redirect after successful update
+
+**Practice Problems:**
+- Problem 1: Create EditPost page at /posts/:id/edit
+- Problem 2: Fetch post and prefill form fields
+- Problem 3: PUT updated post to /posts/:id endpoint
+- Problem 4: Check if current user is post author (show 403 if not)
+- Problem 5: Redirect to post detail after successful update
+
+**Hints:**
+- Fetch post first, then set form state with post data
+- Check: `if (post.authorId !== currentUser.id)` show error
+- Use same form component for create and edit (reusable)
+- PATCH vs PUT: PATCH for partial updates, PUT for full replacement
+
+**Commit:** `Day 108: Create and edit post functionality`
+
+---
+
+### Thursday, Apr 17 - Day 109
+**Topic:** Blog Frontend - Search & Filters
+**Sessions:** 2
+
+#### Session 1: Search Functionality (50 min)
+**Topics:** Search bar, debounced search, query params
+
+**Exercises:**
+1. Add search bar to post list page
+2. Implement debounced search (wait for user to stop typing)
+3. Send search query to API
+4. Display filtered results
+5. Add loading indicator while searching
+6. Update URL with search query
+
+**Practice Problems:**
+- Problem 1: Add search input above post list
+- Problem 2: Debounce search input (wait 500ms after user stops typing)
+- Problem 3: Fetch posts with query: GET /posts?search=keyword
+- Problem 4: Show loading spinner while searching
+- Problem 5: Update URL: /posts?search=keyword (use useSearchParams)
+
+**Hints:**
+- Use useDebounce custom hook from earlier
+- useSearchParams: `const [searchParams, setSearchParams] = useSearchParams()`
+- Update URL: `setSearchParams({ search: query })`
+- Read URL on mount to support direct links
+
+#### Session 2: Filters & Sorting (50 min)
+**Topics:** Category filter, sort options, combine filters
+
+**Exercises:**
+1. Add category filter dropdown
+2. Add sort dropdown (newest, oldest, popular)
+3. Combine search + filters in one API call
+4. Update URL with all filters
+5. Add clear filters button
+6. Implement pagination
+
+**Practice Problems:**
+- Problem 1: Add category dropdown (all, tech, lifestyle, etc.)
+- Problem 2: Add sort dropdown (newest, oldest, most popular)
+- Problem 3: Fetch posts with all params: /posts?search=x&category=tech&sort=newest
+- Problem 4: Update URL with all query params
+- Problem 5: Add pagination (page number in URL, prev/next buttons)
+
+**Hints:**
+- Combine all params: `/posts?search=${search}&category=${cat}&sort=${sort}&page=${page}`
+- Multiple search params: `setSearchParams({ search, category, sort, page })`
+- Pagination: show page numbers, disable prev on page 1
+
+**Commit:** `Day 109: Search, filters, and sorting`
+
+---
+
+### Friday, Apr 18 - Day 110
+**Topic:** Blog Frontend - User Profile
+**Sessions:** 2
+
+#### Session 1: View User Profile (50 min)
+**Topics:** Display user info, user's posts
+
+**Exercises:**
+1. Create UserProfile page
+2. Fetch user data by ID
+3. Display user info (name, email, bio, joined date)
+4. Fetch and display user's posts
+5. Handle user not found
+6. Add edit profile button (only for own profile)
+
+**Practice Problems:**
+- Problem 1: Create UserProfile page at /users/:id
+- Problem 2: Fetch user from GET /users/:id
+- Problem 3: Display user info (name, email, bio, member since)
+- Problem 4: Fetch user's posts: GET /posts?authorId=:id
+- Problem 5: Show "Edit Profile" button only if viewing own profile
+
+**Hints:**
+- Use useParams to get user ID
+- Compare current user ID with profile user ID for edit button
+- List user's posts same as main post list
+
+#### Session 2: Edit User Profile (50 min)
+**Topics:** Update user info, change password, upload avatar
+
+**Exercises:**
+1. Create EditProfile page
+2. Prefill form with current user data
+3. Update user info (name, bio)
+4. Implement change password
+5. Optional: upload profile picture
+6. Update auth context after profile update
+
+**Practice Problems:**
+- Problem 1: Create EditProfile form (name, email, bio)
+- Problem 2: PATCH /users/:id to update profile
+- Problem 3: Add change password section (old password, new password, confirm)
+- Problem 4: POST /users/:id/password to change password
+- Problem 5: Update user in AuthContext after successful update
+
+**Hints:**
+- Can't change email (usually)
+- Validate password change (old password correct, new password valid)
+- Update auth context so header shows new name immediately
+- Optional: implement avatar upload similar to post images
+
+**Commit:** `Day 110: User profile view and edit`
+
+---
+
+### Saturday, Apr 19 - Day 111
+**Topic:** Blog Frontend - Polish & UX Improvements
+**Sessions:** 2
+
+#### Session 1: UI/UX Enhancements (50 min)
+**Topics:** Loading skeletons, empty states, toast notifications
+
+**Exercises:**
+1. Replace loading spinners with skeleton loaders
+2. Add empty states (no posts, no comments, no results)
+3. Implement toast notifications for actions (success, error)
+4. Add confirmation modals (delete post, logout)
+5. Improve error messages (user-friendly)
+6. Add animations and transitions
+
+**Practice Problems:**
+- Problem 1: Create skeleton loader for post list while loading
+- Problem 2: Show friendly empty state when no posts found
+- Problem 3: Add toast notifications for success/error actions
+- Problem 4: Add confirmation modal for post deletion
+- Problem 5: Add fade-in animation for page transitions
+
+**Hints:**
+- Skeleton: gray rectangles mimicking content layout
+- Empty state: illustration + message + action button
+- Toast library: react-hot-toast or react-toastify
+- Confirmation modal: are you sure? with cancel/confirm buttons
+
+#### Session 2: Responsive Design (50 min)
+**Topics:** Mobile-first CSS, responsive navigation, media queries
+
+**Exercises:**
+1. Make layout responsive (mobile, tablet, desktop)
+2. Create responsive navigation (hamburger menu on mobile)
+3. Make forms mobile-friendly
+4. Optimize images for different screen sizes
+5. Test on different devices/screen sizes
+6. Add touch-friendly UI elements
+
+**Practice Problems:**
+- Problem 1: Use CSS Grid/Flexbox for responsive post grid
+- Problem 2: Create hamburger menu for mobile navigation
+- Problem 3: Stack form inputs vertically on mobile
+- Problem 4: Use CSS media queries for breakpoints (768px, 1024px)
+- Problem 5: Test app on mobile screen size (Chrome DevTools)
+
+**Hints:**
+- Mobile-first: design for mobile, add media queries for larger screens
+- Hamburger menu: toggle state, show/hide on mobile
+- Touch targets: minimum 44x44px for buttons/links
+- Test with Chrome DevTools device emulation
+
+**Commit:** `Day 111: UI/UX improvements and responsive design`
+
+---
+
+### Sunday, Apr 20 - Day 112
+**Topic:** Blog Frontend - Real-Time Features (Optional)
+**Sessions:** 2
+
+#### Session 1: WebSocket Connection (50 min)
+**Topics:** Connect to backend WebSocket, listen for events
+
+**Exercises:**
+1. Install socket.io-client
+2. Connect to backend WebSocket server
+3. Listen for "new_post" event
+4. Update post list in real-time
+5. Listen for "new_comment" event
+6. Update comment count in real-time
+
+**Practice Problems:**
+- Problem 1: Connect to WebSocket server on app mount
+- Problem 2: Listen for "new_post" event and add post to list
+- Problem 3: Show toast notification when new post is published
+- Problem 4: Listen for "new_comment" event on post detail page
+- Problem 5: Update comment list in real-time when comment is added
+
+**Hints:**
+- Install: `npm install socket.io-client`
+- Connect: `const socket = io('http://localhost:3000')`
+- Listen: `socket.on('new_post', (post) => { ... })`
+- Cleanup: disconnect socket on unmount
+
+#### Session 2: Real-Time Notifications (50 min)
+**Topics:** Notification dropdown, unread count, mark as read
+
+**Exercises:**
+1. Create notification dropdown in header
+2. Listen for notification events
+3. Display unread notification count
+4. Show notification list
+5. Mark notifications as read
+6. Add notification preferences
+
+**Practice Problems:**
+- Problem 1: Create notification bell icon in header with unread count badge
+- Problem 2: Listen for "notification" WebSocket event
+- Problem 3: Show dropdown with notification list on bell click
+- Problem 4: Mark notification as read when clicked
+- Problem 5: Fetch old notifications on mount (not just live ones)
+
+**Hints:**
+- Store notifications in state
+- Unread count: filter notifications by `!notification.read`
+- Mark as read: PATCH /notifications/:id
+- Optional: use Zustand for notification state
+
+**Commit:** `Day 112: Real-time features with WebSockets`
+
+---
+
+### Monday, Apr 21 - Day 113
+**Topic:** Blog Frontend - Advanced Features Part 1
+**Sessions:** 2
+
+#### Session 1: Draft Posts & Publishing (50 min)
+**Topics:** Save as draft, publish/unpublish, scheduled publishing
+
+**Exercises:**
+1. Add draft/published status to posts
+2. Save post as draft without publishing
+3. Add publish/unpublish toggle
+4. Filter posts by status (drafts, published)
+5. Show draft indicator in UI
+6. Only show published posts to non-authors
+
+**Practice Problems:**
+- Problem 1: Add status field to post creation (draft vs published)
+- Problem 2: Create "My Drafts" page showing only draft posts
+- Problem 3: Add publish button on draft posts
+- Problem 4: Hide draft posts from public post list
+- Problem 5: Show draft badge on post cards
+
+**Hints:**
+- Add status to API: GET /posts?status=published
+- Check authorization: only author can see their drafts
+- Use conditional rendering for draft indicator
+
+#### Session 2: Post Categories & Tags (50 min)
+**Topics:** Category management, tag filtering, multi-select
+
+**Exercises:**
+1. Fetch categories from API
+2. Add category selector to post form
+3. Implement tag input (add/remove tags)
+4. Filter posts by category
+5. Filter posts by tags
+6. Show category and tags on post cards
+
+**Practice Problems:**
+- Problem 1: Fetch categories from GET /categories
+- Problem 2: Add category dropdown to post creation form
+- Problem 3: Implement tag input with add/remove functionality
+- Problem 4: Filter posts: GET /posts?category=tech&tags=javascript,react
+- Problem 5: Display category badge and tag list on post cards
+
+**Hints:**
+- Tags can be comma-separated array in state
+- Use chips/badges UI for tags
+- Category filter: dropdown or sidebar navigation
+
+**Commit:** `Day 113: Draft posts and categories/tags`
+
+---
+
+### Tuesday, Apr 22 - Day 114
+**Topic:** Blog Frontend - Advanced Features Part 2
+**Sessions:** 2
+
+#### Session 1: Like System (50 min)
+**Topics:** Like/unlike posts, optimistic updates
+
+**Exercises:**
+1. Display like count on posts
+2. Add like button (heart icon)
+3. POST like to API /posts/:id/like
+4. Implement unlike functionality
+5. Optimistic UI update (instant feedback)
+6. Show which posts current user has liked
+7. Disable like button if not authenticated
+
+**Practice Problems:**
+- Problem 1: Display like count and heart button on each post
+- Problem 2: POST to /posts/:id/like when heart clicked
+- Problem 3: Update like count immediately (optimistic update)
+- Problem 4: DELETE /posts/:id/like to unlike
+- Problem 5: Show filled heart if user has liked, outline if not
+
+**Hints:**
+- Optimistic update: increment count immediately, revert if API fails
+- Track liked posts: array of post IDs in state
+- Toggle filled/outline heart based on liked status
+
+#### Session 2: Bookmarks/Favorites (50 min)
+**Topics:** Save posts for later, bookmark list
+
+**Exercises:**
+1. Add bookmark button to posts
+2. POST bookmark to API
+3. Create "My Bookmarks" page
+4. Display bookmarked posts
+5. Remove bookmark functionality
+6. Show bookmark count (optional)
+
+**Practice Problems:**
+- Problem 1: Add bookmark icon button to post cards
+- Problem 2: POST to /posts/:id/bookmark
+- Problem 3: Create /bookmarks route showing user's bookmarked posts
+- Problem 4: DELETE /posts/:id/bookmark to remove
+- Problem 5: Toggle filled/outline bookmark icon
+
+**Hints:**
+- Similar to like system implementation
+- Bookmarks are user-specific (not public count)
+- Use local state + API calls
+
+**Commit:** `Day 114: Like and bookmark features`
+
+---
+
+### Wednesday, Apr 23 - Day 115
+**Topic:** Blog Frontend - Image Uploads
+**Sessions:** 2
+
+#### Session 1: Post Cover Image Upload (50 min)
+**Topics:** File input, image preview, upload to API
+
+**Exercises:**
+1. Add file input to post form
+2. Preview selected image before upload
+3. Upload image to API (multipart/form-data)
+4. Display cover image on post cards
+5. Display full cover image on post detail
+6. Handle upload errors
+
+**Practice Problems:**
+- Problem 1: Add file input to post form
+- Problem 2: Show image preview using FileReader
+- Problem 3: Upload image: POST /posts/:id/image with FormData
+- Problem 4: Display uploaded image URL on post cards
+- Problem 5: Show placeholder if no image
+
+**Hints:**
+- Use FormData for file uploads
+- Preview: `URL.createObjectURL(file)` or FileReader
+- Set Content-Type: multipart/form-data
+- API returns image URL, store in post
+
+#### Session 2: Profile Picture Upload (50 min)
+**Topics:** User avatar upload, image cropping (optional)
+
+**Exercises:**
+1. Add profile picture upload to edit profile
+2. Show current profile picture
+3. Upload new profile picture
+4. Display user avatars throughout app
+5. Handle default avatar (no image uploaded)
+6. Optimize image size before upload (optional)
+
+**Practice Problems:**
+- Problem 1: Add file input to edit profile page
+- Problem 2: Upload avatar: POST /users/:id/avatar
+- Problem 3: Display avatar in header when logged in
+- Problem 4: Show avatar next to author name on posts
+- Problem 5: Use default avatar icon if user has no picture
+
+**Hints:**
+- Same upload pattern as post images
+- Store avatar URL in user object
+- Update auth context after avatar upload
+- Use default avatar: initial letter or icon
+
+**Commit:** `Day 115: Image uploads for posts and profiles`
+
+---
+
+### Thursday, Apr 24 - Day 116
+**Topic:** Blog Frontend - Markdown Editor (Optional Enhancement)
+**Sessions:** 2
+
+#### Session 1: Markdown Editor Integration (50 min)
+**Topics:** Rich text editing, markdown syntax, preview
+
+**Setup:**
+```bash
+npm install react-markdown react-simplemde-editor
+```
+
+**Exercises:**
+1. Install markdown editor library
+2. Replace textarea with markdown editor
+3. Add markdown formatting buttons
+4. Implement live preview
+5. Store markdown in database
+6. Render markdown in post display
+
+**Practice Problems:**
+- Problem 1: Integrate SimpleMDE or similar markdown editor
+- Problem 2: Add formatting toolbar (bold, italic, links, images)
+- Problem 3: Show live preview while editing
+- Problem 4: Save markdown content to API
+- Problem 5: Render markdown with react-markdown on post detail page
+
+**Hints:**
+- Libraries: SimpleMDE, react-md-editor, or Toast UI Editor
+- Markdown stored as plain text in database
+- Use react-markdown to render HTML from markdown
+
+#### Session 2: Syntax Highlighting for Code Blocks (50 min)
+**Topics:** Code block formatting, syntax highlighting
+
+**Setup:**
+```bash
+npm install react-syntax-highlighter
+```
+
+**Exercises:**
+1. Add code block support to markdown
+2. Implement syntax highlighting
+3. Support multiple languages
+4. Add copy button to code blocks
+5. Style code blocks properly
+6. Add language label
+
+**Practice Problems:**
+- Problem 1: Use react-syntax-highlighter for code blocks
+- Problem 2: Auto-detect language or use specified language
+- Problem 3: Add "Copy" button that copies code to clipboard
+- Problem 4: Style code blocks with theme (GitHub, VS Code, etc.)
+- Problem 5: Add language label (e.g., "JavaScript") to code block header
+
+**Hints:**
+- react-syntax-highlighter with PrismJS or Highlight.js
+- Detect language from markdown: ```javascript
+- Use navigator.clipboard.writeText() for copy
+
+**Commit:** `Day 116: Markdown editor and code highlighting`
+
+---
+
+### Friday, Apr 25 - Day 117
+**Topic:** Blog Frontend - SEO & Meta Tags
+**Sessions:** 2
+
+#### Session 1: React Helmet for Meta Tags (50 min)
+**Topics:** Dynamic meta tags, Open Graph, Twitter Cards
+
+**Setup:**
+```bash
+npm install react-helmet-async
+```
+
+**Exercises:**
+1. Install react-helmet-async
+2. Set dynamic page titles
+3. Add meta descriptions
+4. Implement Open Graph tags for social sharing
+5. Add Twitter Card meta tags
+6. Test with social media preview tools
+
+**Practice Problems:**
+- Problem 1: Set page title dynamically per route
+- Problem 2: Add meta description for each page
+- Problem 3: Add Open Graph tags for post detail (title, description, image)
+- Problem 4: Add Twitter Card meta tags
+- Problem 5: Test sharing URL on Facebook/Twitter preview tool
+
+**Hints:**
+- Wrap app in HelmetProvider
+- Use Helmet component in each page
+- OG tags: og:title, og:description, og:image, og:url
+- Test with: Facebook Sharing Debugger, Twitter Card Validator
+
+#### Session 2: Sitemap & Robots.txt (50 min)
+**Topics:** SEO optimization, sitemap generation
+
+**Exercises:**
+1. Create robots.txt file
+2. Generate sitemap.xml
+3. Add canonical URLs
+4. Implement structured data (JSON-LD)
+5. Optimize images with alt text
+6. Add loading states for SEO
+
+**Practice Problems:**
+- Problem 1: Create public/robots.txt allowing all crawlers
+- Problem 2: Generate sitemap.xml with all post URLs
+- Problem 3: Add canonical URL meta tag to each page
+- Problem 4: Add JSON-LD structured data for blog posts
+- Problem 5: Ensure all images have descriptive alt text
+
+**Hints:**
+- robots.txt: allow search engines to crawl
+- Sitemap: list all public URLs
+- Canonical URL prevents duplicate content issues
+- JSON-LD: search engines understand content structure
+
+**Commit:** `Day 117: SEO optimization with meta tags`
+
+---
+
+### Saturday, Apr 26 - Day 118
+**Topic:** Blog Frontend Testing - Part 1
+**Sessions:** 2
+
+#### Session 1: Component Testing Setup (50 min)
+**Topics:** Test setup, testing library, first tests
+
+**Exercises:**
+1. Ensure testing library is installed
+2. Write test for Button component
+3. Test PostCard component rendering
+4. Test form input changes
+5. Test conditional rendering
+6. Run tests and check coverage
+
+**Practice Problems:**
+- Problem 1: Test Button renders with correct text
+- Problem 2: Test Button onClick is called when clicked
+- Problem 3: Test PostCard displays title, author, excerpt
+- Problem 4: Test form input value updates on change
+- Problem 5: Test component shows error message when error prop is passed
+
+**Hints:**
+- Use @testing-library/react
+- render() component, then screen.getBy...
+- fireEvent.click() or user.click() for interactions
+- expect().toBeInTheDocument() for assertions
+
+#### Session 2: Testing API Integration (50 min)
+**Topics:** Mocking API calls, testing async behavior
+
+**Setup:**
+```bash
+npm install --save-dev msw
+```
+
+**Exercises:**
+1. Set up MSW (Mock Service Worker)
+2. Mock GET /posts endpoint
+3. Test PostList fetches and displays posts
+4. Test loading state
+5. Test error state
+6. Test empty state
+
+**Practice Problems:**
+- Problem 1: Mock API with MSW handlers
+- Problem 2: Test PostList shows loading spinner initially
+- Problem 3: Test PostList displays posts after fetch
+- Problem 4: Test error message displayed on fetch failure
+- Problem 5: Test empty state when no posts returned
+
+**Hints:**
+- MSW intercepts network requests in tests
+- Use waitFor() for async assertions
+- Mock both success and error responses
+
+**Commit:** `Day 118: Component and integration testing`
+
+---
+
+### Sunday, Apr 27 - Day 119
+**Topic:** Blog Frontend Testing - Part 2
+**Sessions:** 2
+
+#### Session 1: Testing User Flows (50 min)
+**Topics:** E2E-style tests, complete user journeys
+
+**Exercises:**
+1. Test login flow
+2. Test post creation flow
+3. Test comment flow
+4. Test navigation
+5. Test form validation
+6. Test authentication redirects
+
+**Practice Problems:**
+- Problem 1: Test complete login flow (input email/password → submit → redirect)
+- Problem 2: Test post creation (fill form → submit → see new post)
+- Problem 3: Test adding comment (type comment → submit → see comment)
+- Problem 4: Test navigation (click link → new page renders)
+- Problem 5: Test protected route redirects to login when not authenticated
+
+**Hints:**
+- Mock authentication in tests
+- Test complete flows, not isolated actions
+- Use userEvent for realistic interactions
+
+#### Session 2: Testing Custom Hooks (50 min)
+**Topics:** Hook testing, renderHook utility
+
+**Exercises:**
+1. Test useFetch hook
+2. Test useAuth hook
+3. Test useForm hook
+4. Test useDebounce hook
+5. Test custom hooks with dependencies
+
+**Practice Problems:**
+- Problem 1: Test useFetch hook returns loading/data/error states
+- Problem 2: Test useAuth hook login/logout functions
+- Problem 3: Test useForm hook manages form state correctly
+- Problem 4: Test useDebounce hook delays value updates
+- Problem 5: Test hook cleanup functions are called
+
+**Hints:**
+- Use renderHook from @testing-library/react
+- Access hook return values via result.current
+- Use act() for state updates
+- Test async hooks with waitFor()
+
+**Commit:** `Day 119: User flow and hook testing`
+
+---
+
+### Monday, Apr 28 - Day 120
+**Topic:** Blog Frontend - Progressive Web App (PWA)
+**Sessions:** 2
+
+#### Session 1: PWA Setup (50 min)
+**Topics:** Service worker, manifest.json, offline support
+
+**Exercises:**
+1. Create manifest.json
+2. Add app icons
+3. Register service worker
+4. Test "Add to Home Screen"
+5. Implement offline fallback page
+6. Cache static assets
+
+**Practice Problems:**
+- Problem 1: Create manifest.json with app metadata
+- Problem 2: Generate app icons in multiple sizes
+- Problem 3: Register service worker in index.html
+- Problem 4: Test PWA installation on mobile
+- Problem 5: Show offline page when no internet connection
+
+**Hints:**
+- Vite has PWA plugin: vite-plugin-pwa
+- Manifest includes name, icons, theme_color, start_url
+- Service worker caches assets for offline use
+- Test with Chrome DevTools → Application → Manifest
+
+#### Session 2: Caching Strategy (50 min)
+**Topics:** Cache-first, network-first, stale-while-revalidate
+
+**Exercises:**
+1. Implement cache-first strategy for static assets
+2. Implement network-first for API calls
+3. Cache API responses with expiration
+4. Add background sync for offline actions
+5. Test offline functionality
+6. Add update notification
+
+**Practice Problems:**
+- Problem 1: Cache static assets (JS, CSS, images) on install
+- Problem 2: Use network-first for API calls with fallback to cache
+- Problem 3: Cache API responses for 5 minutes
+- Problem 4: Queue failed API calls for retry when back online
+- Problem 5: Show notification when new version is available
+
+**Hints:**
+- Workbox library simplifies service worker logic
+- Cache strategies: CacheFirst, NetworkFirst, StaleWhileRevalidate
+- Background sync: sync event when connection restored
+
+**Commit:** `Day 120: Progressive Web App features`
+
+---
+
+### Tuesday, Apr 29 - Day 121
+**Topic:** Blog Frontend - Deployment
+**Sessions:** 2
+
+#### Session 1: Vercel Deployment (50 min)
+**Topics:** Deploy frontend, environment variables, custom domain
+
+**Exercises:**
+1. Create Vercel account
+2. Connect GitHub repository
+3. Configure build settings
+4. Set environment variables
+5. Deploy production build
+6. Test deployed application
+
+**Practice Problems:**
+- Problem 1: Deploy frontend to Vercel via GitHub integration
+- Problem 2: Configure build command and output directory
+- Problem 3: Add VITE_API_URL environment variable
+- Problem 4: Test production deployment works correctly
+- Problem 5: Set up automatic deployments on git push
+
+**Hints:**
+- Vercel auto-detects Vite projects
+- Environment variables: Settings → Environment Variables
+- Preview deployments for PRs
+- Custom domain: add in Vercel dashboard
+
+#### Session 2: Production Optimization (50 min)
+**Topics:** Bundle size, performance, analytics
+
+**Exercises:**
+1. Analyze bundle size
+2. Optimize imports (tree shaking)
+3. Add compression
+4. Configure caching headers
+5. Add analytics (optional)
+6. Set up monitoring
+
+**Practice Problems:**
+- Problem 1: Run bundle analyzer to identify large dependencies
+- Problem 2: Optimize imports (import only what you need)
+- Problem 3: Enable compression in Vercel
+- Problem 4: Configure cache headers for static assets
+- Problem 5: Add Vercel Analytics or Google Analytics
+
+**Hints:**
+- Use vite-plugin-bundle-analyzer
+- Lazy load heavy components
+- Vercel automatically handles caching
+- Monitor Core Web Vitals
+
+**Commit:** `Day 121: Frontend deployment and optimization`
+
+---
+
+### Wednesday, Apr 30 - Day 122
+**Topic:** Full-Stack Blog - Connect Frontend & Backend
+**Sessions:** 2
+
+#### Session 1: API Integration (50 min)
+**Topics:** Connect deployed frontend to deployed backend
+
+**Exercises:**
+1. Update API base URL to production backend
+2. Handle CORS properly
+3. Test all API endpoints from frontend
+4. Fix any connection issues
+5. Test authentication flow
+6. Verify file uploads work
+
+**Practice Problems:**
+- Problem 1: Update VITE_API_URL to production backend URL
+- Problem 2: Configure CORS on backend to allow frontend domain
+- Problem 3: Test login/register from deployed frontend
+- Problem 4: Test CRUD operations work end-to-end
+- Problem 5: Test file uploads work in production
+
+**Hints:**
+- Backend CORS: allow frontend domain
+- Check browser console for CORS errors
+- Verify environment variables are set correctly
+- Test with real user account
+
+#### Session 2: End-to-End Testing (50 min)
+**Topics:** Test complete application in production
+
+**Exercises:**
+1. Test full user registration flow
+2. Test creating and viewing posts
+3. Test commenting
+4. Test like and bookmark
+5. Test search and filters
+6. Document any bugs and fix them
+
+**Practice Problems:**
+- Problem 1: Create new account on production site
+- Problem 2: Create a blog post with image
+- Problem 3: Comment on a post
+- Problem 4: Like and bookmark posts
+- Problem 5: Test search functionality
+
+**Hints:**
+- Test like a real user would
+- Check all features work in production
+- Monitor backend logs for errors
+- Fix issues and redeploy
+
+**Commit:** `Day 122: Full-stack integration and testing`
+
+---
+
+### Thursday, May 1 - Day 123
+**Topic:** Blog Project - Polish & Documentation
+**Sessions:** 2
+
+#### Session 1: UI Polish (50 min)
+**Topics:** Final UI improvements, consistency, UX
+
+**Exercises:**
+1. Review all pages for consistency
+2. Improve error messages
+3. Add helpful tooltips
+4. Improve mobile experience
+5. Add loading skeletons everywhere
+6. Polish animations and transitions
+
+**Practice Problems:**
+- Problem 1: Ensure consistent spacing, colors, fonts across all pages
+- Problem 2: Make error messages user-friendly and actionable
+- Problem 3: Add tooltips for icon buttons
+- Problem 4: Test and improve mobile UX
+- Problem 5: Add smooth transitions between pages
+
+**Hints:**
+- Use design system for consistency
+- Get feedback from others
+- Test on different devices
+- Small UX improvements matter
+
+#### Session 2: Documentation (50 min)
+**Topics:** README, API docs, deployment guide
+
+**Exercises:**
+1. Write comprehensive README for frontend
+2. Write comprehensive README for backend
+3. Add setup instructions
+4. Document environment variables
+5. Add screenshots and demo GIF
+6. Create architecture diagram
+
+**Practice Problems:**
+- Problem 1: Write README with project description, features, tech stack
+- Problem 2: Add local development setup instructions
+- Problem 3: Document all environment variables needed
+- Problem 4: Add screenshots of key features
+- Problem 5: Create simple architecture diagram (frontend → backend → database)
+
+**Hints:**
+- README should help someone else run your project
+- Include prerequisites (Node version, etc.)
+- Add badges (build status, etc.)
+- Use tools like Excalidraw for diagrams
+
+**Commit:** `Day 123: UI polish and documentation`
+
+---
+
+### Friday, May 2 - Day 124
+**Topic:** Portfolio Website - Setup
+**Sessions:** 2
+
+#### Session 1: Portfolio Design (50 min)
+**Topics:** Personal branding, portfolio structure
+
+**Exercises:**
+1. Plan portfolio structure (sections)
+2. Choose color scheme and fonts
+3. Create wireframes for pages
+4. Design hero section
+5. Design project showcase section
+6. Design about and contact sections
+
+**Practice Problems:**
+- Problem 1: Sketch layout for homepage (hero, projects, about, contact)
+- Problem 2: Choose 2-3 colors for brand palette
+- Problem 3: Design project card layout
+- Problem 4: Write compelling headline and bio
+- Problem 5: Plan project showcase (what to highlight for each)
+
+**Hints:**
+- Keep it simple and professional
+- Focus on projects, not decoration
+- Use tools like Figma (optional) or pen and paper
+- Look at other developer portfolios for inspiration
+
+#### Session 2: Portfolio Build - Part 1 (50 min)
+**Topics:** Create React app for portfolio
+
+**Exercises:**
+1. Create new Vite + React + TypeScript project
+2. Set up routing
+3. Create layout component
+4. Build hero section with name and title
+5. Add navigation
+6. Make it responsive
+
+**Practice Problems:**
+- Problem 1: Create portfolio project with Vite
+- Problem 2: Add routes: /, /projects, /about, /contact
+- Problem 3: Create hero section with your name and "Full-Stack Developer"
+- Problem 4: Add navigation menu
+- Problem 5: Make header responsive for mobile
+
+**Hints:**
+- Keep it simple initially
+- Focus on content over fancy animations
+- Use TailwindCSS or plain CSS
+- Mobile-first approach
+
+**Commit:** `Day 124: Portfolio website setup`
+
+---
+
+### Saturday, May 3 - Day 125
+**Topic:** Portfolio Website - Projects Section
+**Sessions:** 2
+
+#### Session 1: Project Cards (50 min)
+**Topics:** Showcase your projects
+
+**Exercises:**
+1. Create project data (JSON or TypeScript)
+2. Build project card component
+3. Display all projects in grid
+4. Add project images/screenshots
+5. Add tech stack tags
+6. Add links to live demo and GitHub
+
+**Practice Problems:**
+- Problem 1: Create array of project objects (title, description, image, tech, links)
+- Problem 2: Build ProjectCard component displaying all info
+- Problem 3: Create responsive grid of project cards
+- Problem 4: Add tech stack badges (React, NestJS, etc.)
+- Problem 5: Add "Live Demo" and "GitHub" buttons
+
+**Hints:**
+- Include your blog project
+- Add Task API, Weather App, and other projects
+- Use high-quality screenshots
+- Highlight key features in descriptions
+
+#### Session 2: Project Detail (Optional) (50 min)
+**Topics:** Individual project pages
+
+**Exercises:**
+1. Create project detail page
+2. Add detailed description
+3. Add multiple screenshots
+4. List key features
+5. Describe challenges and solutions
+6. Add lessons learned
+
+**Practice Problems:**
+- Problem 1: Create /projects/:slug route
+- Problem 2: Create detailed project page with multiple sections
+- Problem 3: Add carousel for multiple screenshots
+- Problem 4: Write about technical challenges faced
+- Problem 5: Describe what you learned from the project
+
+**Hints:**
+- Optional but impressive
+- Shows communication skills
+- Demonstrates problem-solving
+- Good for interview talking points
+
+**Commit:** `Day 125: Portfolio projects section`
+
+---
+
+### Sunday, May 4 - Day 126
+**Topic:** Portfolio Website - About & Contact
+**Sessions:** 2
+
+#### Session 1: About Section (50 min)
+**Topics:** Tell your story, skills display
+
+**Exercises:**
+1. Write compelling bio
+2. Create skills section with icons
+3. Add experience/timeline
+4. Include education and certifications
+5. Add downloadable resume link
+6. Make it personal but professional
+
+**Practice Problems:**
+- Problem 1: Write 2-3 paragraph bio highlighting your journey
+- Problem 2: Create skills grid with icons (React, TypeScript, Node, etc.)
+- Problem 3: Add timeline showing learning journey
+- Problem 4: Create resume PDF and add download button
+- Problem 5: Add professional photo or avatar
+
+**Hints:**
+- Tell your unique story (HCL Domino → modern dev)
+- Quantify: "500+ hours of intensive learning"
+- Highlight soft skills: problem-solving, self-motivated
+- Keep it concise
+
+#### Session 2: Contact Section (50 min)
+**Topics:** Contact form, social links
+
+**Exercises:**
+1. Create contact form (name, email, message)
+2. Add form validation
+3. Integrate email service (EmailJS or similar)
+4. Add social media links (GitHub, LinkedIn, Twitter)
+5. Add email address
+6. Test form submission
+
+**Practice Problems:**
+- Problem 1: Create contact form with validation
+- Problem 2: Integrate EmailJS for form submissions
+- Problem 3: Add GitHub, LinkedIn, Twitter links with icons
+- Problem 4: Display email address with copy button
+- Problem 5: Show success message after form submission
+
+**Hints:**
+- EmailJS is free for limited sends
+- Alternative: use backend API for contact form
+- Make social links prominent
+- Test form works in production
+
+**Commit:** `Day 126: Portfolio about and contact sections`
+
+---
+
+### Monday, May 5 - Day 127
+**Topic:** Portfolio Website - Final Touches
+**Sessions:** 2
+
+#### Session 1: Animations & Interactions (50 min)
+**Topics:** Smooth scrolling, fade-ins, hover effects
+
+**Exercises:**
+1. Add smooth scroll behavior
+2. Implement scroll animations (fade in on scroll)
+3. Add hover effects to buttons and cards
+4. Add loading animations
+5. Add transitions between sections
+6. Test performance
+
+**Practice Problems:**
+- Problem 1: Add smooth scrolling for navigation links
+- Problem 2: Use Intersection Observer for fade-in animations
+- Problem 3: Add hover effects to project cards (scale, shadow)
+- Problem 4: Add subtle animations to hero section
+- Problem 5: Ensure animations don't hurt performance
+
+**Hints:**
+- Use CSS transitions for smooth effects
+- Intersection Observer for scroll animations
+- Keep animations subtle and professional
+- Test on mobile (animations should work well)
+
+#### Session 2: SEO & Deployment (50 min)
+**Topics:** Meta tags, deploy to Vercel
+
+**Exercises:**
+1. Add meta tags for SEO
+2. Add Open Graph tags
+3. Create favicon
+4. Optimize images
+5. Deploy to Vercel
+6. Test deployed site
+
+**Practice Problems:**
+- Problem 1: Add title, description, keywords meta tags
+- Problem 2: Add Open Graph image for social sharing
+- Problem 3: Create and add favicon
+- Problem 4: Optimize all images (compress, lazy load)
+- Problem 5: Deploy to Vercel and test
+
+**Hints:**
+- Use react-helmet-async
+- Create OG image with your name and title
+- Test with social media preview tools
+- Custom domain if you have one
+
+**Commit:** `Day 127: Portfolio animations and deployment`
+
+---
+
+### Tuesday, May 6 - Day 128
+**Topic:** React Phase Complete - Review & Polish
+**Sessions:** 2
+
+#### Session 1: Blog App Final Review (50 min)
+**Topics:** Test everything, fix bugs, polish
+
+**Exercises:**
+1. Test all blog features
+2. Fix any remaining bugs
+3. Improve performance
+4. Update documentation
+5. Record demo video
+6. Take screenshots for portfolio
+
+**Practice Problems:**
+- Problem 1: Go through entire blog app as a user, note issues
+- Problem 2: Fix all bugs found
+- Problem 3: Run Lighthouse audit, improve score
+- Problem 4: Update README with latest features
+- Problem 5: Record screen recording of key features
+
+**Hints:**
+- Test in multiple browsers
+- Ask friend/family to test
+- Check mobile experience
+- Update GitHub README
+
+#### Session 2: Portfolio Final Review (50 min)
+**Topics:** Final portfolio polish
+
+**Exercises:**
+1. Review portfolio site
+2. Update with all projects
+3. Proofread all text
+4. Test all links work
+5. Get feedback
+6. Make final improvements
+
+**Practice Problems:**
+- Problem 1: Ensure all projects are listed with correct info
+- Problem 2: Proofread bio, project descriptions for typos
+- Problem 3: Test all external links work (GitHub, demos)
+- Problem 4: Test contact form works
+- Problem 5: Share with someone for feedback
+
+**Hints:**
+- First impressions matter
+- Check for typos and grammar
+- Ensure everything works
+- Mobile experience is critical
+
+**Commit:** `Day 128: React phase complete - blog and portfolio ready!`
+
+---
+
+## 🎉 PHASE 3 COMPLETE!
+
+**You've finished Phase 3 (Days 88-128)! Achievements:**
+- ✅ React fundamentals mastered
+- ✅ Hooks (useState, useEffect, useContext, useReducer, custom hooks)
+- ✅ React Router for navigation
+- ✅ TypeScript + React
+- ✅ State management (Context, Zustand)
+- ✅ Performance optimization
+- ✅ Testing React components
+- ✅ Complete blog frontend built and deployed
+- ✅ Professional portfolio website
+
+**Key Projects Built:**
+- Full-featured blog frontend with authentication
+- Personal portfolio website
+- Multiple React components and custom hooks
+
+**Ready for Phase 4: Full-Stack Integration!**
 
 ---
 
 # PHASE 4: FULL-STACK INTEGRATION
 ## May 8 - June 14 (5+ weeks, Days 129-166)
 
-**Focus:** Connecting React frontends to NestJS backends, full-stack projects
+**Focus:** Connecting React frontends to NestJS backends, building complete full-stack applications
 
-_(Days 129-166 will be created in next iteration - Full-stack capstone projects)_
+---
+
+### Thursday, May 7 - Day 129
+**Topic:** Full-Stack Architecture Planning
+**Sessions:** 2
+
+#### Session 1: Project Selection & Planning (50 min)
+**Topics:** Choose capstone project, plan architecture
+
+**Exercises:**
+1. Choose a full-stack project idea (or use provided)
+2. Define core features (MVP)
+3. Design database schema
+4. Plan API endpoints
+5. Sketch UI wireframes
+6. Create project timeline
+
+**Project Options:**
+- **Job Board:** Post jobs, apply, employer dashboard
+- **Social Network:** User profiles, posts, follows, feed
+- **Marketplace:** List items, buy/sell, reviews, payments
+- **Fitness Tracker:** Log workouts, track progress, social features
+- **Recipe Manager:** Save recipes, meal planning, grocery lists
+
+**Practice Problems:**
+- Problem 1: Choose one project and list 5-7 core features
+- Problem 2: Design database schema (users, main entities, relationships)
+- Problem 3: List all API endpoints needed (method, path, auth)
+- Problem 4: Sketch main pages/views
+- Problem 5: Break down into 2-week sprint
+
+**Hints:**
+- Choose project that interests you
+- Keep MVP small (can add features later)
+- Focus on demonstrating full-stack skills
+- Plan for authentication, CRUD, relationships
+
+#### Session 2: Setup Full-Stack Project (50 min)
+**Topics:** Monorepo or separate repos, initial setup
+
+**Exercises:**
+1. Create backend repository (NestJS)
+2. Create frontend repository (React)
+3. Set up PostgreSQL database
+4. Initialize Prisma
+5. Set up Git repos
+6. Create initial project structure
+
+**Practice Problems:**
+- Problem 1: Create backend project with NestJS CLI
+- Problem 2: Create frontend project with Vite
+- Problem 3: Set up PostgreSQL with Docker
+- Problem 4: Initialize Prisma in backend
+- Problem 5: Create database schema in schema.prisma
+
+**Hints:**
+- Use what you've learned (don't start from scratch mentally)
+- Reference blog API for backend patterns
+- Reference blog frontend for React patterns
+- Version control from day 1
+
+**Commit:** `Day 129: Full-stack project planning and setup`
+
+---
+
+### Days 130-145 (May 8-23): Build Capstone Project
+
+**Daily Pattern:**
+- Session 1: Backend feature (API endpoint, database, business logic)
+- Session 2: Frontend feature (UI, state management, API integration)
+
+**Week 1 (Days 130-136): Core Features**
+
+### Day 130: Authentication System
+- Backend: Auth module, JWT strategy, register/login endpoints
+- Frontend: Login/register pages, auth context, protected routes
+
+### Day 131: User Profiles
+- Backend: User CRUD endpoints, profile update
+- Frontend: Profile page, edit profile form
+
+### Day 132: Main Entity CRUD - Part 1
+- Backend: Create main entity (jobs, posts, products, etc.)
+- Frontend: Create form for main entity
+
+### Day 133: Main Entity CRUD - Part 2
+- Backend: Read, update, delete endpoints
+- Frontend: List view, detail view, edit/delete
+
+### Day 134: Relationships - Part 1
+- Backend: Add related entity (applications, comments, orders)
+- Frontend: Display related data
+
+### Day 135: Relationships - Part 2
+- Backend: Create/delete related entities
+- Frontend: Forms and actions for related entities
+
+### Day 136: Search & Filters
+- Backend: Search endpoint with filters
+- Frontend: Search bar, filter UI, results
+
+**Week 2 (Days 137-143): Advanced Features**
+
+### Day 137: File Uploads
+- Backend: Image upload endpoint, S3 integration
+- Frontend: File input, image preview, upload
+
+### Day 138: Pagination
+- Backend: Paginated responses
+- Frontend: Pagination UI, infinite scroll
+
+### Day 139: User Interactions - Part 1
+- Backend: Likes/favorites endpoints
+- Frontend: Like button, favorites page
+
+### Day 140: User Interactions - Part 2
+- Backend: Comments/reviews system
+- Frontend: Comment form, comment list
+
+### Day 141: Notifications
+- Backend: Notification creation, endpoints
+- Frontend: Notification bell, notification list
+
+### Day 142: Email Integration
+- Backend: Email service, transactional emails
+- Frontend: Email verification, password reset
+
+### Day 143: Admin Features
+- Backend: Admin role, admin-only endpoints
+- Frontend: Admin dashboard, moderation
+
+**Days 144-145: Testing & Polish**
+
+### Day 144: Testing
+- Backend: Integration tests for key endpoints
+- Frontend: Component tests for key features
+
+### Day 145: Bug Fixes & Polish
+- Fix all bugs
+- Improve error handling
+- Polish UI/UX
+
+**Commit:** `Days 130-145: Capstone project core and advanced features`
+
+---
+
+### Days 146-152 (May 24-30): Second Full-Stack Project
+
+**Build a different project to reinforce skills:**
+
+### Day 146-147: Project 2 Setup
+- Plan second project (different domain)
+- Set up backend and frontend
+- Database schema
+
+### Day 148-149: Core Features
+- Authentication
+- Main CRUD operations
+- Basic relationships
+
+### Day 150-151: Advanced Features
+- Search, filters, pagination
+- File uploads
+- User interactions
+
+### Day 152: Testing & Deployment
+- Write tests
+- Deploy both backend and frontend
+- Documentation
+
+**Commit:** `Days 146-152: Second full-stack project complete`
+
+---
+
+### Days 153-159 (May 31 - Jun 6): Third Full-Stack Project (Smaller)
+
+**Quick project demonstrating specific skills:**
+
+### Day 153-154: Real-Time Chat Application
+- WebSocket server setup
+- Real-time messaging
+- User presence
+
+### Day 155-156: Chat Features
+- Group chats/rooms
+- Message history
+- File sharing
+
+### Day 157: Chat Polish
+- UI improvements
+- Notifications
+- Mobile responsive
+
+### Day 158-159: Video Chat Integration (Optional)
+- WebRTC basics
+- Peer-to-peer video
+- Or: focus on deployment and documentation
+
+**Commit:** `Days 153-159: Real-time chat application`
+
+---
+
+### Days 160-166 (Jun 7-13): Project Portfolio Polish
+
+### Day 160: Project Documentation
+**Sessions:** 2
+- Write comprehensive READMEs for all projects
+- Add architecture diagrams
+- Document API endpoints
+- Create setup guides
+
+### Day 161: Demo Videos
+**Sessions:** 2
+- Record demo video for capstone project
+- Record demos for other projects
+- Edit and upload to YouTube/portfolio
+- Add video links to portfolio
+
+### Day 162: Portfolio Update
+**Sessions:** 2
+- Add all projects to portfolio site
+- Update project descriptions
+- Add new skills to about section
+- Fresh screenshots
+
+### Day 163: GitHub Profile Polish
+**Sessions:** 2
+- Update GitHub profile README
+- Pin best repositories
+- Ensure good commit history
+- Add project descriptions
+
+### Day 164: LinkedIn & Resume Update
+**Sessions:** 2
+- Update LinkedIn with new skills and projects
+- Refresh resume with quantified achievements
+- Write compelling project descriptions
+- Get resume reviewed
+
+### Day 165: Technical Blog Posts (Optional)
+**Sessions:** 2
+- Write blog post about building your capstone
+- Discuss challenges and solutions
+- Share on dev.to or Medium
+- Link from portfolio
+
+### Day 166: Final Full-Stack Review
+**Sessions:** 2
+- Review all projects
+- Fix any remaining bugs
+- Test all deployments
+- Prepare project presentation talking points
+
+**Commit:** `Days 160-166: Portfolio and documentation complete`
+
+---
+
+## 🎉 PHASE 4 COMPLETE!
+
+**You've finished Phase 4 (Days 129-166)! Achievements:**
+- ✅ Built 2-3 complete full-stack applications
+- ✅ Connected React frontends to NestJS backends
+- ✅ Implemented authentication end-to-end
+- ✅ Managed complex state across frontend and backend
+- ✅ Deployed full-stack applications
+- ✅ Professional documentation and demos
+- ✅ Updated portfolio with all projects
+
+**Key Projects Built:**
+- Capstone full-stack application (comprehensive features)
+- Second full-stack project (different domain)
+- Real-time chat application (WebSockets)
+
+**Ready for Phase 5: Interview Preparation!**
 
 ---
 
@@ -7702,7 +12333,671 @@ _(Days 129-166 will be created in next iteration - Full-stack capstone projects)
 
 **Focus:** LeetCode, system design, portfolio polish, job applications
 
-_(Days 167-196 will be created in next iteration - Interview preparation and job search)_
+---
+
+## Week 1 (Days 167-173): Data Structures & Algorithms Fundamentals
+
+### Day 167: Arrays & Hash Tables
+**Sessions:** 2
+**Topics:** Array manipulation, hash map patterns
+
+**LeetCode Problems:**
+1. Two Sum (Easy)
+2. Contains Duplicate (Easy)
+3. Valid Anagram (Easy)
+4. Group Anagrams (Medium)
+5. Top K Frequent Elements (Medium)
+
+**Practice:**
+- Session 1: Solve 2 easy problems
+- Session 2: Solve 2 medium problems, review patterns
+
+**Key Patterns:**
+- Hash map for O(1) lookup
+- Frequency counting
+- Sliding window basics
+
+---
+
+### Day 168: Two Pointers
+**Sessions:** 2
+**Topics:** Two pointer technique, multiple pointers
+
+**LeetCode Problems:**
+1. Valid Palindrome (Easy)
+2. Two Sum II (Medium)
+3. 3Sum (Medium)
+4. Container With Most Water (Medium)
+5. Trapping Rain Water (Hard)
+
+**Practice:**
+- Session 1: Easy + 1 medium
+- Session 2: 2 medium problems
+
+**Key Patterns:**
+- Left and right pointers
+- Fast and slow pointers
+- Meeting point problems
+
+---
+
+### Day 169: Sliding Window
+**Sessions:** 2
+**Topics:** Fixed and dynamic sliding window
+
+**LeetCode Problems:**
+1. Best Time to Buy and Sell Stock (Easy)
+2. Longest Substring Without Repeating Characters (Medium)
+3. Longest Repeating Character Replacement (Medium)
+4. Permutation in String (Medium)
+5. Minimum Window Substring (Hard)
+
+**Practice:**
+- Session 1: 2 problems with notes
+- Session 2: 2 problems, time yourself
+
+**Key Patterns:**
+- Expand window when condition met
+- Shrink window when invalid
+- Track min/max window size
+
+---
+
+### Day 170: Linked Lists - Part 1
+**Sessions:** 2
+**Topics:** Linked list basics, reversal, fast/slow pointers
+
+**LeetCode Problems:**
+1. Reverse Linked List (Easy)
+2. Merge Two Sorted Lists (Easy)
+3. Linked List Cycle (Easy)
+4. Remove Nth Node From End (Medium)
+5. Reorder List (Medium)
+
+**Practice:**
+- Session 1: Understand linked list structure, solve 2 easy
+- Session 2: 2 medium problems
+
+**Key Patterns:**
+- Dummy head node
+- Fast and slow pointers for cycle detection
+- Reversal technique
+
+---
+
+### Day 171: Linked Lists - Part 2
+**Sessions:** 2
+**Topics:** Advanced linked list problems
+
+**LeetCode Problems:**
+1. Merge K Sorted Lists (Hard)
+2. Reverse Nodes in K Group (Hard)
+3. LRU Cache (Medium)
+4. Copy List with Random Pointer (Medium)
+5. Add Two Numbers (Medium)
+
+**Practice:**
+- Session 1: 2 medium problems
+- Session 2: Review all linked list patterns
+
+**Key Patterns:**
+- Multiple pointers
+- Recursion vs iteration
+- Node manipulation
+
+---
+
+### Day 172: Stacks & Queues
+**Sessions:** 2
+**Topics:** Stack and queue patterns, monotonic stack
+
+**LeetCode Problems:**
+1. Valid Parentheses (Easy)
+2. Min Stack (Medium)
+3. Evaluate Reverse Polish Notation (Medium)
+4. Daily Temperatures (Medium)
+5. Largest Rectangle in Histogram (Hard)
+
+**Practice:**
+- Session 1: Stack basics, 2 problems
+- Session 2: Monotonic stack pattern
+
+**Key Patterns:**
+- Stack for matching problems
+- Monotonic stack for next greater/smaller
+- Queue for BFS
+
+---
+
+### Day 173: Week 1 Review
+**Sessions:** 2
+**Topics:** Review all patterns, solve mixed problems
+
+**Practice:**
+- Session 1: Solve 3 problems from different topics
+- Session 2: Mock interview practice (45 min)
+
+**Reflection:**
+- Which patterns are hardest?
+- Time management strategies
+- Communication practice
+
+---
+
+## Week 2 (Days 174-180): Trees, Graphs & Recursion
+
+### Day 174: Binary Trees - Part 1
+**Sessions:** 2
+**Topics:** Tree traversal, DFS
+
+**LeetCode Problems:**
+1. Invert Binary Tree (Easy)
+2. Maximum Depth of Binary Tree (Easy)
+3. Same Tree (Easy)
+4. Subtree of Another Tree (Easy)
+5. Binary Tree Level Order Traversal (Medium)
+
+**Practice:**
+- Session 1: Tree basics, 3 easy problems
+- Session 2: Level order traversal
+
+**Key Patterns:**
+- Recursive DFS (preorder, inorder, postorder)
+- Iterative BFS (level order)
+- Tree properties
+
+---
+
+### Day 175: Binary Trees - Part 2
+**Sessions:** 2
+**Topics:** Advanced tree problems
+
+**LeetCode Problems:**
+1. Lowest Common Ancestor (Medium)
+2. Validate Binary Search Tree (Medium)
+3. Kth Smallest Element in BST (Medium)
+4. Binary Tree Maximum Path Sum (Hard)
+5. Serialize and Deserialize Binary Tree (Hard)
+
+**Practice:**
+- Session 1: BST properties
+- Session 2: Hard problems
+
+**Key Patterns:**
+- BST properties (left < root < right)
+- Path problems
+- Tree construction
+
+---
+
+### Day 176: Tries
+**Sessions:** 2
+**Topics:** Prefix trees, word search
+
+**LeetCode Problems:**
+1. Implement Trie (Medium)
+2. Design Add and Search Words Data Structure (Medium)
+3. Word Search II (Hard)
+4. Longest Common Prefix (Easy)
+
+**Practice:**
+- Session 1: Implement trie from scratch
+- Session 2: Trie applications
+
+**Key Patterns:**
+- Prefix matching
+- Autocomplete
+- Word validation
+
+---
+
+### Day 177: Graphs - Part 1
+**Sessions:** 2
+**Topics:** Graph representation, DFS, BFS
+
+**LeetCode Problems:**
+1. Number of Islands (Medium)
+2. Clone Graph (Medium)
+3. Pacific Atlantic Water Flow (Medium)
+4. Course Schedule (Medium)
+5. Graph Valid Tree (Medium)
+
+**Practice:**
+- Session 1: Graph traversal basics
+- Session 2: Application problems
+
+**Key Patterns:**
+- Adjacency list representation
+- Visited set
+- DFS vs BFS choice
+
+---
+
+### Day 178: Graphs - Part 2
+**Sessions:** 2
+**Topics:** Advanced graph algorithms
+
+**LeetCode Problems:**
+1. Course Schedule II (Medium)
+2. Word Ladder (Hard)
+3. Network Delay Time (Medium)
+4. Min Cost to Connect All Points (Medium)
+5. Alien Dictionary (Hard)
+
+**Practice:**
+- Session 1: Topological sort
+- Session 2: Shortest path
+
+**Key Patterns:**
+- Topological sort (Kahn's algorithm)
+- Dijkstra's shortest path
+- Union find
+
+---
+
+### Day 179: Backtracking
+**Sessions:** 2
+**Topics:** Decision trees, backtracking
+
+**LeetCode Problems:**
+1. Subsets (Medium)
+2. Combination Sum (Medium)
+3. Permutations (Medium)
+4. Word Search (Medium)
+5. N-Queens (Hard)
+
+**Practice:**
+- Session 1: Backtracking template
+- Session 2: Apply to problems
+
+**Key Patterns:**
+- Choose, explore, unchoose
+- Decision tree
+- Pruning
+
+---
+
+### Day 180: Week 2 Review
+**Sessions:** 2
+**Topics:** Review trees, graphs, backtracking
+
+**Practice:**
+- Session 1: 3 mixed problems
+- Session 2: Mock interview
+
+---
+
+## Week 3 (Days 181-187): Dynamic Programming & System Design
+
+### Day 181: Dynamic Programming - 1D
+**Sessions:** 2
+**Topics:** DP fundamentals, 1D DP
+
+**LeetCode Problems:**
+1. Climbing Stairs (Easy)
+2. House Robber (Medium)
+3. Longest Increasing Subsequence (Medium)
+4. Word Break (Medium)
+5. Decode Ways (Medium)
+
+**Practice:**
+- Session 1: DP concept, memoization
+- Session 2: Bottom-up DP
+
+**Key Patterns:**
+- Identify overlapping subproblems
+- Define recurrence relation
+- Memoization vs tabulation
+
+---
+
+### Day 182: Dynamic Programming - 2D
+**Sessions:** 2
+**Topics:** 2D DP, grid problems
+
+**LeetCode Problems:**
+1. Unique Paths (Medium)
+2. Longest Common Subsequence (Medium)
+3. Best Time to Buy and Sell Stock with Cooldown (Medium)
+4. Coin Change 2 (Medium)
+5. Edit Distance (Hard)
+
+**Practice:**
+- Session 1: 2D DP patterns
+- Session 2: Apply to problems
+
+**Key Patterns:**
+- 2D state definition
+- Grid traversal
+- String matching
+
+---
+
+### Day 183: Greedy Algorithms
+**Sessions:** 2
+**Topics:** Greedy choice, intervals
+
+**LeetCode Problems:**
+1. Maximum Subarray (Medium)
+2. Jump Game (Medium)
+3. Gas Station (Medium)
+4. Merge Intervals (Medium)
+5. Non-overlapping Intervals (Medium)
+
+**Practice:**
+- Session 1: Greedy vs DP
+- Session 2: Interval problems
+
+**Key Patterns:**
+- Locally optimal choices
+- Proof of correctness
+- Sorting first
+
+---
+
+### Day 184: System Design - Fundamentals
+**Sessions:** 2
+**Topics:** Scalability, load balancing, caching
+
+**Study Topics:**
+1. Horizontal vs vertical scaling
+2. Load balancing strategies
+3. Caching (Redis patterns)
+4. Database replication
+5. CAP theorem
+
+**Practice:**
+- Session 1: Study concepts, take notes
+- Session 2: Draw diagrams, explain out loud
+
+**Resources:**
+- System Design Primer (GitHub)
+- Gaurav Sen YouTube videos
+
+---
+
+### Day 185: System Design - URL Shortener
+**Sessions:** 2
+**Topics:** Design URL shortening service
+
+**Requirements:**
+- Shorten long URLs
+- Redirect short URLs
+- Analytics
+- Scale to millions of users
+
+**Practice:**
+- Session 1: Requirements, API design, database schema
+- Session 2: Scalability, caching, load balancing
+
+**Key Concepts:**
+- Base62 encoding
+- Database sharding
+- Caching strategy
+- Rate limiting
+
+---
+
+### Day 186: System Design - Twitter/Instagram Feed
+**Sessions:** 2
+**Topics:** Design social media feed
+
+**Requirements:**
+- Post content
+- Follow users
+- View feed
+- Notifications
+- Scale to millions
+
+**Practice:**
+- Session 1: Data model, API design
+- Session 2: Feed generation, caching, ranking
+
+**Key Concepts:**
+- Fan-out on write vs read
+- Timeline generation
+- Push vs pull
+- Ranking algorithms
+
+---
+
+### Day 187: Week 3 Review
+**Sessions:** 2
+**Topics:** DP review, system design practice
+
+**Practice:**
+- Session 1: 2 DP problems
+- Session 2: Mock system design interview
+
+---
+
+## Week 4 (Days 188-194): Interview Prep & Applications
+
+### Day 188: Behavioral Interview Prep
+**Sessions:** 2
+**Topics:** STAR method, tell your story
+
+**Preparation:**
+- Write down 10 project stories
+- STAR format (Situation, Task, Action, Result)
+- Practice out loud
+
+**Common Questions:**
+1. Tell me about yourself
+2. Why software development?
+3. Tell me about a challenging project
+4. How do you handle deadlines?
+5. Describe a time you solved a difficult problem
+6. How do you handle feedback?
+7. Why our company?
+8. Where do you see yourself in 5 years?
+
+**Practice:**
+- Session 1: Write STAR stories
+- Session 2: Practice with timer (2 min each)
+
+---
+
+### Day 189: Resume & Cover Letter Polish
+**Sessions:** 2
+**Topics:** Final resume review, cover letter template
+
+**Tasks:**
+- Update resume with all projects
+- Quantify achievements
+- Tailor for full-stack roles
+- Write cover letter template
+- Get feedback from others
+
+**Resume Highlights:**
+- "Built 8 full-stack applications with modern tech stack"
+- "500+ hours self-directed learning"
+- "Proficient in React, TypeScript, NestJS, PostgreSQL"
+- List projects with tech stack and impact
+
+---
+
+### Day 190: Portfolio & GitHub Final Review
+**Sessions:** 2
+**Topics:** Portfolio polish, GitHub profile
+
+**Tasks:**
+- Review portfolio site (mobile + desktop)
+- Update GitHub profile README
+- Pin best repositories
+- Ensure all READMEs are excellent
+- Add demo GIFs to projects
+- Check all live demo links work
+
+**GitHub Profile README:**
+- Introduction with tech stack
+- Featured projects with links
+- GitHub stats
+- Contact information
+
+---
+
+### Day 191: Mock Interviews - Technical
+**Sessions:** 2
+**Topics:** Full technical interview simulation
+
+**Practice:**
+- Session 1: 2 LeetCode mediums (45 min)
+- Session 2: System design problem (45 min)
+
+**Use:**
+- Pramp for peer interviews
+- LeetCode's mock interview feature
+- Time yourself strictly
+
+**Focus:**
+- Think out loud
+- Ask clarifying questions
+- Explain approach before coding
+- Test with examples
+
+---
+
+### Day 192: Mock Interviews - Behavioral
+**Sessions:** 2
+**Topics:** Behavioral interview practice
+
+**Practice:**
+- Session 1: Answer 10 behavioral questions
+- Session 2: Practice with partner or record yourself
+
+**Evaluate:**
+- Clarity of answers
+- STAR format usage
+- Confidence
+- Authenticity
+
+---
+
+### Day 193: Job Applications - Day 1
+**Sessions:** 2
+**Topics:** Apply to first batch of jobs
+
+**Tasks:**
+- Research 20 companies
+- Apply to 10 companies today
+- Customize each application
+- Track applications in spreadsheet
+
+**Target Companies:**
+- Startups (high growth, modern stack)
+- Mid-size companies (good engineering culture)
+- Remote-friendly companies
+- Companies using React/Node.js/TypeScript
+
+**Application Tracking:**
+- Company name
+- Position title
+- Date applied
+- Status
+- Follow-up date
+- Notes
+
+---
+
+### Day 194: Job Applications - Day 2
+**Sessions:** 2
+**Topics:** Apply to more jobs, recruiter outreach
+
+**Tasks:**
+- Apply to 10 more companies
+- Reach out to 5 recruiters on LinkedIn
+- Join relevant Slack/Discord communities
+- Network with developers in target companies
+
+**LinkedIn Strategy:**
+- Update headline: "Full-Stack Developer | React, TypeScript, NestJS"
+- Open to work badge
+- Connect with recruiters
+- Engage with content
+
+---
+
+### Days 195-196: Final Prep
+
+### Day 195: LeetCode Final Sprint
+**Sessions:** 2
+**Topics:** Solve problems from weak areas
+
+**Practice:**
+- Session 1: 3 problems from weakest topic
+- Session 2: 2 random medium problems
+
+**Goal:**
+- Build confidence
+- Stay sharp
+- Time management
+
+---
+
+### Day 196: Final Review & Reflection
+**Sessions:** 2
+**Topics:** Review everything, celebrate progress
+
+**Tasks:**
+- Review your 196-day journey
+- Update portfolio with any final touches
+- Prepare for upcoming interviews
+- Set goals for month 7+
+
+**Reflection Questions:**
+1. What am I most proud of?
+2. What was hardest?
+3. What would I do differently?
+4. What surprised me?
+5. How do I feel about job search?
+
+**Celebrate:**
+- You completed 196 days!
+- You have a portfolio of projects
+- You can build full-stack applications
+- You're ready to interview
+- You're a developer now!
+
+---
+
+## 🎉 PHASE 5 COMPLETE!
+
+**You've finished Phase 5 (Days 167-196)! Achievements:**
+- ✅ Solved 50+ LeetCode problems across all topics
+- ✅ Mastered common algorithm patterns
+- ✅ Practiced system design
+- ✅ Prepared behavioral interview answers
+- ✅ Polished resume and portfolio
+- ✅ Applied to 20+ companies
+- ✅ Completed 196-day journey!
+
+**LeetCode Topics Covered:**
+- Arrays & Hash Tables
+- Two Pointers & Sliding Window
+- Linked Lists
+- Stacks & Queues
+- Binary Trees & BSTs
+- Tries
+- Graphs & Backtracking
+- Dynamic Programming
+- Greedy Algorithms
+
+**System Design Topics:**
+- Scalability fundamentals
+- Caching strategies
+- Load balancing
+- Database design
+- URL Shortener
+- Social media feed
+
+**Interview Skills:**
+- Technical communication
+- Problem-solving approach
+- STAR method for behavioral
+- Portfolio presentation
+
+**Ready for Extended Plan: Months 7-12!**
 
 ---
 
@@ -8372,11 +13667,9 @@ Each project should be:
 
 Ready to commit to this? The struggle is REAL, but so are the results. 🔥
 
+---
 
-
-
-
-### Monday, Feb 2 - Day 33
+*Last updated: January 1, 2026*
 **Topic:** TypeScript Basic Types
 **Sessions:** 2
 
@@ -9297,4 +14590,4 @@ const publishedPosts = await prisma.post.findMany({
 
 ---
 
-*Last updated: January 18, 2026*
+*Last updated: January 1, 2026*
