@@ -326,3 +326,15 @@
 
 **Commits:**
 - docs: add Day 20 session 1 — includes notes exercises  
+- ### Tuesday, Jan 20 - Day 20 — Session 1
+**Goal:** Modern JS Core - Promises Then catch finally
+**Status:** [x] Complete  
+**Sessions:** 2/2 (weekday)  
+**Time:** 20:20 - 21:20 (60 minutes)
+
+**Notes:**
+- Studied Promises
+
+
+**Commits:**
+- docs: add Day 20 session 2 — includes notes exercises  
