@@ -338,3 +338,27 @@
 
 **Commits:**
 - docs: add Day 20 session 2 — includes notes exercises  
+- ### Tuesday, Jan 20 - Day 20 — Session 1
+**Goal:** Modern JS Core - Promises 
+**Status:** [x] Complete  
+**Sessions:** 1/2 (weekday)  
+**Time:** 19:20 -20:10 (50 minutes)
+
+**Notes:**
+- Studied Promises
+
+
+**Commits:**
+- docs: add Day 20 session 1 — includes notes exercises  
+- ### Tuesday, Jan 20 - Day 20 — Session 1
+**Goal:** Modern JS Core - Async await 
+**Status:** [x] Complete  
+**Sessions:** 1/1 (weekday)  
+**Time:** 17:10 - 20:10 (60 minutes)
+
+**Notes:**
+- Studied ASync await
+
+
+**Commits:**
+- docs: add Day 21 session 1 — includes notes exercises  
