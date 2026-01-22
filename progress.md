@@ -349,8 +349,8 @@
 
 
 **Commits:**
-- docs: add Day 20 session 1 — includes notes exercises  
-- ### Tuesday, Jan 20 - Day 20 — Session 1
+- docs: add Day 21 session 1 — includes notes exercises  
+- ### Tuesday, Jan 21 - Day 20 — Session 1
 **Goal:** Modern JS Core - Async await 
 **Status:** [x] Complete  
 **Sessions:** 1/1 (weekday)  
