@@ -361,7 +361,7 @@
 
 
 **Commits:**
-- docs: add Day 21 session 1 — includes notes exercises  
+- docs: add Day 22 session 1 — includes notes exercises  
   
 **Goal:** Modern JS Core - Async await exercioses
 **Status:** [x] Complete  
@@ -373,5 +373,20 @@
 
 
 **Commits:**
-- docs: add Day 21 session 1 — includes notes exercises  
+- docs: add Day 23 session 1 — includes notes exercises  
+
+**Commits:**
+- docs: add Day 23 session 1 — includes notes exercises  
+  
+**Goal:** Modern JS Core - Async await exercioses
+**Status:** [x] Complete  
+**Sessions:** 1/1 (weekday)  
+**Time:** 17:30 - 20:40 (70 minutes)
+
+**Notes:**
+- Studied ASync await with exercises
+
+
+**Commits:**
+- docs: add Day 23 session 1 — includes notes exercises  
 - 
