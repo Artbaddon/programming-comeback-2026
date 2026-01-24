@@ -389,4 +389,14 @@
 
 **Commits:**
 - docs: add Day 23 session 1 — includes notes exercises  
-- 
+
+**Goal:** Modern JS Core - Async await exercioses
+**Status:** [x] Complete  
+**Sessions:** 1/4 (weekday)  
+**Time:** 09:20 - 10:25 (65 minutes)
+
+**Notes:**
+- Studied promiseAll
+
+**Commits:**
+- docs: add Day 24 session 1 — async promise all error handling best practices and promiseAll
