@@ -399,4 +399,15 @@
 - Studied promiseAll
 
 **Commits:**
-- docs: add Day 24 session 1 — async promise all error handling best practices and promiseAll
+- docs: add Day 24 session 2 — async promise all error handling best practices and promiseAll
+- 
+**Goal:** Modern JS Core - Async await exercioses
+**Status:** [x] Complete  
+**Sessions:** 2/4 (weekday)  
+**Time:** 11:00 - 11:50 (60 minutes)
+
+**Notes:**
+- Studied promiseAllSettled
+
+**Commits:**
+-  docs: add Day 24 session 2 — promiseAllSettled, fetch API get requests
