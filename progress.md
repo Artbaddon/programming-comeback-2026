@@ -411,3 +411,19 @@
 
 **Commits:**
 -  docs: add Day 24 session 2 — promiseAllSettled, fetch API get requests
+-  
+
+**Goal:** Modern JS Core - Active Recall & Logic Refinement
+**Status:** [x] Complete  
+**Sessions:** 1/1 (Tuesday)  
+**Time:** 19:10 - 20:21 (70 minutes)
+
+**Notes:**
+- **Active Recall:** Answered 52 questions covering TDZ, Lexical `this`, Closures, and Array Methods (Map/Filter/Reduce).
+- **Key Discovery:** Fixed a misconception about `this` in `setTimeout`; confirmed that arrow functions tether to the outer method's context (Victor) while regular functions reset to global.
+- **Async/Fetch:** Reviewed `Promise.allSettled` and reinforced that `fetch` does NOT reject on 404/500 errors.
+- **Calculated Confidence:** 8/10.
+
+**Commits:**
+- docs: add Feb 03 active recall — Core JS, Async/Await, and Lexical Scope
+- refactor: update mental models for TDZ and arrow function tethering
