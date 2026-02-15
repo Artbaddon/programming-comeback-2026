@@ -427,3 +427,37 @@
 **Commits:**
 - docs: add Feb 03 active recall — Core JS, Async/Await, and Lexical Scope
 - refactor: update mental models for TDZ and arrow function tethering
+
+### Sunday, Feb 15 - Day 46 — Session 1
+**Goal:** Modern JS Core - DOM Manipulation (Searching Elements)
+**Status:** [x] Complete
+**Sessions:** 1/4
+**Time:** 09:40 - 10:30 (50 minutes)
+
+**Notes:**
+- Studied the DOM (Document Object Model) as a tree-like structure representing all page content
+- Reviewed `document` object as the main entry point for all DOM operations
+- Practiced navigating the DOM tree using properties: `documentElement`, `body`, `head`
+- Covered child nodes vs descendants; learned DOM collections (childNodes, firstChild, lastChild)
+- Learned that DOM collections are "live" and array-like but different from arrays; they re-evaluate lazily
+
+**Commits:**
+- docs: add Day 46 session 1 — DOM manipulation notes
+- files: week_01_modern_js_core/day_46/day_46_session_1_DOM.md, week_01_modern_js_core/day_46/day_46_session_1_DOM.js
+
+---
+
+### Sunday, Feb 15 - Day 46 — Session 2
+**Goal:** Modern JS Core - DOM Manipulation (exercises)
+**Status:** [x] Complete
+**Sessions:** 2/4
+**Time:** 11:00 - 11:50 (50 minutes)
+
+**Notes:**
+- Practiced accessing DOM nodes using navigation properties (firstElementChild, nextElementSibling, lastElementChild)
+- Solved exercises on accessing specific elements like `<div>`, `<ul>`, and individual list items
+- Implemented code to paint diagonal table cells red using node properties and indexing
+- Applied knowledge of element relationships and how to traverse the DOM tree
+
+**Commits:**
+- docs: add Day 46 session 2 — DOM manipulation exercises
