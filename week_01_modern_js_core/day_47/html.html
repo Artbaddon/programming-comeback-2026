@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app" class="light-theme">
+      <h1>Welcome to the App</h1>
+      <p>Click the button to change the vibe.</p>
+      <button id="theme-btn">Toggle Dark Mode</button>
+    </div>
+    <script>
+      const div = document.getElementById("app");
+      const button = document.getElementById("theme-btn");
+
+      button.addEventListener("click", () => {
+        div.classList.toggle("dark-theme");
+        div.classList.toggle("light-theme");
+        
+      });
+    </script>
+  </body>
+</html>
