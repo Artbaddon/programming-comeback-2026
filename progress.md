@@ -461,3 +461,20 @@
 
 **Commits:**
 - docs: add Day 46 session 2 — DOM manipulation exercises
+### Tuesday, Feb 17 - Day 48 — Session 1
+**Goal:** Modern JS Core - DOM Manipulation (Searching Elements with querySelector)
+**Status:** [x] Complete
+**Sessions:** 1/1 (weekday)
+**Time:** 19:45 - 20:45 (60 minutes)
+
+**Notes:**
+- Studied DOM search methods: `getElementById`, `querySelector`, `querySelectorAll`, `matches`, and `closest`
+- Learned that `querySelector` returns the first match while `querySelectorAll` returns a collection of all matches
+- Practiced CSS selectors with querySelector for flexible element searching
+- Used `closest()` to traverse up the DOM tree to find nearest matching ancestor
+- Used `matches()` to check if an element matches a given CSS selector
+- Completed exercises: breadcrumb navigator, attribute pseudo-selectors, and filtering by data attributes
+- Applied knowledge to select required inputs, find finance category cards, and style elements conditionally
+
+**Commits:**
+- docs: add Day 48 session 1 — DOM manipulation (querySelector, querySelectorAll, closest, matches)

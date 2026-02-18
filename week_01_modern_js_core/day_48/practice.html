@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <title>DOM Practice</title>
+  </head>
+  <body>
+    <header id="main-header">
+      <h1 class="title">My Website</h1>
+      <nav>
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="nav-link">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <article class="post">
+        <h2>First Post</h2>
+        <p>Content here...</p>
+      </article>
+      <article class="post">
+        <h2>Second Post</h2>
+        <p>More content...</p>
+      </article>
+
+      <section class="Exercise-1">
+        <div class="breadcrumb-container" data-depth="0">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+              <div class="dropdown">
+                <button class="menu-btn">Settings</button>
+                <span class="status-icon"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <form id="registration">
+        <input type="text" name="user_name" required />
+        <input type="email" name="user_email" disabled />
+        <input type="checkbox" name="terms" checked />
+        <input type="password" name="user_password" required />
+        <button type="submit">Submit</button>
+      </form>
+      <section class="dashboard">
+        <article class="card" data-category="finance">
+          <h2 class="title">Revenue</h2>
+          <p class="content">Details here...</p>
+        </article>
+        <article class="card" data-category="marketing">
+          <h2 class="title">Ad Spend</h2>
+          <p class="content">Details here...</p>
+        </article>
+        <article class="card" data-category="finance">
+          <h2 class="title">Profit</h2>
+          <p class="content">Details here...</p>
+        </article>
+      </section>
+    </main>
+    <script src="day_48_session_1_dom_query_selector.js"></script>
+  </body>
+</html>
