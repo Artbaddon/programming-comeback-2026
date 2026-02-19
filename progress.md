@@ -477,4 +477,4 @@
 - Applied knowledge to select required inputs, find finance category cards, and style elements conditionally
 
 **Commits:**
-- docs: add Day 48 session 1 — DOM manipulation (querySelector, querySelectorAll, closest, matches)
+- docs: add Day 48 session 1 — DOM manipulation (querySelector, querySelectorAll, closest, matches) 
