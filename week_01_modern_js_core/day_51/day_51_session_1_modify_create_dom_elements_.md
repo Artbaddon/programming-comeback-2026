@@ -78,7 +78,9 @@ const newTextNode document.createTextNode(" Hello World")
 -For cloning we have:
 -Element.cloneNode(true) creates a "deep" clone of the element with all the attributes and subelements. 
 -If we call elem.cloneNode(false), then the clone is made without child elements.
-
+- For wrapping a list of nodes we use DocumentFragment
+  - Is an sepecial DOM node that serves as a wrapper to pass around a lists of nodes, like a div or container for more nodes
+    We can append other nodes oto tit and when we isnter it someohwere then its contents are insterted isntead.
 **Example:**
 ```html
 <ol id="ol">
@@ -88,6 +90,7 @@ const newTextNode document.createTextNode(" Hello World")
 </ol>
 <div id="div"></div>
 <div class="deletemePlease"></div>
+<ul id="nul"></ul>
 <script>
     ol.before("before"); //Insert string "before" before <ol>
     ol.after("after"); //Insert string "after" after <ol>
@@ -104,6 +107,16 @@ const newTextNode document.createTextNode(" Hello World")
     div.insertAdjacentHTML('afterend', '<p>Bye</p>');
     const deleteElement = document.querySelector('.deletemePlease')
     setTimeout(()=>document.deleteNode(),1000)
+    //documentFragment
+    function getListContent(){
+        let fragment = new DocumentFragment();
+
+        for(let i 1; i<=3; i++){
+            let li = document.createElement("li");
+            li.append(i);
+            fragment.append(i);
+        }
+    }
 </script>
 
 ```
