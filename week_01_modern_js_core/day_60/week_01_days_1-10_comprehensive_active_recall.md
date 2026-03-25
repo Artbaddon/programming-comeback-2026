@@ -28,9 +28,9 @@ Until the code reaches their declaration, they stay “uninitialized”, and acc
 3. Name two situations where you should NOT use arrow functions.
 
 **My guesses:**
-- you return an object implicity when is a one line statement and you use =>({})
-- 
-- 
+- you return an object implicity when is a one line statement and you use ()=>({})
+- because they dont have a this, when they are created  they take the one that is in it outer scope so they take the this from the parent
+- When you need a function with its own this (e.g. object methods), When you need access to arguments
 
 ---
 
