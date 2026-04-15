@@ -47,7 +47,7 @@
 3. What does `findIndex()` return when no element matches?
 
 **My guesses:**
-- a shallow copy of the array, it doenst not mutate the original array
+- a shallow copy of the array, it does not mutate the original array
 - the idea of filter is returnig an array of all the items that met the criteria argument we passed, find does the same but stops at the first one.
 - -1
 ---
@@ -70,9 +70,9 @@
 3. How do closures enable "private variables"?
 
 **My guesses:**
-- 
-- 
-- 
+- function that takes the scope of the parent
+- Lexical Scope is the set of rules that defines where variables are physically located and who has the "clearance" to access them.
+- A closure is a function that remembers its outer scope. By returning this function from an inner scope, we create a 'bridge' to variables that are otherwise isolated and inaccessible to the rest of the program.
 
 ---
 
@@ -82,9 +82,9 @@
 3. Where should `.catch()` go in a Promise chain?
 
 **My guesses:**
-- 
-- 
-- 
+- Settled, pending, rejected
+- then returns a prmoise
+- usually in last place, because it will catch the errors
 
 ---
 
@@ -94,9 +94,9 @@
 3. What does `Promise.all()` do if one Promise rejects?
 
 **My guesses:**
-- 
-- 
-- 
+- it always return a promise
+- no, it only works in async functions
+- promise.all will solve the first one, but if it fails it goes straight to the catch
 
 ---
 
@@ -106,9 +106,9 @@
 3. Is a 404 response a rejected Promise?
 
 **My guesses:**
-- 
-- 
-- 
+- Fetch returns a promise
+- we use it when we need to organize or take the response as json
+- is not a rejected promise
 
 ---
 
