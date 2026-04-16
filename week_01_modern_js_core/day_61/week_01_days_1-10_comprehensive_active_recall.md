@@ -143,6 +143,7 @@
 // Use typeof to verify each one
 // Your code here:
 
+
 ```
 
 ### Exercise 1.2: Type Coercion Prediction
