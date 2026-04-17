@@ -201,67 +201,78 @@ function sumX(...numbers) {
 // ### Exercise 4.1: map() Practice
 // ```javascript
 // const numbers = [1, 2, 3, 4, 5];
-// const users = [
-//   { name: "Alice", age: 25 },
-//   { name: "Bob", age: 30 },
-//   { name: "Charlie", age: 35 }
-// ];
+const users = [
+    { name: "Alice", age: 25 },
+    { name: "Bob", age: 30 },
+    { name: "Charlie", age: 35 }
+];
 
 // // 1. Double all numbers
 // // Your code:
 
+const numbers2 = [1, 2, 3, 4, 5];
+const doubledNumbers = numbers2.map((ele) => ele * 2)
+
 // // 2. Get array of just user names
 // // Your code:
+const names = users.map((obj) => obj.name)
+
 
 // // 3. Create sentences: "Alice is 25 years old"
 // // Your code:
+const sentences = users.map((obj) => `${obj.name} is ${obj.age} years old`)
 
 // ```
 
 // ### Exercise 4.2: filter() Practice
 // ```javascript
-// const products = [
-//   { name: "Laptop", price: 1000, inStock: true },
-//   { name: "Phone", price: 500, inStock: false },
-//   { name: "Tablet", price: 300, inStock: true },
-//   { name: "Watch", price: 200, inStock: true }
-// ];
+const products = [
+    { name: "Laptop", price: 1000, inStock: true },
+    { name: "Phone", price: 500, inStock: false },
+    { name: "Tablet", price: 300, inStock: true },
+    { name: "Watch", price: 200, inStock: true }
+];
 
 // // 1. Get only products that are in stock
 // // Your code:
+const onlyStock = products.filter((product) => product.inStock)
 
 // // 2. Get products under $400
 // // Your code:
-
+const cheapProducts = products.filter((product) => product.pr)
 // // 3. Get products that are in stock AND under $400
 // // Your code:
-
+const stockUnder = products.filter((product) => product.inStock && product.price < 400)
 // // 4. Chain filter + map to get names of in-stock products
 // // Your code:
-
+const namesInStock = product.filter((product) => product.inStock).map(product.name)
 // ```
+
 
 // ### Exercise 4.3: find() and findIndex()
 // ```javascript
-// const users = [
-//   { id: 1, name: "Alice", role: "admin" },
-//   { id: 2, name: "Bob", role: "user" },
-//   { id: 3, name: "Charlie", role: "user" },
-//   { id: 4, name: "Diana", role: "admin" }
-// ];
+const users2 = [
+    { id: 1, name: "Alice", role: "admin" },
+    { id: 2, name: "Bob", role: "user" },
+    { id: 3, name: "Charlie", role: "user" },
+    { id: 4, name: "Diana", role: "admin" }
+];
 
 // // 1. Find user with id 3
 // // Your code:
-
+const user3 = users2.find((user) => user.id === 3)
 // // 2. Find the first admin user
 // // Your code:
-
+const admin = users2.find((user) => user.role === "admin")
 // // 3. Find the index of Bob
 // // Your code:
-
+const bobIndex = users2.findIndex((user) => user.name.toLowerCase() === "bob")
 // // 4. Create a getUserById(id) function using find()
 // // Your code:
+function getUserById(id, users) {
+    return users.find((user) => user.id === id)
 
+}
 // ```
 
 // ---
@@ -270,18 +281,20 @@ function sumX(...numbers) {
 
 // ### Exercise 5.1: reduce() Fundamentals
 // ```javascript
-// const numbers = [1, 2, 3, 4, 5];
+const numbers3 = [1, 2, 3, 4, 5];
 
 // // 1. Sum all numbers using reduce
 // // Your code:
+const sumed = numbers3.reduce((acc, curr) => acc + curr)
 
 // // 2. Find the maximum number using reduce
 // // Your code:
-
+const maxNum = numbers3.reduce((acc, curr) => acc > curr ? acc : curr, -Infinity)
 // // 3. Flatten an array: [[1,2], [3,4], [5]] into [1,2,3,4,5]
 // // Your code:
-
-// ```
+const initalArr = [[1, 2], [3, 4], [5]]
+const flattened = initalArr.reduce((acc, curr) => acc.concat(curr), []);
+// 
 
 // ### Exercise 5.2: reduce() for Aggregation
 // ```javascript
