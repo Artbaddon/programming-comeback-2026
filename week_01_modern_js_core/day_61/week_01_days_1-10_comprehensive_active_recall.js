@@ -298,44 +298,60 @@ const flattened = initalArr.reduce((acc, curr) => acc.concat(curr), []);
 
 // ### Exercise 5.2: reduce() for Aggregation
 // ```javascript
-// const orders = [
-//   { product: "Laptop", amount: 1000 },
-//   { product: "Phone", amount: 500 },
-//   { product: "Phone", amount: 500 },
-//   { product: "Tablet", amount: 300 }
-// ];
+const orders2 = [
+    { product: "Laptop", amount: 1000 },
+    { product: "Phone", amount: 500 },
+    { product: "Phone", amount: 500 },
+    { product: "Tablet", amount: 300 }
+];
 
 // // 1. Calculate total of all order amounts
 // // Your code:
+const totalOfAll = orders2.reduce((acc, curr) => {
 
+    acc["total"] += curr.amount
+
+    return acc
+}, { total: 0 })
 // // 2. Count occurrences: { Laptop: 1, Phone: 2, Tablet: 1 }
 // // Your code:
+const occurrences = orders2.reduce((acc, curr) => {
+    acc[curr.product] = acc[curr.product] || 0;
+    acc[curr.product]++
+
+    return acc
+}, {})
 
 // // 3. Group orders by product name
 // // Your code:
-
+const groupedOrder = orders2.reduce((acc, curr) => {
+    acc[curr.product] = acc[curr.product] || [];
+    acc[curr.product].push({ amount: curr.amount })
+    return acc;
+}, {})
 // ```
 
 // ### Exercise 5.3: some(), every(), includes()
 // ```javascript
-// const users = [
-//   { name: "Alice", age: 25, active: true },
-//   { name: "Bob", age: 17, active: false },
-//   { name: "Charlie", age: 30, active: true }
-// ];
+const users4 = [
+    { name: "Alice", age: 25, active: true },
+    { name: "Bob", age: 17, active: false },
+    { name: "Charlie", age: 30, active: true }
+];
 
 // // 1. Check if ANY user is under 18
 // // Your code:
-
+const anyUnder = users4.any((ele) => ele.age < 18)
 // // 2. Check if ALL users are active
 // // Your code:
-
+const activeUsers = users4.every((ele) => ele.active)
 // // 3. Check if ALL users are over 15
 // // Your code:
-
+const allOver = users4.every((ele) => ele.age > 15)
 // // 4. Check if array [1, 2, 3] includes 2
 // // Your code:
-
+const arr3 = [1, 2, 3];
+const includes2 = arr3.includes((ele) => ele === 2)
 // ```
 
 // ---
