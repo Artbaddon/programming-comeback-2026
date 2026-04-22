@@ -365,12 +365,31 @@ const includes2 = arr3.includes((ele) => ele === 2)
 // // count should NOT be directly accessible
 // // Example use: const counter = createCounter(); counter(); // 1, counter(); // 2
 // // Your code:
+function createCounter() {
+    let count = 0;
+    return function () {
 
+        count++;
+        return count
+
+
+    }
+}
+const counter = createCounter();
+count()
 // // 2. Create a createIdGenerator(prefix) function
 // // Returns a function that generates unique IDs
 // // Example: const userIds = createIdGenerator("user");
 // //          userIds(); // "user_1", userIds(); // "user_2"
 // // Your code:
+function createIdGenerator(prefix) {
+    let id = 0;
+    return function () {
+        id++;
+        return `${prefix}_${id}`
+    }
+
+}
 
 // ```
 
@@ -383,6 +402,37 @@ const includes2 = arr3.includes((ele) => ele === 2)
 // //   add(2, 3); // Computed: 5
 // //   add(2, 3); // Cached: 5
 // // Your code:
+
+function data(fn) {
+    const interceptor = (...args) => {
+        console.log(args)
+        return fn(...args)
+    }
+}
+function memoize(fn) {
+    const cachedArgs = {
+        arguments: [],
+        result: []
+    }
+    return function (...args) {
+        const stringArgs = args.toString()
+        const idx = cachedArgs.arguments.findIndex(item => item === stringArgs);
+        if (idx = -1) {
+            console.log("CACHED!")
+            return cachedArgs.result[idx];
+        } else {
+            const result = fn(...args);
+
+            cachedArgs.arguments.push(stringArgs);
+            cachedArgs.result.push(result)
+
+            return result
+        }
+
+
+    }
+}
+
 
 // // 2. Create a once(fn) function that only allows fn to run once
 // // Example:
