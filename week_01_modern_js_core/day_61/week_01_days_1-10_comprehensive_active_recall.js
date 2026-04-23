@@ -440,6 +440,19 @@ function memoize(fn) {
 // //   init(); // "Initialized!"
 // //   init(); // Nothing happens
 // // Your code:
+function once(fn) {
+
+    let once = false;
+    return function () {
+        if (!once) {
+            fn()
+            once = true;
+        }
+
+    }
+}
+const init = once(() => console.log("Initialized!"));
+init();
 
 // ```
 
@@ -459,8 +472,7 @@ function memoize(fn) {
 // console.log(counter()); // Prediction: ?
 
 // // Explanation of why:
-
-// ```
+// it will keep adding one to the counter because when we return a function even if it is anamed one, we still have the reference in the return so we create a closure with the scope of the function
 
 // ---
 
@@ -470,12 +482,21 @@ function memoize(fn) {
 // ```javascript
 // // 1. Create a Promise that resolves after 2 seconds with "Done!"
 // // Your code:
+const promise123 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("Done!"), 2000)
+})
 
 // // 2. Create a Promise that rejects if a number is negative
 // // Your code:
+const number = -2;
+
+const promise1 = new Promise((resolve, reject) => number < 0 ? reject(new Error("NO PADRE")) : resolve("TA BIEN"))
 
 // // 3. Create a Promise that randomly resolves or rejects (50/50)
 // // Your code:
+
+const generateRandonNum = () => Math.random()
+const promiseA = new Promise((resolve, reject) => generateRandonNum() < 0.5 ? resolve("GOOD") : reject(new Promise("NOPE")))
 
 // ```
 
