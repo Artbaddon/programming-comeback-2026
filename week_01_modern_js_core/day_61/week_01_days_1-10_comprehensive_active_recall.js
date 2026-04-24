@@ -503,28 +503,28 @@ const promiseA = new Promise((resolve, reject) => generateRandonNum() < 0.5 ? re
 // ### Exercise 7.2: Promise Chaining
 // ```javascript
 // // Assume these helper functions exist:
-// function getUser(id) {
-//   return new Promise(resolve => {
-//     setTimeout(() => resolve({ id, name: "John" }), 500);
-//   });
-// }
+function getUser(id) {
+    return new Promise(resolve => {
+        setTimeout(() => resolve({ id, name: "John" }), 500);
+    });
+}
 
-// function getPosts(userId) {
-//   return new Promise(resolve => {
-//     setTimeout(() => resolve(["Post 1", "Post 2"]), 500);
-//   });
-// }
+function getPosts(userId) {
+    return new Promise(resolve => {
+        setTimeout(() => userID > 0 ? resolve(["Post 1", "Post 2"]) : reject(new Error("Error, id is negative")), 500);
+    });
+}
 
 // // 1. Chain getUser and getPosts: getUser(1) -> then get their posts
 // // Log the posts when done
 // // Your code:
-
+getUser(2).then((res) => getPosts(res.id)).then((ele) => console.log(ele))
 // // 2. Add error handling with .catch()
 // // Your code:
-
+getUser(-1).then((res) => getPosts(res.id)).then((ele) => console.log(ele)).catch(err => console.error(err))
 // // 3. Add .finally() to log "Complete" regardless of success/failure
 // // Your code:
-
+getUser(-1).then((res) => getPosts(res.id)).then((ele) => console.log(ele)).catch(err => console.error(err)).finally(() => console.log("COMPLETE"))
 // ```
 
 // ### Exercise 7.3: Promise.all() Challenge
@@ -533,8 +533,16 @@ const promiseA = new Promise((resolve, reject) => generateRandonNum() < 0.5 ? re
 // // Use Promise.all() to wait for all three
 // // Log the results when all are done
 
+function createNTimerPromise(body, time) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(body), time)
+    })
+}
+const promise1S = createNTimerPromise("HALLO", 1);
+const promise3S = createNTimerPromise("HALLO 3 seconds", 3);
+const promise6S = createNTimerPromise("HALLO 6 seconds", 6);
 // // Your code:
-
+const results = Promise.all([promise1S, promise3S, promise6S])
 // ```
 
 // ---
@@ -550,12 +558,30 @@ const promiseA = new Promise((resolve, reject) => generateRandonNum() < 0.5 ? re
 
 // // Your async/await version:
 
+const usersData = [{ id: 1, name: "Pedro" }, { id: 2, name: "Vector" }, { id: 3, name: "Pablo" }];
+const postsData = [{ id: 1, posts: ["p1", "p2", "p5", "p7"] }, { id: 2, posts: ["p11", "p22"] }, { id: 3, posts: ["p15", "p23", "p56", "p78"] }];
+
+async function getResource(resource, id) {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(resource.find(item => item.id === id)), 1000);
+    });
+}
+
+async function main() {
+    const user = await getResource(usersData, 1);
+    const userPosts = await getResource(postsData, user.id);
+    console.log(userPosts);
+}
+
+main();
 // // 2. Create an async function that waits 1 second then returns "Hello"
 // // Your code:
-
+async function waitsOneThenHello() {
+    return new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), 1000))
+}
 // // 3. What does an async function return? Create one and log its return value
 // // Your code:
-
+//It returns a promise
 // ```
 
 // ### Exercise 8.2: Error Handling & Parallel Execution
