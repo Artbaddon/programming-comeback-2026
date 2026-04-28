@@ -588,6 +588,22 @@ async function waitsOneThenHello() {
 // ```javascript
 // // 1. Add try/catch error handling to an async function
 // // Your code:
+async function sayHelloIf1(number) {
+    return new Promise((res, reject) => {
+        setTimeout(() => number === 1 ? resolve("IS ONE") : reject(new Error("PROVIDED NUMBER IS NOT ONE")), 1000)
+    })
+}
+
+async function main() {
+    try {
+        sayHelloIf1(1)
+
+    } catch (error) {
+        console.console.error(error);
+
+    }
+
+}
 
 // // 2. Fetch 3 different user IDs in PARALLEL using Promise.all()
 // // Your code:
@@ -608,7 +624,20 @@ async function waitsOneThenHello() {
 // // Hint: use Promise.race()
 // // Your code:
 
+async function rejectAfterN(ms) {
+    return new Promise((_, reject) => setTimeout(() => reject("REQUEST TIMEOUT!"), ms))
+}
 // ```
+async function fetchWithTimeout(promise, ms) {
+    try {
+        const result = Promise.all([promise, rejectAfterN(ms)])
+    } catch (err) {
+        console.error(err)
+
+    }
+
+}
+
 
 // ---
 
