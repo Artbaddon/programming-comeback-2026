@@ -649,13 +649,54 @@ async function fetchWithTimeout(promise, ms) {
 
 // // 1. Create a function that fetches all posts
 // // Your code:
-
+async function fetchAllPosts() {
+    const URL = "https://jsonplaceholder.typicode.com"
+    try {
+        const response = await fetch(`${URL}/posts`);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error(err.message)
+    }
+}
 // // 2. Create a function that fetches a single post by ID
 // // Your code:
+async function getPostById(id) {
+    const BASE_URL = "https://jsonplaceholder.typicode.com";
 
+    try {
+        const response = await fetch(`${URL}/${id}`)
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error(err.message)
+    }
+}
 // // 3. Create a safe version that returns null for 404s
 // // Your code:
+async function getPostById(id) {
+    const BASE_URL = "https://jsonplaceholder.typicode.com";
 
+    try {
+        const response = await fetch(`${URL}/${id}`)
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error(err.message)
+        return null;
+    }
+}
 // ```
 
 // ### Exercise 9.2: POST Requests & Headers
