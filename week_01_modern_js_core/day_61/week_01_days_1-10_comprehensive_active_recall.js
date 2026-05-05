@@ -704,9 +704,46 @@ async function getPostById(id) {
 // // 1. Create a function that POSTs a new post
 // // Required: title, body, userId
 // // Your code:
+async function createAPost(post) {
+    const BASE_URL = "https://jsonplaceholder.typicode.com";
+    try {
+        const { title, body, userId } = post;
+        if (!title || !body || !userId) {
+            throw new Error("ALL FIELDS ARE MANDATORY")
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(post)
+        }
 
+
+        const response = await fetch(`${BASE_URL}/posts`, options)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Post Creation Failed:", error.message);
+        throw error; // Re-throw so the caller knows it failed
+
+    }
+
+}
 // // 2. Create a reusable API client object with get(), post(), put(), delete() methods
 // // Your code:
+
+ class clientAPI {
+
+    constructor(BASE_URL) {
+        this.BASE_URL = BASE_URL;
+    }
+
+}
+
 
 // // 3. Add authorization header to requests
 // // Your code:
