@@ -736,10 +736,37 @@ async function createAPost(post) {
 // // 2. Create a reusable API client object with get(), post(), put(), delete() methods
 // // Your code:
 
- class clientAPI {
+class clientAPI {
 
     constructor(BASE_URL) {
         this.BASE_URL = BASE_URL;
+    }
+    async makeRequest(method, resource, body) {
+        const options = {
+            method: "GET",
+
+        }
+        if (method.toLowerCase() !== "get") {
+            options.headers = {
+                "Content-type": "application/json"
+            }
+            options.body = JSON.stringify(body)
+            options.method = method.toUpperCase();
+        }
+        try {
+            const response = await fetch(`${this.BASE_URL}/${resource}`, options)
+            if (!response.ok) {
+                throw new Error(`Request failed with status: ${response.status}`)
+            }
+
+            const result = await response.json()
+
+            return result
+        } catch (error) {
+            throw new Error(`API CONNECTION FAILED WITH ERROR ${err}`)
+
+        }
+
     }
 
 }
